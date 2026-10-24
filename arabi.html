@@ -38,39 +38,45 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-slate-950">
 
-    <!-- Header Bar -->
-    <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-slate-950 shadow-lg shadow-emerald-500/20">
-                    <i class="fa-solid fa-moon text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-cinzel text-lg sm:text-xl font-bold tracking-wider text-emerald-400">HISTORIA DIGITALE</h1>
-                    <p class="text-xs text-slate-400 font-medium">L'Inizio dell'Islam e la Civiltà Arabo-Islamica</p>
-                </div>
-            </div>
+    <!-- Header con Doppio Link (Home e Storia Medievale) -->
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        
+        <!-- Navigazione Breadcrumb (Doppio Riferimento) -->
+        <div class="flex items-center space-x-2 text-xs sm:text-sm">
+            <a href="index.html" class="text-slate-400 hover:text-sky-400 transition-colors flex items-center gap-1.5 font-semibold">
+                <i class="fa-solid fa-house"></i> Home Portale
+            </a>
+            <span class="text-slate-600">/</span>
+            <a href="storia-medievale.html" class="text-slate-400 hover:text-sky-400 transition-colors font-semibold">
+                Storia Medievale
+            </a>
+            <span class="text-slate-600">/</span>
+            <span class="text-sky-400 font-bold">Gli Arabi e l'Espansione Islamica</span>
+        </div>
 
-            <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
-                <div class="relative flex items-center">
-                    <i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
-                    <input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 w-40 sm:w-48">
+        <!-- Controlli Utente e Punteggio XP -->
+        <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+            <div class="relative flex items-center">
+                <i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+                <input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-sky-500 w-40 sm:w-48">
+            </div>
+            <button onclick="toggleAudio()" id="sound-btn" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-sky-400" title="Audio">
+                <i class="fa-solid fa-volume-high text-sm"></i>
+            </button>
+            <div class="flex items-center space-x-3 bg-slate-900 border border-sky-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+                <div class="text-right">
+                    <span class="text-[10px] uppercase tracking-wider text-sky-400/80 block font-bold">Punti XP</span>
+                    <span id="global-score-text" class="text-sm font-extrabold text-sky-400">0 / 100</span>
                 </div>
-                <button onclick="toggleAudio()" id="sound-btn" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-emerald-400" title="Audio">
-                    <i class="fa-solid fa-volume-high text-sm"></i>
-                </button>
-                <div class="flex items-center space-x-3 bg-slate-900 border border-emerald-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
-                    <div class="text-right">
-                        <span class="text-[10px] uppercase tracking-wider text-emerald-400/80 block font-bold">Punti XP</span>
-                        <span id="global-score-text" class="text-sm font-extrabold text-emerald-400">0 / 100</span>
-                    </div>
-                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
+                <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-extrabold text-xs">
+                    <i class="fa-solid fa-bolt"></i>
                 </div>
             </div>
         </div>
-    </header>
+
+    </div>
+</header>
 
     <!-- Navigation Bar -->
     <nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portale Didattico Interattivo</title>
+    <title>Portale di Storia • Didattica Interattiva</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,12 +19,12 @@
     <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-4">
         <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+                    <i class="fa-solid fa-landmark text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="font-cinzel text-lg font-bold text-emerald-400 tracking-wider">PORTALE DIDATTICO</h1>
-                    <p class="text-xs text-slate-400">Laboratori Interattivi e Verifiche delle Competenze</p>
+                    <h1 class="font-cinzel text-lg font-bold text-amber-400 tracking-wider">PORTALE DI STORIA</h1>
+                    <p class="text-xs text-slate-400">Laboratori Interattivi e Percorsi Cronologici</p>
                 </div>
             </div>
         </div>
@@ -34,58 +34,73 @@
     <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-10 space-y-8">
         
         <!-- Banner Benvenuto -->
-        <div class="glass-card p-8 rounded-2xl border-emerald-500/20 relative overflow-hidden">
-            <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400 mb-2">Seleziona un Modulo Didattico</h2>
+        <div class="glass-card p-8 rounded-2xl border-amber-500/20 relative overflow-hidden">
+            <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-amber-400 mb-2">Seleziona l'Epoca Storica</h2>
             <p class="text-slate-300 text-sm leading-relaxed max-w-2xl">
-                Scegli uno dei laboratori interattivi sottostanti per iniziare le esercitazioni, ripassare i concetti chiave e verificare la tua preparazione.
+                Scegli il periodo storico che desideri approfondire per accedere alle schede di studio e ai relativi laboratori interattivi.
             </p>
         </div>
 
-        <!-- Griglia Moduli/Esercizi -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Griglia 4 Epoche Storiche -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <!-- Card Modulo 1 -->
-            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-emerald-500/50 transition-all flex flex-col justify-between group">
-                <div class="space-y-3">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-book"></i>
-                    </div>
-                    <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-md border border-emerald-800">Modulo 1</span>
-                    <h3 class="font-bold text-lg text-slate-100">I Longobardi in Italia</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Dall'invasione del 568 d.C. all'Editto di Rotari, la conversione e l'eredità storica.</p>
-                </div>
-                <a href="longobardi.html" class="mt-4 w-full bg-slate-900 hover:bg-emerald-600 hover:text-slate-950 text-emerald-400 font-bold py-2.5 px-4 rounded-xl border border-slate-800 text-xs transition-all flex items-center justify-center gap-2">
-                    Accedi al Laboratorio <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Card Modulo 2 -->
-            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-sky-500/50 transition-all flex flex-col justify-between group">
-                <div class="space-y-3">
-                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-moon"></i>
-                    </div>
-                    <span class="text-[10px] uppercase font-bold tracking-wider text-sky-400 bg-sky-950/60 px-2.5 py-1 rounded-md border border-sky-800">Modulo 2</span>
-                    <h3 class="font-bold text-lg text-slate-100">Gli Arabi e l'Espansione Islamica</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">L'Arabia pre-islamica, Maometto, l'Egira, le conquiste e la grande cultura scientifica.</p>
-                </div>
-                <a href="arabi.html" class="mt-4 w-full bg-slate-900 hover:bg-sky-500 hover:text-slate-950 text-sky-400 font-bold py-2.5 px-4 rounded-xl border border-slate-800 text-xs transition-all flex items-center justify-center gap-2">
-                    Accedi al Laboratorio <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Card Modulo 3 (In arrivo / Nuovo) -->
+            <!-- 1. Storia Antica -->
             <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-amber-500/50 transition-all flex flex-col justify-between group">
                 <div class="space-y-3">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-crown"></i>
+                        <i class="fa-solid fa-monument"></i>
                     </div>
-                    <span class="text-[10px] uppercase font-bold tracking-wider text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded-md border border-amber-800">Modulo 3</span>
-                    <h3 class="font-bold text-lg text-slate-100">I Franchi e Carlo Magno</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Dai Merovingi al Sacro Romano Impero, la rinascita carolingia e l'organizzazione feudale.</p>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded-md border border-amber-800">Dalle Origini al 476 d.C.</span>
+                    <h3 class="font-bold text-xl text-slate-100 font-cinzel">Storia Antica</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Prime civiltà fluviali, Grecia classica, periodo ellenistico e l'Impero Romano.</p>
                 </div>
-                <a href="franchi.html" class="mt-4 w-full bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-bold py-2.5 px-4 rounded-xl border border-slate-800 text-xs transition-all flex items-center justify-center gap-2">
-                    Accedi al Laboratorio <i class="fa-solid fa-arrow-right"></i>
+                <a href="storia-antica.html" class="mt-4 w-full bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-bold py-2.5 px-4 rounded-xl border border-slate-800 text-xs transition-all flex items-center justify-center gap-2">
+                    Esplora la Sezione <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- 2. Storia Medievale -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-emerald-500/50 transition-all flex flex-col justify-between group border-emerald-500/30">
+                <div class="space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-[#10b981] fa-shield-halved"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-md border border-emerald-800">Dal 476 d.C. al 1492 d.C.</span>
+                    <h3 class="font-bold text-xl text-slate-100 font-cinzel">Storia Medievale</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Regni romano-barbarici, espansione islamica, Feudalesimo, Sacro Romano Impero e Comuni.</p>
+                </div>
+                <a href="storia-medievale.html" class="mt-4 w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold py-2.5 px-4 rounded-xl border border-emerald-500 text-xs transition-all flex items-center justify-center gap-2">
+                    Esplora i Laboratori (3 Moduli Attivi) <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- 3. Storia Moderna -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-sky-500/50 transition-all flex flex-col justify-between group">
+                <div class="space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-sky-400 bg-sky-950/60 px-2.5 py-1 rounded-md border border-sky-800">Dal 1492 al 1789</span>
+                    <h3 class="font-bold text-xl text-slate-100 font-cinzel">Storia Moderna</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Scoperte geografiche, Riforma protestante, Assolutismo monarchico e Illuminismo.</p>
+                </div>
+                <a href="storia-moderna.html" class="mt-4 w-full bg-slate-900 hover:bg-sky-500 hover:text-slate-950 text-sky-400 font-bold py-2.5 px-4 rounded-xl border border-slate-800 text-xs transition-all flex items-center justify-center gap-2">
+                    Esplora la Sezione <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- 4. Storia Contemporanea -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-purple-500/50 transition-all flex flex-col justify-between group">
+                <div class="space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-industry"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-purple-400 bg-purple-950/60 px-2.5 py-1 rounded-md border border-purple-800">Dal 1789 ad Oggi</span>
+                    <h3 class="font-bold text-xl text-slate-100 font-cinzel">Storia Contemporanea</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Rivoluzione francese e industriale, i due conflitti mondiali, Guerra Fredda e Mondo globale.</p>
+                </div>
+                <a href="storia-contemporanea.html" class="mt-4 w-full bg-slate-900 hover:bg-purple-500 hover:text-slate-950 text-purple-400 font-bold py-2.5 px-4 rounded-xl border border-slate-800 text-xs transition-all flex items-center justify-center gap-2">
+                    Esplora la Sezione <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
 
@@ -93,7 +108,7 @@
     </main>
 
     <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-        Piattaforma Didattica Interattiva • Materiali per la Didattica Digitale
+        Portale Didattico Interattivo di Storia • Materiali Didattici
     </footer>
 
 </body>
