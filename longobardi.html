@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piattaforma Didattica: I Longobardi in Italia</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            450: '#10b981',
+                        },
+                        medieval: {
+                            dark: '#080d16',
+                            card: '#111927',
+                            border: '#1f2a3e'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #080d16;
+            color: #f1f5f9;
+        }
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+        .tab-btn.active {
+            background-color: #059669;
+            color: #ffffff;
+            border-color: #34d399;
+            box-shadow: 0 4px 20px -2px rgba(5, 150, 105, 0.5);
+        }
+        .glass-card {
+            background: linear-gradient(135deg, rgba(17, 25, 39, 0.85), rgba(10, 15, 26, 0.95));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .badge-glow {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-certificate, #printable-certificate * {
+                visibility: visible;
+            }
+            #printable-certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-slate-950">
+
+    <!-- Top Header Bar -->
+    <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- Branding -->
+            <div class="flex items-center space-x-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-slate-950 shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-shield-halved text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-cinzel text-lg sm:text-xl font-bold tracking-wider text-emerald-400">HISTORIA DIGITALE</h1>
+                    <p class="text-xs text-slate-400 font-medium">I Longobardi in Italia • Dalla Migrazione alla Caduta del Regno</p>
+                </div>
+            </div>
+
+            <!-- Student Profile & XP Status -->
+            <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+                <div class="relative flex items-center">
+                    <i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+                    <input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" 
+                        oninput="updateStudentName(this.value)"
+                        class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-all w-40 sm:w-48">
+                </div>
+
+                <button onclick="toggleAudio()" id="sound-btn" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-emerald-400 transition-all" title="Attiva/Disattiva Audio">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+
+                <div class="flex items-center space-x-3 bg-slate-900 border border-emerald-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+                    <div class="text-right">
+                        <span class="text-[10px] uppercase tracking-wider text-emerald-400/80 block font-bold">Punti XP</span>
+                        <span id="global-score-text" class="text-sm font-extrabold text-emerald-400">0 / 100</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+            <button onclick="switchTab('tab-studio')" class="tab-btn active px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 border border-transparent">
+                <i class="fa-solid fa-map text-emerald-400"></i> 0. Quadro Storico Completo
+            </button>
+            <button onclick="switchTab('tab-mcq')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz Multiplo (10 Q)
+            </button>
+            <button onclick="switchTab('tab-tf')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. Vero o Falso (8 Q)
+            </button>
+            <button onclick="switchTab('tab-timeline')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-timeline text-purple-400"></i> 3. Cronologia (8 Eventi)
+            </button>
+            <button onclick="switchTab('tab-matching')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-diagram-project text-rose-400"></i> 4. Concetti (8 Abbinamenti)
+            </button>
+            <button onclick="switchTab('tab-cloze')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-pen-nib text-amber-400"></i> 5. Testo Guidato (10 Lacune)
+            </button>
+            <button onclick="switchTab('tab-report')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-certificate text-yellow-400"></i> Certificato
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+        <!-- ================= TAB 0: MAPPA & RIPASSO COMPLETO ================= -->
+        <section id="tab-studio" class="tab-content space-y-8">
+            
+            <!-- Banner Intro -->
+            <div class="glass-card p-6 sm:p-8 rounded-2xl border-emerald-500/20 relative overflow-hidden">
+                <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-emerald-500/10 to-transparent pointer-events-none hidden md:block"></div>
+                <div class="max-w-3xl space-y-3">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                        <i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico Integrato • Storia Medievale
+                    </span>
+                    <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400">La Gens Langobardorum in Italia</h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Dalla migrazione della <em>gens Langobardorum</em> e l'ingresso in Italia nel 568/569 d.C. guidati da Alboino, attraverso la codificazione dell'Editto di Rotari, la conversione al Cattolicesimo, la Donazione di Sutri, fino alla caduta per mano di Carlo Magno e alla secolare sopravvivenza dei ducati meridionali.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Detailed Grid 6 Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-emerald-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-person-walking-luggage"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-100">1. L'Invasione del 568/569 d.C. e la Bipartizione</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Dopo una lunga migrazione (dalla Russia alla Scandinavia, Germania e Pannonia), i Longobardi guidati da <strong>re Alboino</strong> valicano le Alpi Giulie ed entrano dal Friuli. Occupano il Nord Italia e la Toscana, espandendosi anche al Centro-Sud con i ducati autonomi di <strong>Spoleto e Benevento</strong>. Questo segna la fine dell'unità politica dell'Italia romano-ostrogota e l'inizio della bipartizione tra <em>Langobardia</em> e <em>Romania bizantina</em>.
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-emerald-300">
+                        <i class="fa-solid fa-key mr-1"></i> <strong>Assenza di resistenza:</strong> I Bizantini non opposero una forte resistenza armata, poiché minacciati a oriente da Avari e Persiani. Il vero limite longobardo fu l'incapacità di dominare i mari.
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-sky-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-100">2. Struttura Sociale: Farae, Arimanni e Aldii</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        La società è organizzata in <strong>Farae</strong> (gruppi di famiglie unite da vincoli di sangue e funzioni militari). I livelli sociali comprendono:
+                        <br>• <strong>Re:</strong> Capo teorico (capitale a Pavia, *Palatium* e lancia come simbolo).
+                        <br>• <strong>Duchi:</strong> Capi militari delle farae, giudici d'ampia autonomia.
+                        <br>• <strong>Arimanni:</strong> Uomini liberi combattenti.
+                        <br>• <strong>Aldii e Servi:</strong> Semiliberi legati a un patrono e servi privi di diritti. Le donne vivevano sotto la tutela (*mundio*) maschile.
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-sky-300">
+                        <i class="fa-solid fa-building-user mr-1"></i> <strong>Gastaldi vs Duchi:</strong> I Gastaldi erano gli "occhi del re", ufficiali regi incaricati di amministrare le *curtes regis* e contrastare lo strapotere dei duchi.
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-purple-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-church"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-100">3. Religione e Integrazione: Teodolinda e Agilulfo</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Inizialmente a maggioranza ariana o pagana, la corte inizia il cammino di conversione grazie alla regina bavarese <strong>Teodolinda</strong> (cattolica), sposa dei re Autari e poi Agilulfo, e al dialogo con Papa Gregorio Magno. Agilulfo assume il titolo significativo di <em>rex totius Italiae</em>. Nel <strong>653 d.C.</strong> il Cattolicesimo diventa religione ufficiale, superando l'ultima barriera etnica con la popolazione romana.
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-purple-300">
+                        <i class="fa-solid fa-handshake mr-1"></i> <strong>Fusione Etnica:</strong> La conversione eliminò la separazione tra l'élite guerriera germanica e i romani, dando vita a una nuova società integrata.
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-amber-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-book-journal-whills"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-100">4. L'Editto di Rotari (643 d.C.) e la Giustizia</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Nel <strong>643 d.C.</strong> il re Rotari promulga la prima codificazione scritta delle leggi longobarde (in latino). L'Editto persegue l'obiettivo di rafforzare il potere regio e sostituire la <strong>faida</strong> (la vendetta privata di sangue) con il <strong>guidrigildo</strong>: un sistema di compensazioni monetarie proporzionale al valore sociale del danneggiato (es. 150 solidi per un arimanno, 300 per un gasindio regio).
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-amber-300">
+                        <i class="fa-solid fa-scale-unbalanced-flip mr-1"></i> <strong>Pace Sociale:</strong> Il guidrigildo impediva il perpetuarsi delle guerre tra clan familiari (*farae*).
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-rose-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-landmark-flag"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-100">5. La Donazione di Sutri (728 d.C.) e i Rapporti col Papa</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        I rapporti con la Chiesa oscillarono tra intesa e scontro. Nel <strong>728 d.C.</strong> re Liutprando cede a Papa Gregorio II il castello di Sutri nel Lazio: questa <strong>Donazione di Sutri</strong> rappresenta storicamente il primo nucleo del potere temporale del Papato (Stato della Chiesa). Quando nel 751 Astolfo conquista Ravenna, il Papa allarmato chiede l'intervento dei Franchi.
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-rose-300">
+                        <i class="fa-solid fa-chess-rook mr-1"></i> <strong>Evoluzione Geopolitica:</strong> Il tentativo longobardo di unificare la penisola spinse Roma a legarsi definitivamente alla monarchia carolingia.
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-teal-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-100">6. La Caduta, la Longobardia Minore e la Lingua</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Nel <strong>774 d.C.</strong> Carlo Magno sconfigge il re Desiderio e conquista Pavia. Tuttavia, la presenza longobarda sopravvive al Centro-Sud per altri tre secoli con i principati di <strong>Benevento, Salerno e Capua/Amalfi</strong>, scomparendo solo con i Normanni nell'XI secolo. Inoltre, l'eredità longobarda sopravvive oggi nel lessico italiano.
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-teal-300">
+                        <i class="fa-solid fa-comments mr-1"></i> <strong>Parole Longobarde:</strong> *Guerra, faida, zuffa, tregua, spaccare, arraffare, guancia, schiena, nocche, panca, scaffale, roba, palla, tanfo*.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Start Exercises CTA -->
+            <div class="text-center pt-4">
+                <button onclick="switchTab('tab-mcq')" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-bold px-8 py-3.5 rounded-xl transition-all shadow-xl shadow-emerald-500/20 inline-flex items-center gap-3 text-sm sm:text-base">
+                    <span>Inizia il Test di Valutazione sui Longobardi</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 1: QUIZ A SCELTA MULTIPLA (10 DOMANDE) ================= -->
+        <section id="tab-mcq" class="tab-content hidden space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 gap-2">
+                <div>
+                    <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo Specialistico</h2>
+                    <p class="text-xs sm:text-sm text-slate-400">10 quesiti basati sull'analisi della storia e delle strutture istituzionali longobarde.</p>
+                </div>
+                <div class="text-xs font-semibold bg-sky-950 text-sky-300 px-3 py-1.5 rounded-lg border border-sky-800/80">
+                    Valore: 30 Punti XP
+                </div>
+            </div>
+
+            <div id="mcq-container" class="space-y-6">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: VERO O FALSO (8 DOMANDE) ================= -->
+        <section id="tab-tf" class="tab-content hidden space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 gap-2">
+                <div>
+                    <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso Motivato</h2>
+                    <p class="text-xs sm:text-sm text-slate-400">Analisi critica delle affermazioni storiche con spiegazioni puntuali.</p>
+                </div>
+                <div class="text-xs font-semibold bg-emerald-950 text-emerald-300 px-3 py-1.5 rounded-lg border border-emerald-800/80">
+                    Valore: 20 Punti XP
+                </div>
+            </div>
+
+            <div id="tf-container" class="space-y-4">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: LINEA DEL TEMPO (8 EVENTI) ================= -->
+        <section id="tab-timeline" class="tab-content hidden space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400">Esercizio 3: Riordino Cronologico Avanzato</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Disponi gli 8 momenti chiave in ordine dal più antico (in alto) al più recente (in basso).</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl space-y-6">
+                <div id="timeline-list" class="space-y-3">
+                    <!-- Injected via JS -->
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-slate-800">
+                    <button onclick="checkTimeline()" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-purple-600/20 text-xs sm:text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check-double"></i> Verifica Sequenza
+                    </button>
+                    <div id="timeline-feedback" class="text-xs sm:text-sm font-semibold"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: ABBINAMENTO CONCETTI (8 COPPIE) ================= -->
+        <section id="tab-matching" class="tab-content hidden space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400">Esercizio 4: Abbinamento Lessico e Istituzioni</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Seleziona un termine a sinistra e collegalo con la corretta definizione a destra.</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-3">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-2">
+                            <i class="fa-solid fa-list-ul"></i> Termini Longobardi
+                        </h3>
+                        <div id="matching-terms" class="space-y-2.5">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-book"></i> Definizioni Storiografiche
+                        </h3>
+                        <div id="matching-defs" class="space-y-2.5">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="matching-feedback" class="text-xs sm:text-sm font-semibold pt-2 min-h-[24px]"></div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: COMPLETA IL TESTO (10 LACUNE) ================= -->
+        <section id="tab-cloze" class="tab-content hidden space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 5: Cloze Test Storiografico Integrale</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Seleziona la parola corretta in ciascuno dei 10 punti del testo per completare la sintesi storica.</p>
+            </div>
+
+            <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-6">
+                <div class="p-5 sm:p-6 bg-slate-900/90 rounded-xl border border-slate-800/80 leading-loose text-sm sm:text-base text-slate-200 space-y-4">
+                    <p>
+                        Nel 
+                        <select id="cloze-1" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="568/569 d.C.">568/569 d.C.</option>
+                            <option value="496 d.C.">496 d.C.</option>
+                            <option value="774 d.C.">774 d.C.</option>
+                        </select>, 
+                        la <em>gens Langobardorum</em> guidata dal re 
+                        <select id="cloze-2" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Alboino">Alboino</option>
+                            <option value="Rotari">Rotari</option>
+                            <option value="Liutprando">Liutprando</option>
+                        </select>
+                        valicò le Alpi Giulie ed entrò in Italia, stabilendo la propria capitale a 
+                        <select id="cloze-3" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Pavia">Pavia</option>
+                            <option value="Ravenna">Ravenna</option>
+                            <option value="Spoleto">Spoleto</option>
+                        </select>.
+                    </p>
+                    <p>
+                        Il processo di integrazione religiosa fu avviato dalla regina cattolica 
+                        <select id="cloze-4" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Teodolinda">Teodolinda</option>
+                            <option value="Galsuinda">Galsuinda</option>
+                            <option value="Brunilde">Brunilde</option>
+                        </select>
+                        e culminò nel 
+                        <select id="cloze-5" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="653 d.C.">653 d.C.</option>
+                            <option value="800 d.C.">800 d.C.</option>
+                            <option value="732 d.C.">732 d.C.</option>
+                        </select>
+                        quando il cattolicesimo divenne la religione ufficiale della gens.
+                    </p>
+                    <p>
+                        La struttura sociale era basata sulle 
+                        <select id="cloze-6" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Farae">Farae</option>
+                            <option value="Curtes">Curtes</option>
+                            <option value="Contee">Contee</option>
+                        </select>
+                        (clan familiari armati). Nel 643, per limitare la vendetta privata (faida) e rafforzare la monarchia, fu introdotto il 
+                        <select id="cloze-7" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Guidrigildo">Guidrigildo</option>
+                            <option value="Mundio">Mundio</option>
+                            <option value="Corvée">Corvée</option>
+                        </select>
+                        all'interno dell'
+                        <select id="cloze-8" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Editto di Rotari">Editto di Rotari</option>
+                            <option value="Capitolare di Quierzy">Capitolare di Quierzy</option>
+                            <option value="Trattato di Verdun">Trattato di Verdun</option>
+                        </select>.
+                    </p>
+                    <p>
+                        Nel 728 d.C., con la Donazione di 
+                        <select id="cloze-9" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Sutri">Sutri</option>
+                            <option value="Poitiers">Poitiers</option>
+                            <option value="Aquisgrana">Aquisgrana</option>
+                        </select>, 
+                        nacque il primo nucleo dello Stato della Chiesa. Infine, nel 774 d.C. il re dei Franchi 
+                        <select id="cloze-10" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold focus:outline-none focus:border-emerald-400 text-xs sm:text-sm cursor-pointer">
+                            <option value="">[seleziona]</option>
+                            <option value="Carlo Magno">Carlo Magno</option>
+                            <option value="Pipino il Breve">Pipino il Breve</option>
+                            <option value="Clodoveo">Clodoveo</option>
+                        </select>
+                        sconfisse Desiderio mettendo fine al Regno di Pavia.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-slate-800">
+                    <button onclick="checkCloze()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-xs sm:text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check"></i> Verifica Risposte Testo
+                    </button>
+                    <div id="cloze-feedback" class="text-xs sm:text-sm font-semibold"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 6: CERTIFICATO & REPORT ================= -->
+        <section id="tab-report" class="tab-content hidden space-y-6">
+            
+            <div class="glass-card p-6 sm:p-10 rounded-2xl text-center space-y-6 relative overflow-hidden">
+                <div class="w-20 h-20 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-4xl shadow-xl shadow-emerald-500/10">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+
+                <div>
+                    <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400">Valutazione Globale delle Competenze</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Resoconto dettagliato del percorso didattico sui Longobardi</p>
+                </div>
+
+                <!-- Score Progress Card -->
+                <div class="max-w-md mx-auto bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="text-4xl font-black text-emerald-400 tracking-tight" id="report-score">0 / 100 XP</div>
+                    
+                    <div class="h-3 w-full bg-slate-800 rounded-full overflow-hidden p-0.5">
+                        <div id="report-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 via-sky-400 to-amber-400 rounded-full w-0 transition-all duration-700"></div>
+                    </div>
+                    
+                    <div id="report-badge" class="font-cinzel text-lg font-bold text-slate-200">Qualifica in elaborazione...</div>
+                    <p id="report-desc" class="text-xs text-slate-400 leading-relaxed"></p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4 pt-2">
+                    <button onclick="window.print()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-xs sm:text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-print"></i> Stampa o Salva Certificato (PDF)
+                    </button>
+                    <button onclick="resetAll()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-2.5 rounded-xl transition-all border border-slate-700 text-xs sm:text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> Ricomincia Esercizi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Certificate Template -->
+            <div id="printable-certificate" class="hidden print:block glass-card bg-slate-950 p-8 rounded-3xl border-4 border-emerald-500/40 text-center space-y-6">
+                <div class="border-2 border-dashed border-emerald-500/30 p-8 rounded-2xl space-y-6">
+                    <div class="font-cinzel text-emerald-400 text-3xl font-black tracking-widest uppercase">Certificato di Competenza Storica</div>
+                    <p class="text-slate-300 text-sm">Si attesta che lo studente / la studentessa:</p>
+                    <div id="cert-student-name" class="font-cinzel text-2xl font-bold text-white underline decoration-emerald-500 decoration-2">Studente</div>
+                    <p class="text-slate-300 text-sm max-w-lg mx-auto leading-relaxed">
+                        ha completato il percorso didattico dedicato all'argomento:
+                        <br><strong class="text-emerald-400">"I Longobardi in Italia: dall'invasione del 568 d.C. all'Editto di Rotari, la conversione e l'eredità storica"</strong>
+                    </p>
+                    <div class="flex justify-around items-center pt-6 border-t border-slate-800 text-xs text-slate-400">
+                        <div>
+                            <span>Punteggio Conseguito:</span>
+                            <div id="cert-score" class="font-bold text-emerald-400 text-base">0 / 100 XP</div>
+                        </div>
+                        <div>
+                            <span>Livello Raggiunto:</span>
+                            <div id="cert-title" class="font-bold text-sky-400 text-base">In corso</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <span>Modulo Didattico Interattivo • Storia Medievale</span>
+            <span class="text-slate-600">Basato sulla documentazione storiografica "L'arrivo e il dominio dei Longobardi"</span>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const state = {
+            studentName: "Studente",
+            audioEnabled: true,
+            mcqAnswers: {},
+            tfAnswers: {},
+            timelineOrder: [0, 1, 2, 3, 4, 5, 6, 7],
+            matchingPairs: {},
+            clozeScore: 0,
+            selectedTermId: null
+        };
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!state.audioEnabled) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.05);
+                } else if (type === 'correct') {
+                    osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.25);
+                } else if (type === 'error') {
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(164.81, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.25);
+                }
+            } catch (e) { console.log(e); }
+        }
+
+        function toggleAudio() {
+            state.audioEnabled = !state.audioEnabled;
+            const btn = document.getElementById('sound-btn');
+            btn.innerHTML = state.audioEnabled ? 
+                '<i class="fa-solid fa-volume-high text-sm"></i>' : 
+                '<i class="fa-solid fa-volume-xmark text-sm text-rose-400"></i>';
+        }
+
+        function updateStudentName(val) {
+            state.studentName = val.trim() || "Studente";
+            const certName = document.getElementById('cert-student-name');
+            if(certName) certName.innerText = state.studentName;
+        }
+
+        const mcqData = [
+            {
+                id: 1,
+                question: "Quando e da dove entrarono in Italia i Longobardi guidati da re Alboino?",
+                options: [
+                    "Nel 476 d.C. attraversando lo Stretto di Messina dalla Sicilia.",
+                    "Nel 568/569 d.C. valicando le Alpi Giulie dalla Pannonia.",
+                    "Nel 751 d.C. sbarcando a Ravenna dal Mare Adriatico.",
+                    "Nel 800 d.C. valicando il Passo del Gran San Bernardo dalla Gallia."
+                ],
+                correct: 1,
+                explanation: "Nel 568/569 d.C. la gens Langobardorum abbandonò la Pannonia e, sotto la guida di Alboino, valicò le Alpi Giulie entrando dal Friuli."
+            },
+            {
+                id: 2,
+                question: "Quale fu la principale conseguenza geopolitica dell'invasione longobarda sulla penisola italiana?",
+                options: [
+                    "L'immediata unificazione politica di tutta l'Italia sotto un solo re.",
+                    "La cacciata definitiva della Chiesa Cattolica da Roma.",
+                    "Una rottura epocale dell'unità politica con una bipartizione tra Langobardia e Romania bizantina.",
+                    "La trasformazione dell'Italia in una provincia del Califfato Arabo."
+                ],
+                correct: 2,
+                explanation: "L'invasione ruppe l'unità politica romana e ostrogota, dividendo l'Italia tra zone longobarde e zone rimaste sotto il controllo bizantino (Romania)."
+            },
+            {
+                id: 3,
+                question: "Quale ruolo svolse la regina Teodolinda nel contesto culturale e religioso longobardo?",
+                options: [
+                    "Fu la prima sovrana a vietare l'uso della lingua latina nelle leggi.",
+                    "Di fede cattolica, favorì i contatti con Papa Gregorio Magno avviando la conversione del popolo.",
+                    "Costrinse tutti i romani ad abbracciare l'Arianesimo con la forza.",
+                    "Fu la fondatrice della flotta militare navale di Pavia."
+                ],
+                correct: 1,
+                explanation: "La regina bavarese Teodolinda, cattolica, fu fondamentale per il dialogo con la Chiesa e la progressiva conversione, culminata nel 653 d.C."
+            },
+            {
+                id: 4,
+                question: "Che cos'era la 'Fara' all'interno dell'organizzazione sociale dei Longobardi?",
+                options: [
+                    "Una moneta d'oro utilizzata per il commercio con l'Oriente.",
+                    "Un gruppo omogeneo di famiglie legate da vincoli di sangue e con funzioni di unità militare.",
+                    "La residenza privata e fortificata del solo Re a Pavia.",
+                    "Un'imposta fondiaria dovuta dai servi contadini al signore."
+                ],
+                correct: 1,
+                explanation: "Le farae erano le strutture base della società e dell'esercito longobardo, costituite da clan familiari armati."
+            },
+            {
+                id: 5,
+                question: "Qual era la differenza essenziale tra i Duchi e i Gastaldi nell'amministrazione regia?",
+                options: [
+                    "I Duchi erano sacerdoti ariani, mentre i Gastaldi erano giudici romani.",
+                    "I Duchi erano capi con forte autonomia territoriale; i Gastaldi erano ufficiali regi preposti al patrimonio del Re.",
+                    "I Duchi governavano le città marittime, i Gastaldi solo i villaggi di montagna.",
+                    "Non vi era alcuna differenza; erano sinonimi per indicare i mercanti regi."
+                ],
+                correct: 1,
+                explanation: "Mentre i duchi avevano poteri ereditari e autonomi sulle regioni, i gastaldi agivano come rappresentanti diretti del fisco regio e delle curtes regi."
+            },
+            {
+                id: 6,
+                question: "Quale innovazione fondamentale introdusse l'Editto di Rotari nel 643 d.C. per la giustizia?",
+                options: [
+                    "Introdusse la pena di morte automatica per qualunque reato minore.",
+                    "Abolì ogni forma di legge scritta, affidandosi unicamente alla memoria dei vecchi.",
+                    "Sostituì la vendetta privata (faida) con un sistema codificato di compensazioni monetarie (guidrigildo).",
+                    "Impose il diritto romano classico eliminando tutte le usanze germaniche."
+                ],
+                correct: 2,
+                explanation: "L'Editto di Rotari (in latino) sostituì la violenta faida tra clan con il guidrigildo, cioè il risarcimento in denaro tarato sul valore sociale della persona."
+            },
+            {
+                id: 7,
+                question: "Chi erano gli 'Arimanni' nella piramide sociale della gens Langobardorum?",
+                options: [
+                    "Gli uomini liberi tenuti al servizio militare e dotati di pieni diritti politici nell'assemblea.",
+                    "I servi domestici legati al lavoro nei campi senza alcun diritto.",
+                    "I mercanti bizantini che vivevano a Ravenna e Venezia.",
+                    "Gli artigiani semiliberi sottoposti alla tutela del re."
+                ],
+                correct: 0,
+                explanation: "Gli Arimanni costituivano il popolo-esercito: uomini liberi guerrieri che partecipavano alle decisioni dell'assemblea e portavano le armi."
+            },
+            {
+                id: 8,
+                question: "Qual è l'importanza storica della Donazione di Sutri compiuta da re Liutprando nel 728 d.C.?",
+                options: [
+                    "Segnò l'inizio della conquista longobarda della Sicilia.",
+                    "Rappresenta il primo nucleo territoriale del potere temporale del Papato (Stato della Chiesa).",
+                    "Fu il trattato di pace definitivo tra Longobardi e Carlo Magno.",
+                    "Provocò la trasformazione di Roma in una colonia commerciale bizantina."
+                ],
+                correct: 1,
+                explanation: "Cedendo il castello di Sutri al Papa anziché all'imperatore bizantino, Liutprando diede formalmente avvio al dominio temporale pontificio."
+            },
+            {
+                id: 9,
+                question: "Cosa accadde ai dominii longobardi dopo la sconfitta del re Desiderio ad opera di Carlo Magno nel 774 d.C.?",
+                options: [
+                    "Tutti i Longobardi furono espulsi dall'Italia e costretti a tornare in Pannonia.",
+                    "Il regno del Nord cadde, ma i ducati del Centro-Sud (Benevento, Salerno) sopravvissero per altri tre secoli.",
+                    "Il Regno di Pavia fu immediatamente ceduto all'Impero Bizantino.",
+                    "L'Italia fu unificata sotto il governo diretto del Papa."
+                ],
+                correct: 1,
+                explanation: "Sebbene il regno settentrionale fosse caduto sotto i Franchi, la cosiddetta 'Longobardia Minore' al Sud sopravvisse fino all'arrivo dei Normanni nell'XI secolo."
+            },
+            {
+                id: 10,
+                question: "Quale di questi gruppi di parole italiane contiene termini direttamente ereditati dalla lingua longobarda?",
+                options: [
+                    "Acquedotto, filosofo, repubblica, senato.",
+                    "Guerra, faida, zuffa, guancia, schiena, panca, roba.",
+                    "Computer, software, mouse, altoparlante.",
+                    "Sultano, califfo, algebra, ammiraglio."
+                ],
+                correct: 1,
+                explanation: "La lingua longobarda ha lasciato un'impronta duratura nell'italiano con termini legati alla guerra, all'anatomia e all'arredamento domestico."
+            }
+        ];
+
+        const tfData = [
+            {
+                id: 1,
+                text: "I Longobardi riuscirono ad ottenere un dominio completo e totale sull'intera penisola italiana grazie al controllo dei mari.",
+                isTrue: false,
+                explanation: "FALSO. Il loro grande limite fu proprio l'incapacità di controllare i mari, consentendo ai Bizantini di mantenere le coste e le isole."
+            },
+            {
+                id: 2,
+                text: "Il titolo di 'rex totius Italiae' assunto da re Agilulfo rifletteva l'inizio di una lenta fusione e integrazione con la popolazione romana.",
+                isTrue: true,
+                explanation: "VERO. Sostituendo 'rex Langobardorum' con 'rex totius Italiae', si evidenziava la volontà di governare l'intero territorio e i suoi abitanti."
+            },
+            {
+                id: 3,
+                text: "Il 'mundio' indicava la somma di denaro pagata come risarcimento per l'uccisione di un guerriero arimanno.",
+                isTrue: false,
+                explanation: "FALSO. Il mundio era la potestà/tutela giuridica esercitata dagli uomini sulle donne. Il risarcimento monetario per le offese era il guidrigildo."
+            },
+            {
+                id: 4,
+                text: "Nel 653 d.C. il Cattolicesimo divenne la religione ufficiale della gens Langobardorum, eliminando la barriera ideologica con i Romani.",
+                isTrue: true,
+                explanation: "VERO. Il superamento dell'Arianesimo e del Paganesimo permise la completa integrazione etnico-culturale nel corso del VII secolo."
+            },
+            {
+                id: 5,
+                text: "L'Editto di Rotari (643 d.C.) fu scritto in lingua greca per omaggiare l'Imperatore di Costantinopoli.",
+                isTrue: false,
+                explanation: "FALSO. L'Editto fu redatto in LATINO, pur contenendo termini giuridici tecnici d'origine germanica."
+            },
+            {
+                id: 6,
+                text: "I Gastaldi erano ufficiali di nomina regia che amministravano le curtes del Re e ne gestivano il patrimonio fiscale.",
+                isTrue: true,
+                explanation: "VERO. Agivano come contrappeso al potere dei duchi, garantendo gli interessi economici della corona."
+            },
+            {
+                id: 7,
+                text: "Con la conquista franchi di Pavia nel 774 d.C., ogni traccia di ducati longobardi in Italia scomparve immediatamente.",
+                isTrue: false,
+                explanation: "FALSO. I ducati del Sud (Spoleto, Benevento, Salerno) mantennero autonomia e identità per circa tre secoli fino all'arrivo dei Normanni."
+            },
+            {
+                id: 8,
+                text: "Termini quotidiani come 'schiena', 'guancia', 'panca' e 'arraffare' derivano dal patrimonio linguistico longobardo.",
+                isTrue: true,
+                explanation: "VERO. Si tratta di prestiti germanico-longobardi penetrati nel volgare italiano."
+            }
+        ];
+
+        const timelineData = [
+            { id: 0, year: "568/569 d.C.", title: "Invasione di Alboino", desc: "I Longobardi valicano le Alpi Giulie e occupano il Nord Italia e la Toscana." },
+            { id: 1, year: "584-590 d.C.", title: "Regno di Autari e Teodolinda", desc: "La regina cattolica Teodolinda avvia i primi contatti con Papa Gregorio Magno." },
+            { id: 2, year: "591-616 d.C.", title: "Regno di Agilulfo", desc: "Assunzione del titolo 'rex totius Italiae' e avvio dell'integrazione etnica." },
+            { id: 3, year: "643 d.C.", title: "Editto di Rotari", desc: "Prima codificazione scritta delle leggi longobarde e introduzione del guidrigildo." },
+            { id: 4, year: "653 d.C.", title: "Cattolicesimo Ufficiale", desc: "Il cattolicesimo diventa religione ufficiale della gens Langobardorum." },
+            { id: 5, year: "728 d.C.", title: "Donazione di Sutri", desc: "Re Liutprando cede il borgo di Sutri al Papa: nasce il potere temporale della Chiesa." },
+            { id: 6, year: "751 d.C.", title: "Conquista di Ravenna", desc: "Re Astolfo conquista l'Esarcato bizantino; il Papa chiama in aiuto i Franchi." },
+            { id: 7, year: "774 d.C.", title: "Vittoria di Carlo Magno", desc: "Caduta di Pavia e fine del Regno Longobardo del Nord; sopravvivenza al Sud." }
+        ];
+
+        const matchingTerms = [
+            { id: "m1", term: "Fara" },
+            { id: "m2", term: "Guidrigildo" },
+            { id: "m3", term: "Mundio" },
+            { id: "m4", term: "Gastaldo" },
+            { id: "m5", term: "Arimanno" },
+            { id: "m6", term: "Aldio" },
+            { id: "m7", term: "Editto di Rotari" },
+            { id: "m8", term: "Donazione di Sutri" }
+        ];
+
+        const matchingDefs = [
+            { id: "d1", matchId: "m1", text: "Gruppo di famiglie unite da vincoli di sangue che costituiva l'unità sociale e militare base." },
+            { id: "d2", matchId: "m2", text: "Compensazione monetaria calcolata sul valore della persona, introdotta per sostituire la faida." },
+            { id: "d3", matchId: "m3", text: "Potestà di tutela giuridica ed economica esercitata dagli uomini sulle donne." },
+            { id: "d4", matchId: "m4", text: "Funzionario di nomina regia che amministrava i beni fiscali del sovrano e le sue curtes." },
+            { id: "d5", matchId: "m5", text: "Uomo libero tenuto al servizio militare nell'esercito e membro con pieni diritti dell'assemblea." },
+            { id: "d6", matchId: "m6", text: "Uomo semilibero dotato di capacità patrimoniale ma legato alla tutela di un patrono." },
+            { id: "d7", matchId: "m7", text: "Prima raccolta scritta in latino delle leggi e consuetudini longobarde (643 d.C.)." },
+            { id: "d8", matchId: "m8", text: "Cessione di un borgo laziale al Papa da parte di Liutprando nel 728 d.C., nucleo dello Stato Pontificio." }
+        ];
+
+        function shuffle(arr) {
+            let res = arr.slice();
+            for(let i = res.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [res[i], res[j]] = [res[j], res[i]];
+            }
+            return res;
+        }
+
+        function renderMCQ() {
+            const container = document.getElementById('mcq-container');
+            container.innerHTML = '';
+
+            mcqData.forEach((q, qIdx) => {
+                const div = document.createElement('div');
+                div.className = "glass-card p-5 sm:p-6 rounded-2xl space-y-4 border border-slate-800";
+                
+                let opts = q.options.map((opt, oIdx) => `
+                    <button onclick="selectMCQ(${q.id}, ${oIdx})" id="mcq-btn-${q.id}-${oIdx}"
+                        class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-slate-800 transition-all text-xs sm:text-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700">${String.fromCharCode(65 + oIdx)}</span>
+                        <span class="text-slate-200 mt-0.5">${opt}</span>
+                    </button>
+                `).join('');
+
+                div.innerHTML = `
+                    <div class="font-bold text-slate-100 text-sm sm:text-base flex items-start gap-2">
+                        <span class="text-sky-400">${qIdx + 1}.</span>
+                        <span>${q.question}</span>
+                    </div>
+                    <div class="space-y-2.5">${opts}</div>
+                    <div id="mcq-feedback-${q.id}" class="hidden p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed border"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectMCQ(qId, oIdx) {
+            playSound('click');
+            const q = mcqData.find(item => item.id === qId);
+            state.mcqAnswers[qId] = oIdx;
+
+            q.options.forEach((_, idx) => {
+                const btn = document.getElementById(`mcq-btn-${qId}-${idx}`);
+                btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-900/40 text-xs sm:text-sm flex items-start gap-3 opacity-50 pointer-events-none";
+            });
+
+            const selectedBtn = document.getElementById(`mcq-btn-${qId}-${oIdx}`);
+            const feedbackEl = document.getElementById(`mcq-feedback-${qId}`);
+            feedbackEl.classList.remove('hidden');
+
+            if(oIdx === q.correct) {
+                playSound('correct');
+                selectedBtn.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-950/60 text-emerald-200 text-xs sm:text-sm flex items-start gap-3 font-semibold";
+                feedbackEl.className = "p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed border border-emerald-700/60 bg-emerald-950/40 text-emerald-300";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> <strong>Risposta Corretta!</strong> ${q.explanation}`;
+            } else {
+                playSound('error');
+                selectedBtn.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-950/60 text-rose-200 text-xs sm:text-sm flex items-start gap-3 font-semibold";
+                
+                const correctBtn = document.getElementById(`mcq-btn-${qId}-${q.correct}`);
+                correctBtn.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-950/40 text-emerald-200 text-xs sm:text-sm flex items-start gap-3 font-semibold";
+
+                feedbackEl.className = "p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed border border-rose-700/60 bg-rose-950/40 text-rose-300";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-400 mr-1.5"></i> <strong>Risposta Errata.</strong> ${q.explanation}`;
+            }
+
+            updateGlobalScore();
+        }
+
+        function renderTF() {
+            const container = document.getElementById('tf-container');
+            container.innerHTML = '';
+
+            tfData.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = "glass-card p-5 rounded-2xl space-y-3 border border-slate-800";
+                card.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-emerald-950 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 border border-emerald-800 mt-0.5">${idx + 1}</span>
+                        <p class="text-xs sm:text-sm font-medium text-slate-200">${item.text}</p>
+                    </div>
+                    <div class="flex items-center gap-3 pl-9">
+                        <button onclick="answerTF(${item.id}, true)" id="tf-btn-${item.id}-true" class="bg-slate-900 hover:bg-emerald-900/50 text-emerald-300 border border-emerald-700/50 px-4 py-1.5 rounded-lg font-bold text-xs transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-check"></i> VERO
+                        </button>
+                        <button onclick="answerTF(${item.id}, false)" id="tf-btn-${item.id}-false" class="bg-slate-900 hover:bg-rose-900/50 text-rose-300 border border-rose-700/50 px-4 py-1.5 rounded-lg font-bold text-xs transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-xmark"></i> FALSO
+                        </button>
+                    </div>
+                    <div id="tf-feedback-${item.id}" class="hidden pl-9 text-xs sm:text-sm leading-relaxed"></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function answerTF(id, choice) {
+            playSound('click');
+            const item = tfData.find(d => d.id === id);
+            state.tfAnswers[id] = choice;
+
+            const bTrue = document.getElementById(`tf-btn-${id}-true`);
+            const bFalse = document.getElementById(`tf-btn-${id}-false`);
+            const fb = document.getElementById(`tf-feedback-${id}`);
+
+            bTrue.disabled = true; bFalse.disabled = true;
+            bTrue.classList.add('opacity-40'); bFalse.classList.add('opacity-40');
+
+            fb.classList.remove('hidden');
+            if(choice === item.isTrue) {
+                playSound('correct');
+                fb.className = "pl-9 text-xs sm:text-sm text-emerald-300 bg-emerald-950/40 p-3 rounded-xl border border-emerald-800/60";
+                fb.innerHTML = `<i class="fa-solid fa-circle-check mr-1 text-emerald-400"></i> <strong>Esatto!</strong> ${item.explanation}`;
+            } else {
+                playSound('error');
+                fb.className = "pl-9 text-xs sm:text-sm text-rose-300 bg-rose-950/40 p-3 rounded-xl border border-rose-800/60";
+                fb.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1 text-rose-400"></i> <strong>Sbagliato.</strong> ${item.explanation}`;
+            }
+
+            updateGlobalScore();
+        }
+
+        function renderTimeline() {
+            const list = document.getElementById('timeline-list');
+            list.innerHTML = '';
+
+            state.timelineOrder.forEach((dataIdx, currentPos) => {
+                const item = timelineData[dataIdx];
+                const card = document.createElement('div');
+                card.className = "bg-slate-900/90 p-4 rounded-xl border border-slate-800 flex items-center justify-between gap-4 transition-all";
+                card.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-lg bg-purple-950 text-purple-300 font-bold text-xs sm:text-sm flex items-center justify-center border border-purple-800 shrink-0">
+                            ${currentPos + 1}
+                        </span>
+                        <div>
+                            <div class="font-bold text-xs sm:text-sm text-purple-300">${item.title}</div>
+                            <div class="text-[11px] sm:text-xs text-slate-400">${item.desc}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1 shrink-0">
+                        <button onclick="moveTimeline(${currentPos}, -1)" ${currentPos === 0 ? 'disabled class="opacity-20 text-slate-600"' : 'class="text-purple-400 hover:bg-slate-800 p-1.5 rounded"'} title="Sposta su">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </button>
+                        <button onclick="moveTimeline(${currentPos}, 1)" ${currentPos === timelineData.length - 1 ? 'disabled class="opacity-20 text-slate-600"' : 'class="text-purple-400 hover:bg-slate-800 p-1.5 rounded"'} title="Sposta giù">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function moveTimeline(pos, dir) {
+            playSound('click');
+            const target = pos + dir;
+            if(target < 0 || target >= timelineData.length) return;
+
+            const temp = state.timelineOrder[pos];
+            state.timelineOrder[pos] = state.timelineOrder[target];
+            state.timelineOrder[target] = temp;
+
+            renderTimeline();
+        }
+
+        function checkTimeline() {
+            let correct = 0;
+            state.timelineOrder.forEach((dataIdx, currentPos) => {
+                if(dataIdx === currentPos) correct++;
+            });
+
+            const fb = document.getElementById('timeline-feedback');
+            if(correct === timelineData.length) {
+                playSound('correct');
+                fb.className = "text-emerald-400 font-bold";
+                fb.innerHTML = `<i class="fa-solid fa-circle-check"></i> Perfetto! Sequenza cronologica corretta al 100%.`;
+            } else {
+                playSound('error');
+                fb.className = "text-amber-400 font-bold";
+                fb.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Eventi in ordine corretto: ${correct} su ${timelineData.length}.`;
+            }
+
+            updateGlobalScore();
+        }
+
+        let shuffledDefs = [];
+        function initMatching() {
+            shuffledDefs = shuffle(matchingDefs);
+            renderMatching();
+        }
+
+        function renderMatching() {
+            const termsContainer = document.getElementById('matching-terms');
+            const defsContainer = document.getElementById('matching-defs');
+
+            termsContainer.innerHTML = ''; defsContainer.innerHTML = '';
+
+            matchingTerms.forEach(t => {
+                const isPaired = state.matchingPairs[t.id];
+                const isSelected = state.selectedTermId === t.id;
+
+                const btn = document.createElement('button');
+                btn.onclick = () => { playSound('click'); selectTerm(t.id); };
+                btn.className = `w-full text-left p-3 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
+                    isPaired ? 'bg-emerald-950/60 border-emerald-600 text-emerald-300 opacity-60 pointer-events-none' :
+                    isSelected ? 'bg-rose-600 border-rose-400 text-white shadow-lg' :
+                    'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800'
+                }`;
+                btn.innerHTML = `<i class="fa-solid fa-bookmark text-rose-400 mr-2"></i> ${t.term}`;
+                termsContainer.appendChild(btn);
+            });
+
+            shuffledDefs.forEach(d => {
+                const pairedTermId = Object.keys(state.matchingPairs).find(k => state.matchingPairs[k] === d.id);
+                const isPaired = !!pairedTermId;
+
+                const btn = document.createElement('button');
+                btn.onclick = () => { selectDef(d); };
+                btn.className = `w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition-all ${
+                    isPaired ? 'bg-emerald-950/60 border-emerald-600 text-emerald-300 opacity-60 pointer-events-none' :
+                    'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
+                }`;
+                btn.innerHTML = `<i class="fa-solid fa-align-left text-slate-500 mr-2"></i> ${d.text}`;
+                defsContainer.appendChild(btn);
+            });
+        }
+
+        function selectTerm(termId) {
+            state.selectedTermId = termId;
+            renderMatching();
+        }
+
+        function selectDef(defObj) {
+            if(!state.selectedTermId) return;
+
+            const termId = state.selectedTermId;
+            const termObj = matchingTerms.find(t => t.id === termId);
+            const fb = document.getElementById('matching-feedback');
+
+            if(defObj.matchId === termId) {
+                playSound('correct');
+                state.matchingPairs[termId] = defObj.id;
+                state.selectedTermId = null;
+                fb.className = "text-emerald-400 font-bold";
+                fb.innerHTML = `<i class="fa-solid fa-circle-check"></i> Ottimo! Abbinamento corretto per "${termObj.term}".`;
+            } else {
+                playSound('error');
+                fb.className = "text-rose-400 font-bold";
+                fb.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Abbinamento errato per "${termObj.term}". Riprova!`;
+            }
+
+            renderMatching();
+            updateGlobalScore();
+        }
+
+        function checkCloze() {
+            playSound('click');
+            const answers = {
+                1: "568/569 d.C.", 
+                2: "Alboino", 
+                3: "Pavia",
+                4: "Teodolinda", 
+                5: "653 d.C.", 
+                6: "Farae", 
+                7: "Guidrigildo",
+                8: "Editto di Rotari",
+                9: "Sutri",
+                10: "Carlo Magno"
+            };
+
+            let correct = 0;
+            const total = Object.keys(answers).length;
+
+            for(let i = 1; i <= total; i++) {
+                const el = document.getElementById(`cloze-${i}`);
+                if(el.value === answers[i]) {
+                    correct++;
+                    el.className = "bg-emerald-950 text-emerald-300 border-2 border-emerald-500 rounded-lg px-2.5 py-1 mx-1 font-semibold text-xs sm:text-sm";
+                } else {
+                    el.className = "bg-rose-950 text-rose-300 border-2 border-rose-500 rounded-lg px-2.5 py-1 mx-1 font-semibold text-xs sm:text-sm";
+                }
+            }
+
+            state.clozeScore = Math.round((correct / total) * 100);
+
+            const fb = document.getElementById('cloze-feedback');
+            if(correct === total) {
+                playSound('correct');
+                fb.className = "text-emerald-400 font-bold";
+                fb.innerHTML = `<i class="fa-solid fa-circle-check"></i> Eccellente! Testo completato correttamente (${correct}/${total}).`;
+            } else {
+                playSound('error');
+                fb.className = "text-amber-400 font-bold";
+                fb.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Risposte corrette: ${correct} su ${total}. Correggi i campi evidenziati in rosso.`;
+            }
+
+            updateGlobalScore();
+        }
+
+        function updateGlobalScore() {
+            // MCQ: 30 Points (3 pts each)
+            let mcqCorrect = 0;
+            mcqData.forEach(q => { if(state.mcqAnswers[q.id] === q.correct) mcqCorrect++; });
+            const mcqScore = Math.round((mcqCorrect / mcqData.length) * 30);
+
+            // True/False: 20 Points (2.5 pts each)
+            let tfCorrect = 0;
+            tfData.forEach(d => { if(state.tfAnswers[d.id] === d.isTrue) tfCorrect++; });
+            const tfScore = Math.round((tfCorrect / tfData.length) * 20);
+
+            // Timeline: 15 Points
+            let timelineCorrect = 0;
+            state.timelineOrder.forEach((val, idx) => { if(val === idx) timelineCorrect++; });
+            const timelineScore = Math.round((timelineCorrect / timelineData.length) * 15);
+
+            // Matching: 15 Points
+            const matchingCount = Object.keys(state.matchingPairs).length;
+            const matchingScore = Math.round((matchingCount / matchingTerms.length) * 15);
+
+            // Cloze: 20 Points
+            const clozeScorePoints = Math.round((state.clozeScore / 100) * 20);
+
+            const total = mcqScore + tfScore + timelineScore + matchingScore + clozeScorePoints;
+
+            document.getElementById('global-score-text').innerText = `${total} / 100`;
+
+            return total;
+        }
+
+        function updateReport() {
+            const score = updateGlobalScore();
+            document.getElementById('report-score').innerText = `${score} / 100 XP`;
+            document.getElementById('report-progress-bar').style.width = `${score}%`;
+
+            const badgeEl = document.getElementById('report-badge');
+            const descEl = document.getElementById('report-desc');
+            
+            const certScore = document.getElementById('cert-score');
+            const certTitle = document.getElementById('cert-title');
+            if(certScore) certScore.innerText = `${score} / 100 XP`;
+
+            let titleText = "Novizio Guerriero";
+
+            if(score >= 90) {
+                titleText = "Rex totius Italiae (Eccellente)";
+                badgeEl.innerText = titleText;
+                badgeEl.className = "font-cinzel text-xl font-bold text-emerald-400";
+                descEl.innerText = "Padronanza specialistica della storia, delle istituzioni e dell'eredità culturale dei Longobardi in Italia.";
+            } else if(score >= 75) {
+                titleText = "Dux et Judex (Buono)";
+                badgeEl.innerText = titleText;
+                badgeEl.className = "font-cinzel text-xl font-bold text-sky-400";
+                descEl.innerText = "Ottima preparazione generale. Si consiglia un piccolo ripasso sulle istituzioni dell'Editto di Rotari e sulla cronologia.";
+            } else if(score >= 55) {
+                titleText = "Gastaldo Regio (Sufficiente)";
+                badgeEl.innerText = titleText;
+                badgeEl.className = "font-cinzel text-xl font-bold text-purple-400";
+                descEl.innerText = "Conoscenze di base acquisite. Sono presenti alcune imprecisioni nel lessico istituzionale e negli abbinamenti.";
+            } else {
+                titleText = "Novizio Guerriero (Insufficiente)";
+                badgeEl.innerText = titleText;
+                badgeEl.className = "font-cinzel text-xl font-bold text-rose-400";
+                descEl.innerText = "Punteggio basso. Rileggi attentamente le schede del Quadro Storico Completo e ripeti gli esercizi.";
+            }
+
+            if(certTitle) certTitle.innerText = titleText;
+        }
+
+        function switchTab(tabId) {
+            playSound('click');
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-300');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if(activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('text-slate-300');
+            }
+
+            if(tabId === 'tab-report') updateReport();
+        }
+
+        function resetAll() {
+            playSound('click');
+            state.mcqAnswers = {};
+            state.tfAnswers = {};
+            state.timelineOrder = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+            state.matchingPairs = {};
+            state.clozeScore = 0;
+            state.selectedTermId = null;
+
+            renderMCQ(); renderTF(); renderTimeline(); initMatching();
+
+            for(let i=1; i<=10; i++) {
+                const el = document.getElementById(`cloze-${i}`);
+                if(el) {
+                    el.value = "";
+                    el.className = "bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-2.5 py-1 mx-1 font-semibold text-xs sm:text-sm cursor-pointer";
+                }
+            }
+
+            document.getElementById('cloze-feedback').innerHTML = '';
+            document.getElementById('timeline-feedback').innerHTML = '';
+            document.getElementById('matching-feedback').innerHTML = '';
+
+            updateGlobalScore();
+            switchTab('tab-studio');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            state.timelineOrder = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+            renderMCQ();
+            renderTF();
+            renderTimeline();
+            initMatching();
+            updateGlobalScore();
+        });
+    </script>
+</body>
+</html>
