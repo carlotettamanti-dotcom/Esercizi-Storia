@@ -177,35 +177,35 @@
             <div id="tf-container" class="space-y-4"></div>
         </section>
 
-        <!-- TAB 3: MAPPA INTERATTIVA -->
+       <!-- TAB 3: MAPPA INTERATTIVA -->
         <section id="tab-map" class="tab-content hidden space-y-6">
             <div class="border-b border-slate-800 pb-4">
-                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Cartina Geografica della Penisola Longobarda</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Osserva la posizione dei numeri sulla penisola italiana e identifica le città e i ducati fondanti della dominazione longobarda.</p>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Cartina Geografica dell'Italia Longobarda</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Osserva i punti numerati sulla vera cartina dell'Italia medievale e identifica i centri nevralgici del regno longobardo.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Cartina Mappa Canvas/Vettoriale -->
-                <div class="lg:col-span-7 glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[360px] bg-slate-950 border border-slate-800">
-                    <div class="w-full relative rounded-xl overflow-hidden bg-slate-900/90 border border-slate-800 shadow-inner" style="aspect-ratio: 16/10;">
-                        <svg class="w-full h-full object-cover opacity-60" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="800" height="500" fill="#0b172a"/>
-                            <path d="M280,120 L480,120 L520,220 L450,420 L380,450 L340,320 L280,220 Z" fill="#1e293b" stroke="#334155"/>
-                        </svg>
+                <!-- Cartina Geografica Reale con Pin Overlaid -->
+                <div class="lg:col-span-7 glass-card p-3 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center bg-slate-950 border border-slate-800">
+                    <div class="w-full relative rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+                        <!-- Immagine Mappa Storica Reale dell'Italia Longobarda -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Italy_568_572-en.svg/1200px-Italy_568_572-en.svg.png" 
+                             alt="Mappa dell'Italia Longobarda" 
+                             class="w-full h-auto object-cover filter brightness-90 contrast-105">
 
                         <!-- Pin 1: Cividale del Friuli -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 22%; left: 52%;" title="Punto 1">1</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 14%; left: 62%;" title="Punto 1">1</div>
                         <!-- Pin 2: Pavia -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 28%; left: 40%;" title="Punto 2">2</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 22%; left: 32%;" title="Punto 2">2</div>
                         <!-- Pin 3: Sutri / Roma -->
                         <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-rose-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 55%; left: 45%;" title="Punto 3">3</div>
                         <!-- Pin 4: Benevento -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 68%; left: 54%;" title="Punto 4">4</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 68%; left: 66%;" title="Punto 4">4</div>
                         <!-- Pin 5: Spoleto -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 50%; left: 48%;" title="Punto 5">5</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 48%; left: 51%;" title="Punto 5">5</div>
                     </div>
                     <div class="text-[11px] text-slate-400 mt-2 text-center">
-                        <i class="fa-solid fa-circle-info mr-1"></i> Mappa dell'Italia Longobarda: associa i punti numerati ai centri del regno e dei ducati.
+                        <i class="fa-solid fa-circle-info mr-1"></i> Mappa dell'Italia tra Langobardia Maior, Langobardia Minor e dominii bizantini.
                     </div>
                 </div>
 
@@ -217,28 +217,6 @@
                     </button>
                     <div id="map-feedback" class="text-xs font-semibold"></div>
                 </div>
-            </div>
-        </section>
-
-        <!-- TAB 4: TIMELINE -->
-        <section id="tab-timeline" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400">Esercizio 4: Riordino Cronologico Avanzato</h2>
-            <div class="glass-card p-6 rounded-2xl space-y-6">
-                <div id="timeline-list" class="space-y-3"></div>
-                <button onclick="checkTimeline()" id="btn-check-timeline" class="bg-purple-600 text-white font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-check-double"></i> Verifica Sequenza</button>
-                <div id="timeline-feedback" class="text-xs sm:text-sm font-semibold"></div>
-            </div>
-        </section>
-
-        <!-- TAB 5: MATCHING -->
-        <section id="tab-matching" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400">Esercizio 5: Abbinamento Lessico e Istituzioni</h2>
-            <div class="glass-card p-6 rounded-2xl space-y-6">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div id="matching-terms" class="space-y-2.5"></div>
-                    <div id="matching-defs" class="space-y-2.5"></div>
-                </div>
-                <div id="matching-feedback" class="text-xs sm:text-sm font-semibold pt-2"></div>
             </div>
         </section>
 

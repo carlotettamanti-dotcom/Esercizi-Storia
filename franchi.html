@@ -177,36 +177,35 @@
             <div id="tf-container" class="space-y-4"></div>
         </section>
 
-        <!-- TAB 3: MAPPA INTERATTIVA -->
+      <!-- TAB 3: MAPPA INTERATTIVA -->
         <section id="tab-map" class="tab-content hidden space-y-6">
             <div class="border-b border-slate-800 pb-4">
                 <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 3: Cartina Geografica dell'Impero Carolingio</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Osserva i punti numerati sulla cartina dell'Impero di Carlo Magno e associa ogni numero alla località storica corretta.</p>
+                <p class="text-xs sm:text-sm text-slate-400">Osserva i punti numerati sulla cartina storica dell'Impero di Carlo Magno e associa ogni numero alla località corretta.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Cartina Mappa Canvas/Vettoriale -->
-                <div class="lg:col-span-7 glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[360px] bg-slate-950 border border-slate-800">
-                    <div class="w-full relative rounded-xl overflow-hidden bg-slate-900/90 border border-slate-800 shadow-inner" style="aspect-ratio: 16/10;">
-                        <svg class="w-full h-full object-cover opacity-60" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="800" height="500" fill="#0b172a"/>
-                            <path d="M120,80 L450,90 L480,280 L350,380 L200,320 L100,220 Z" fill="#1e293b" stroke="#334155"/>
-                            <path d="M300,310 L380,310 L410,480 L320,480 Z" fill="#1e293b" stroke="#334155"/>
-                        </svg>
+                <!-- Cartina Geografica Reale con Pin Overlaid -->
+                <div class="lg:col-span-7 glass-card p-3 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center bg-slate-950 border border-slate-800">
+                    <div class="w-full relative rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+                        <!-- Immagine Mappa Storica Reale -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Frankish_Empire_481_to_814-en.svg/1200px-Frankish_Empire_481_to_814-en.svg.png" 
+                             alt="Mappa dell'Impero Carolingio" 
+                             class="w-full h-auto object-cover filter brightness-90 contrast-105">
 
                         <!-- Pin 1: Aquisgrana -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 25%; left: 42%;" title="Punto 1">1</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 32%; left: 44%;" title="Punto 1">1</div>
                         <!-- Pin 2: Poitiers -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 42%; left: 24%;" title="Punto 2">2</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 52%; left: 24%;" title="Punto 2">2</div>
                         <!-- Pin 3: Roma -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-rose-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 72%; left: 46%;" title="Punto 3">3</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-rose-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 82%; left: 56%;" title="Punto 3">3</div>
                         <!-- Pin 4: Pavia -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 55%; left: 41%;" title="Punto 4">4</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 66%; left: 48%;" title="Punto 4">4</div>
                         <!-- Pin 5: Verdun -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 32%; left: 35%;" title="Punto 5">5</div>
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 40%; left: 38%;" title="Punto 5">5</div>
                     </div>
                     <div class="text-[11px] text-slate-400 mt-2 text-center">
-                        <i class="fa-solid fa-circle-info mr-1"></i> Mappa dell'Europa Carolingia: abbina i punti chiave della geografia carolingia.
+                        <i class="fa-solid fa-circle-info mr-1"></i> Mappa dell'Impero Carolingio: individua le capitali, le battaglie e i trattati.
                     </div>
                 </div>
 
