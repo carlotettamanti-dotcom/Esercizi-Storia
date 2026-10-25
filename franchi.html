@@ -177,35 +177,65 @@
             <div id="tf-container" class="space-y-4"></div>
         </section>
 
-      <!-- TAB 3: MAPPA INTERATTIVA -->
+   <!-- TAB 3: MAPPA INTERATTIVA -->
         <section id="tab-map" class="tab-content hidden space-y-6">
             <div class="border-b border-slate-800 pb-4">
                 <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 3: Cartina Geografica dell'Impero Carolingio</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Osserva i punti numerati sulla cartina storica dell'Impero di Carlo Magno e associa ogni numero alla località corretta.</p>
+                <p class="text-xs sm:text-sm text-slate-400">Osserva i punti numerati sulla cartina geografica dell'Europa occidentale e associa ciascun numero alla località corretta.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Cartina Geografica Reale con Pin Overlaid -->
-                <div class="lg:col-span-7 glass-card p-3 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center bg-slate-950 border border-slate-800">
-                    <div class="w-full relative rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
-                        <!-- Immagine Mappa Storica Reale -->
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Frankish_Empire_481_to_814-en.svg/1200px-Frankish_Empire_481_to_814-en.svg.png" 
-                             alt="Mappa dell'Impero Carolingio" 
-                             class="w-full h-auto object-cover filter brightness-90 contrast-105">
+                <!-- Cartina Geografica Vettoriale dell'Europa -->
+                <div class="lg:col-span-7 glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center bg-slate-950 border border-slate-800 min-h-[420px]">
+                    <div class="w-full h-[380px] relative rounded-xl overflow-hidden bg-[#0a1322] border border-slate-800 shadow-2xl">
+                        
+                        <!-- SVG Europa Occidentale (Francia, Germania, Italia) -->
+                        <svg class="w-full h-full object-contain" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="500" height="500" fill="#080e1a"/>
+                            
+                            <!-- Isole Britanniche -->
+                            <path d="M 100,80 C 130,70 140,110 120,130 C 100,120 90,90 100,80 Z" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
 
-                        <!-- Pin 1: Aquisgrana -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 32%; left: 44%;" title="Punto 1">1</div>
-                        <!-- Pin 2: Poitiers -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 52%; left: 24%;" title="Punto 2">2</div>
-                        <!-- Pin 3: Roma -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-rose-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 82%; left: 56%;" title="Punto 3">3</div>
-                        <!-- Pin 4: Pavia -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 66%; left: 48%;" title="Punto 4">4</div>
-                        <!-- Pin 5: Verdun -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 40%; left: 38%;" title="Punto 5">5</div>
+                            <!-- CONTINENTE EUROPEO (Francia, Germania, Italia, Nord Spagna) -->
+                            <path d="M 80,240 
+                                     C 110,210 130,180 160,160 
+                                     C 190,140 220,130 260,120 
+                                     C 310,110 380,100 440,120 
+                                     C 450,170 420,220 380,240 
+                                     C 360,260 340,290 350,330 
+                                     C 360,370 330,420 300,450 
+                                     C 280,440 270,410 280,380 
+                                     C 270,350 250,320 230,310 
+                                     C 200,320 180,350 140,360 
+                                     C 110,340 100,290 80,240 Z" 
+                                  fill="#181a29" stroke="#f59e0b" stroke-width="2"/>
+
+                            <!-- Penisola Italiana -->
+                            <path d="M 280,310 C 310,320 330,360 350,410 C 330,420 310,380 290,340 Z" fill="#111c2e" stroke="#f59e0b" stroke-width="1.5"/>
+
+                            <text x="140" y="240" fill="#f59e0b" font-size="11" font-family="sans-serif" font-weight="bold" opacity="0.4">REGNO DEI FRANCHI</text>
+                            <text x="310" y="180" fill="#38bdf8" font-size="10" font-family="sans-serif" font-weight="bold" opacity="0.4">SASSONIA</text>
+                        </svg>
+
+                        <!-- PIN POSIZIONATI -->
+                        <!-- Pin 1: Aquisgrana (Nord Europa/Germania) -->
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 28%; left: 48%;" title="Punto 1">1</div>
+                        
+                        <!-- Pin 2: Poitiers (Francia Centro-Ovest) -->
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 48%; left: 28%;" title="Punto 2">2</div>
+                        
+                        <!-- Pin 3: Roma (Italia) -->
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-rose-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 78%; left: 64%;" title="Punto 3">3</div>
+                        
+                        <!-- Pin 4: Pavia (Nord Italia) -->
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 62%; left: 56%;" title="Punto 4">4</div>
+                        
+                        <!-- Pin 5: Verdun (Francia Orientale) -->
+                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 38%; left: 42%;" title="Punto 5">5</div>
                     </div>
-                    <div class="text-[11px] text-slate-400 mt-2 text-center">
-                        <i class="fa-solid fa-circle-info mr-1"></i> Mappa dell'Impero Carolingio: individua le capitali, le battaglie e i trattati.
+                    
+                    <div class="text-[11px] text-slate-400 mt-3 text-center">
+                        <i class="fa-solid fa-map-marked-alt mr-1 text-amber-400"></i> Cartina dell'Impero Carolingio: associa i numeri ai centri dell'Impero.
                     </div>
                 </div>
 
