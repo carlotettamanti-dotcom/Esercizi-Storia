@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio delle Fonti: La Guerra dei Trent'anni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: {
+                colors: { emerald: { 450: '#10b981' } },
+                fontFamily: { cinzel: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+            }}
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080d16; color: #f1f5f9; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .tab-btn.active { background-color: #059669; color: #ffffff; border-color: #34d399; box-shadow: 0 4px 20px -2px rgba(5, 150, 105, 0.5); }
+        .glass-card { background: linear-gradient(135deg, rgba(17, 25, 39, 0.85), rgba(10, 15, 26, 0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .badge-glow { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+        .quote-box { background: rgba(30, 41, 59, 0.6); border-left: 3px solid #f59e0b; padding: 0.75rem 1rem; border-radius: 0.5rem; font-style: italic; font-family: Georgia, serif; color: #fde68a; }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-certificate, #printable-certificate * { visibility: visible; }
+            #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-slate-950">
+
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center space-x-2 text-xs sm:text-sm">
+            <a href="index.html" class="text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-semibold"><i class="fa-solid fa-house"></i> Home Portale</a>
+            <span class="text-slate-600">/</span>
+            <a href="storia-moderna.html" class="text-slate-400 hover:text-emerald-400 transition-colors font-semibold">Storia Moderna</a>
+            <span class="text-slate-600">/</span>
+            <span class="text-emerald-400 font-bold">Laboratorio Fonti: Guerra dei Trent'anni</span>
+        </div>
+        <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+            <div class="relative flex items-center">
+                <i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+                <input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 w-40 sm:w-48">
+            </div>
+            <button onclick="toggleAudio()" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-emerald-400" title="Audio">
+                <i class="fa-solid fa-volume-high text-sm"></i>
+            </button>
+            <div class="flex items-center space-x-3 bg-slate-900 border border-emerald-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+                <div class="text-right">
+                    <span class="text-[10px] uppercase tracking-wider text-emerald-400/80 block font-bold">Punti XP</span>
+                    <span id="global-score-text" class="text-sm font-extrabold text-emerald-400">0 / 100</span>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs"><i class="fa-solid fa-bolt"></i></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+        <button onclick="switchTab('tab-studio')" class="tab-btn active px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent"><i class="fa-solid fa-folder-open text-emerald-400"></i> 0. Dossier</button>
+        <button onclick="switchTab('tab-attr')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-fingerprint text-sky-400"></i> 1. Chi dice cosa</button>
+        <button onclick="switchTab('tab-tf')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. V/F Fonti</button>
+        <button onclick="switchTab('tab-analysis')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-magnifying-glass-chart text-teal-400"></i> 3. Analisi</button>
+        <button onclick="switchTab('tab-compare')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-code-compare text-purple-400"></i> 4. Prospettive</button>
+        <button onclick="switchTab('tab-causes')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-arrow-right-arrow-left text-fuchsia-400"></i> 5. Cause/Effetti</button>
+        <button onclick="switchTab('tab-rhetoric')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-feather-pointed text-orange-400"></i> 6. Retorica</button>
+        <button onclick="switchTab('tab-themes')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-tags text-rose-400"></i> 7. Fonti↔Temi</button>
+        <button onclick="switchTab('tab-cloze')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-pen-nib text-amber-400"></i> 8. Sintesi</button>
+        <button onclick="switchTab('tab-report')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-certificate text-yellow-400"></i> Certificato</button>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+    <!-- TAB 0: STUDIO/DOSSIER -->
+    <section id="tab-studio" class="tab-content space-y-8">
+        <div class="glass-card p-6 sm:p-8 rounded-2xl border-emerald-500/20">
+            <div class="max-w-3xl space-y-3">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <i class="fa-solid fa-folder-open mr-1.5"></i> Laboratorio sulle Fonti Primarie • Storia Moderna
+                </span>
+                <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400">La Guerra dei Trent'anni vista dalle fonti</h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Un percorso di <strong>educazione alle fonti</strong>: trattati, lettere, diari di soldati, cronache contadine, manifesti politici e memorie di statisti. Ogni esercizio richiede di <em>leggere</em>, <em>attribuire</em>, <em>interpretare</em> e <em>comparare</em> i documenti.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-2xl space-y-3 hover:border-emerald-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl"><i class="fa-solid fa-scroll"></i></div>
+                <h3 class="font-bold text-slate-100">Fonti giuridico-politiche</h3>
+                <p class="text-xs text-slate-400">Lettera di Maestà (1609), atti di Unione Protestante e Lega Cattolica, Pace di Praga, Instrumentum Pacis.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl space-y-3 hover:border-amber-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl"><i class="fa-solid fa-quote-left"></i></div>
+                <h3 class="font-bold text-slate-100">Testimonianze dirette</h3>
+                <p class="text-xs text-slate-400">Slavata e l'Apologia boema, Anhalt, Wallenstein, Gustavo Adolfo, Richelieu, Pappenheim, Hagendorf.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl space-y-3 hover:border-rose-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl"><i class="fa-solid fa-book"></i></div>
+                <h3 class="font-bold text-slate-100">Diari "dal basso"</h3>
+                <p class="text-xs text-slate-400">Caspar Preis, Hans Heberle, Martin Bötzinger, Peter Hagendorf, Augustin Güntzer: la guerra vissuta dai civili e dai soldati.</p>
+            </div>
+        </div>
+
+        <div class="text-center pt-4">
+            <button onclick="switchTab('tab-attr')" class="bg-emerald-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-emerald-600">Inizia il Laboratorio ➔</button>
+        </div>
+    </section>
+
+    <!-- TAB 1: ATTRIBUZIONE -->
+    <section id="tab-attr" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Chi ha detto cosa? — Attribuzione di citazioni</h2>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate</span>
+        </div>
+        <div id="attr-container" class="space-y-6"></div>
+    </section>
+
+    <!-- TAB 2: VERO/FALSO -->
+    <section id="tab-tf" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso sulle fonti</h2>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate</span>
+        </div>
+        <div id="tf-container" class="space-y-4"></div>
+    </section>
+
+    <!-- TAB 3: ANALISI -->
+    <section id="tab-analysis" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Analisi approfondita di documenti</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Leggi l'estratto e ragiona sul suo significato storico e sul suo funzionamento argomentativo.</p>
+        </div>
+        <div id="analysis-container" class="space-y-6"></div>
+    </section>
+
+    <!-- TAB 4: PROSPETTIVE CONTRAPPOSTE -->
+    <section id="tab-compare" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400">Esercizio 4: Prospettive contrapposte</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Due fonti sullo stesso evento: leggi entrambe e ragiona su cosa emerge dal confronto.</p>
+        </div>
+        <div id="compare-container" class="space-y-6"></div>
+    </section>
+
+    <!-- TAB 5: CAUSE/EFFETTI -->
+    <section id="tab-causes" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-fuchsia-400">Esercizio 5: Cause ed effetti ricostruiti dalle fonti</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Abbina ogni causa (documentata) all'effetto che essa ha prodotto.</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xs font-bold text-fuchsia-300 uppercase tracking-wider mb-3"><i class="fa-solid fa-bolt mr-1"></i> Cause</h3>
+                    <div id="causes-terms" class="space-y-2.5"></div>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-fuchsia-300 uppercase tracking-wider mb-3"><i class="fa-solid fa-arrow-right mr-1"></i> Effetti</h3>
+                    <div id="causes-defs" class="space-y-2.5"></div>
+                </div>
+            </div>
+            <div id="causes-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+    </section>
+
+    <!-- TAB 6: RETORICA -->
+    <section id="tab-rhetoric" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-orange-400">Esercizio 6: Linguaggio, retorica e intenti delle fonti</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Perché l'autore sceglie quella parola, quel tono, quella metafora? Ogni fonte parla anche attraverso il suo stile.</p>
+        </div>
+        <div id="rhetoric-container" class="space-y-6"></div>
+    </section>
+
+    <!-- TAB 7: FONTI↔TEMI -->
+    <section id="tab-themes" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400">Esercizio 7: Fonti e temi — Abbina ogni documento al tema che illumina</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Ogni fonte risponde a una domanda storica. Clicca prima un documento a sinistra e poi il tema a destra.</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div id="themes-docs" class="space-y-2.5"></div>
+                <div id="themes-defs" class="space-y-2.5"></div>
+            </div>
+            <div id="themes-feedback" class="text-xs sm:text-sm font-semibold pt-2"></div>
+        </div>
+    </section>
+
+    <!-- TAB 8: CLOZE -->
+    <section id="tab-cloze" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 8: Sintesi ragionata dalle fonti</h2>
+            <button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg">
+                <i class="fa-solid fa-rotate mr-1"></i> Cambia Testo
+            </button>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <div id="cloze-body-container"></div>
+            <button onclick="checkCloze()" id="btn-check-cloze" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md">
+                <i class="fa-solid fa-check mr-1.5"></i> Verifica Sintesi
+            </button>
+            <div id="cloze-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+    </section>
+
+    <!-- TAB 9: REPORT -->
+    <section id="tab-report" class="tab-content hidden space-y-6">
+        <div id="printable-certificate" class="glass-card p-8 rounded-2xl text-center space-y-6">
+            <h2 class="font-cinzel text-2xl font-bold text-emerald-400">Valutazione Globale — Laboratorio delle Fonti</h2>
+            <p id="report-student" class="text-sm text-slate-300">Studente: <span class="font-bold text-slate-100">Studente</span></p>
+            <div class="text-4xl font-black text-emerald-400" id="report-score">0 / 100 XP</div>
+            <div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
+            <div class="flex justify-center gap-4">
+                <button onclick="window.print()" class="bg-emerald-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato PDF</button>
+                <button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 space-x-4">
+    <a href="index.html" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-house mr-1"></i> Home Portale</a>
+    <span>•</span>
+    <a href="storia-moderna.html" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-shield-halved mr-1"></i> Storia Moderna</a>
+</footer>
+
+<script>
+    const state = {
+        studentName: "Studente", audioEnabled: true,
+        attrAnswers: {}, tfAnswers: {}, analysisAnswers: {}, compareAnswers: {},
+        causesPairs: {}, rhetoricAnswers: {}, themesPairs: {},
+        clozeScore: 0, activeClozeIndex: 0,
+        activeAttr: [], activeTF: [], activeAnalysis: [], activeRhetoric: []
+    };
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        if (!state.audioEnabled) return;
+        try {
+            const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            if (type === 'click') { osc.frequency.setValueAtTime(400, audioCtx.currentTime); gain.gain.setValueAtTime(0.05, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.05); }
+            else if (type === 'correct') { osc.frequency.setValueAtTime(880, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
+            else if (type === 'error') { osc.frequency.setValueAtTime(220, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
+        } catch(e){}
+    }
+    function toggleAudio() { state.audioEnabled = !state.audioEnabled; }
+    function updateStudentName(val) { state.studentName = val || "Studente"; }
+    function shuffle(arr) { let r = arr.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; }
+
+    /* ================= POOL 1: ATTRIBUZIONE (12, mostra 8) ================= */
+    const attrPool = [
+        { id: 1, quote: "«Nessuno, neppure un contadino, avrebbe potuto essere costretto a convertirsi a un'altra religione con la violenza o con qualche altro espediente»",
+          options: ["La Lettera di Maestà di Rodolfo II (1609)", "L'Apologia dei Ceti Boemi (1618)", "Il Trattato di Bärwalde (1631)", "L'Instrumentum Pacis (1648)"],
+          correct: 0, explanation: "La frase è nella Lettera di Maestà, con cui Rodolfo II garantì ai protestanti boemi piena libertà religiosa contro ogni coercizione." },
+        { id: 2, quote: "«In nome della Santa e Indivisibile Trinità. Amen. Noi, gli Elettori e gli Stati del Sacro Romano Impero... ci uniamo e confederiamo in un'alleanza difensiva solenne»",
+          options: ["Il Trattato dell'Aia (1625)", "L'Atto costitutivo dell'Unione Protestante (Auhausen, 1608)", "La Pace di Praga (1635)", "La Lega Cattolica (1609)"],
+          correct: 1, explanation: "È l'incipit dell'atto di fondazione dell'Unione Protestante, firmato ad Auhausen il 4 maggio 1608." },
+        { id: 3, quote: "«La presente Lega è istituita unicamente per la difesa e la preservazione della vera Santa Fede Cattolica Romana»",
+          options: ["L'Apologia dei Ceti Boemi", "La Lettera di Maestà", "L'Atto della Lega Cattolica (1609)", "Il Trattato di Bärwalde"],
+          correct: 2, explanation: "È l'articolo 1 dell'atto di fondazione della Lega Cattolica (1609), guidata da Massimiliano di Baviera." },
+        { id: 4, quote: "«Ora ci faremo giustizia dei nostri nemici religiosi!»",
+          options: ["Cristiano di Anhalt alla Montagna Bianca", "I nobili boemi durante la defenestrazione di Praga (testimonianza di Slavata)", "Wallenstein a Pappenheim prima di Lützen", "Pappenheim dopo Magdeburgo"],
+          correct: 1, explanation: "Sono le parole gridate dai nobili boemi mentre gettavano Martinitz dalla finestra, secondo la testimonianza del reggente Wilhelm von Slavata." },
+        { id: 5, quote: "«Deus propitius esto mihi peccatori»",
+          options: ["Gustavo Adolfo prima di Lützen", "Wallenstein prima di essere assassinato", "Wilhelm von Slavata durante la caduta dalla finestra", "Il pastore Bötzinger sotto tortura"],
+          correct: 2, explanation: "Slavata, precipitando dalla finestra del castello di Praga, pronunciò questa frase latina ('Signore, sii propizio a me peccatore')." },
+        { id: 6, quote: "«Li abbiamo gettati fuori dalla finestra secondo l'antica consuetudine boema»",
+          options: ["Il diario di Slavata", "L'Apologia dei Ceti Boemi (25 maggio 1618)", "La lettera di Mattia", "Il resoconto di Pappenheim"],
+          correct: 1, explanation: "L'Apologia dei Ceti Boemi usa l''antica consuetudine' per legittimare il gesto come atto di giustizia tradizionale." },
+        { id: 7, quote: "«Deve essere stato Dio a togliere improvvisamente il coraggio dal cuore dei nostri soldati»",
+          options: ["Cristiano di Anhalt nella relazione a Federico V sulla Montagna Bianca", "Il conte Thurn durante la defenestrazione", "Wallenstein dopo Lützen", "Il pastore Minck sulla peste"],
+          correct: 0, explanation: "Cristiano di Anhalt attribuisce la disfatta della Montagna Bianca (1620) al giudizio divino e al panico improvviso dei soldati." },
+        { id: 8, quote: "«I Re di Spagna e gli Arciduchi di Bruxelles non mirano ad altro che ad estendere, sotto il falso pretesto della religione, la loro sfrenata ambizione»",
+          options: ["Richelieu nelle Memorie politiche", "Gli Stati Generali Olandesi nel memoriale al Consiglio di Stato inglese (1621)", "Gustavo Adolfo nella Dichiarazione di guerra", "Pappenheim dopo Magdeburgo"],
+          correct: 1, explanation: "Il memoriale degli Stati Generali Olandesi (15 febbraio 1621) presenta la Spagna come mossa da ambizione mascherata da religione." },
+        { id: 9, quote: "«Cito, Cito, Citissime, Cito!»",
+          options: ["Gustavo Adolfo ai suoi generali prima di Breitenfeld", "Wallenstein a Pappenheim nella lettera d'urgenza del 15 novembre 1632", "Tilly prima della Montagna Bianca", "Richelieu a Luigi XIII"],
+          correct: 1, explanation: "Wallenstein scrisse a Pappenheim questa nota concitata ('In fretta, in fretta, il più in fretta possibile!') prima di Lützen." },
+        { id: 10, quote: "«Questo giovane possiede un animo inquieto, ambizioso e insaziabile... la sua fine sarà tragica e violenta per mano di congiurati»",
+          options: ["Un epitaffio satirico viennese", "L'oroscopo di Johannes Kepler su Wallenstein (1608)", "Il ritratto di Gustavo Adolfo secondo Monro", "Una gazzetta di Francoforte"],
+          correct: 1, explanation: "È il profilo tracciato da Keplero nel 1608 esaminando la configurazione astrale della nascita di Wallenstein." },
+        { id: 11, quote: "«Nei suoi accampamenti non si tolleravano le bestemmie né i saccheggi incontrollati»",
+          options: ["Pappenheim su Tilly", "Il colonnello Robert Monro su Gustavo Adolfo II", "Il duca di Baviera su Wallenstein", "Richelieu su Luigi XIII"],
+          correct: 1, explanation: "Il colonnello scozzese Monro, al servizio della Svezia, descrive la disciplina esemplare imposta da Gustavo Adolfo nel suo esercito." },
+        { id: 12, quote: "«Di undici figli che ho avuto durante i lunghi anni di guerra, ne sono sopravvissuti soltanto due»",
+          options: ["Il contadino Caspar Preis", "Il sindaco di Rüthen Christoph Brandis", "Il soldato mercenario Peter Hagendorf", "Il pastore Martin Bötzinger"],
+          correct: 2, explanation: "Peter Hagendorf, nel suo diario, racconta la morte dei figli durante le marce e le difficoltà del seguito dell'esercito." }
+    ];
+
+    /* ================= POOL 2: V/F (12, mostra 8) ================= */
+    const tfPool = [
+        { id: 1, text: "Secondo la Lettera di Maestà (1609), nessuno, neppure un contadino, poteva essere costretto a convertirsi con la violenza.", isTrue: true, explanation: "VERO: il documento sottoscritto da Rodolfo II garantiva esplicitamente la libertà religiosa contro ogni coercizione." },
+        { id: 2, text: "L'Unione Protestante (1608) si propose di sopprimere le divergenze teologiche tra luterani e calvinisti imponendo una confessione unica.", isTrue: false, explanation: "FALSO: l'Unione non intendeva alterare le differenze teologiche, ma solo evitare gli attacchi reciproci tra teologi per mantenere concordia e difesa comune." },
+        { id: 3, text: "La Lega Cattolica (1609) affidava il comando supremo dell'esercito al Duca Massimiliano di Baviera.", isTrue: true, explanation: "VERO: l'atto costitutivo specifica che direzione generale e comando delle forze armate sono affidati a Massimiliano di Baviera." },
+        { id: 4, text: "L'Apologia dei Ceti Boemi (1618) dichiara esplicitamente di non voler nulla contro Sua Maestà Imperiale.", isTrue: true, explanation: "VERO: la dichiarazione afferma di non compiere 'nulla contro Sua Maestà Imperiale, nostro graziosissimo re e signore'." },
+        { id: 5, text: "Cristiano di Anhalt attribuisce la sconfitta della Montagna Bianca principalmente alla superiorità numerica del nemico.", isTrue: false, explanation: "FALSO: Anhalt parla di 'terrore improvviso', panico dei soldati e giudizio divino, non di superiorità numerica." },
+        { id: 6, text: "Nella Pace di Praga (1635) l'applicazione dell'Editto di Restituzione viene sospesa per quarant'anni.", isTrue: true, explanation: "VERO: la Pace di Praga sospese l'Editto per 40 anni, congelando le proprietà ecclesiastiche alla situazione del 12 novembre 1627." },
+        { id: 7, text: "Il Trattato dell'Aia (1625) prevedeva l'ingresso della Danimarca con 28.000-30.000 fanti e 7.000-8.000 cavalli.", isTrue: true, explanation: "VERO: il trattato specifica questa consistenza per l'esercito danese, finanziato da Inghilterra e Province Unite." },
+        { id: 8, text: "Il Trattato di Bärwalde (1631) impose alla Svezia di non rispettare il culto cattolico nei territori occupati.", isTrue: false, explanation: "FALSO: l'articolo 6 stabilisce che nei luoghi di religione cattolica essa sarebbe rimasta 'del tutto inviolata e indisturbata'." },
+        { id: 9, text: "Wallenstein, secondo Khevenhüller, sosteneva che con soli 20.000 uomini non avrebbe potuto imporre le contribuzioni di guerra.", isTrue: true, explanation: "VERO: Wallenstein argomentava che con 50.000 uomini avrebbe potuto far vivere l'esercito sulle risorse dei paesi occupati, cosa impossibile con 20.000." },
+        { id: 10, text: "Nell'Instrumentum Pacis (1648) l'anno normativo per le questioni ecclesiastiche fu fissato al 1618.", isTrue: false, explanation: "FALSO: l'anno normativo era il 1° gennaio 1624. Chi nel 1624 non aveva culto pubblico poteva praticarlo privatamente." },
+        { id: 11, text: "I diari di Caspar Preis attestano che le truppe svedesi rimasero nei territori tedeschi fino a dicembre 1649.", isTrue: true, explanation: "VERO: Preis annota che le truppe svedesi rimasero 'dal mese di gennaio fino all'8° giorno di dicembre dell'anno 1649'." },
+        { id: 12, text: "Pappenheim, dopo Magdeburgo, descrive la distruzione come un evento che suscitò orrore e vergogna tra i vincitori.", isTrue: false, explanation: "FALSO: Pappenheim scrive 'Tutti i nostri soldati sono diventati ricchi. Dio è con noi.', in tono trionfalistico e provvidenzialistico." }
+    ];
+
+    /* ================= POOL 3: ANALISI APPROFONDITA (10, mostra 6) ================= */
+    const analysisPool = [
+        { id: 1,
+          excerpt: "«Li abbiamo gettati fuori dalla finestra secondo l'antica consuetudine boema» (Apologia dei Ceti Boemi, 25 maggio 1618).",
+          question: "Perché gli insorti boemi richiamano l''antica consuetudine'?",
+          options: ["Per ammettere che si trattò di un gesto arbitrario e illegittimo", "Per legittimare l'atto come espressione di una tradizione giuridico-politica riconosciuta, non come violenza di fazione", "Per dimostrare che il gesto fu dettato solo da motivi religiosi", "Per chiedere perdono all'imperatore"],
+          correct: 1,
+          explanation: "L'Apologia sposta il piano dalla ribellione a un diritto consuetudinario: presenta l'atto come giustizia tradizionale, non come violenza arbitraria. È una mossa retorica che cerca legittimazione giuridica, non solo religiosa." },
+        { id: 2,
+          excerpt: "«Tutti i nostri soldati sono diventati ricchi. Dio è con noi.» (Pappenheim dopo Magdeburgo, 1631).",
+          question: "Cosa rivela questa frase sulla mentalità di guerra?",
+          options: ["Che Pappenheim condanna il saccheggio come atto immorale", "Che il massacro è presentato come ricompensa divina per i vincitori, legittimando la violenza come segno di favore celeste", "Che i soldati erano insoddisfatti per la mancanza di bottino", "Che il generale voleva negoziare la resa"],
+          correct: 1,
+          explanation: "Pappenheim collega bottino e favore divino: la violenza è teologicamente trasformata in segno di elezione. La strage diventa manifestazione del giudizio provvidenziale, e chi vince è 'dalla parte di Dio'." },
+        { id: 3,
+          excerpt: "«Il mio quarto fratello, Christian, un bambino piccolo... disse tutto impaurito: 'Ah, lasciate vivere il padre; vi voglio dare per questo la moneta che riceverò domenica'» (Friese, superstite di Magdeburgo, 1631).",
+          question: "Quale funzione ha, nel racconto di Friese, l'episodio del fratellino?",
+          options: ["Dimostrare che tutti i soldati erano crudeli e insensibili", "Mostrare che persino in una carneficina un gesto umano può deviare la violenza, dando al racconto una dimensione morale e religiosa", "Sottolineare la ricchezza economica della famiglia", "Criticare l'incapacità del padre di difendersi"],
+          correct: 1,
+          explanation: "Friese costruisce un racconto esemplare: il soldato, toccato dalle parole del bambino, diventa protettore. È un topos narrativo che dà senso religioso e morale alla sopravvivenza e permette al lettore di identificarsi." },
+        { id: 4,
+          excerpt: "Nel Trattato di Bärwalde (1631) la cattolica Francia si impegna a finanziare l'esercito protestante svedese in Germania.",
+          question: "Quale principio politico emerge da questo accordo apparentemente contraddittorio?",
+          options: ["La solidarietà tra tutti i cattolici d'Europa contro i protestanti", "La ragion di Stato: l'interesse politico prevale sull'appartenenza confessionale", "La sottomissione della Francia al Papa", "La volontà di diffondere il protestantesimo in Francia"],
+          correct: 1,
+          explanation: "Richelieu finanzia un re protestante contro l'Impero cattolico: la scelta è politica, non religiosa. La ragion di Stato prevale sull'ortodossia confessionale, aprendo la strada alla fase francese." },
+        { id: 5,
+          excerpt: "Nell'Instrumentum Pacis (1648) si stabilisce che 'i sudditi che nel 1624 non avevano l'esercizio pubblico della propria religione siano pacificamente tollerati' e possano praticare privatamente il culto.",
+          question: "Perché la scelta dell'anno normativo 1624 è politica e non religiosa?",
+          options: ["Perché coincide con l'inizio della guerra", "Perché fotografa una situazione di equilibrio, evitando sia di restituire le conquiste cattoliche successive sia di legittimare le espulsioni precedenti", "Perché è la data di nascita di Gustavo Adolfo", "Perché coincide con la morte di Wallenstein"],
+          correct: 1,
+          explanation: "Il 1624 è scelto come 'fotografia' di un equilibrio: congela le posizioni senza restituire tutto né legittimare tutto. È un compromesso giuridico e politico, non una verità religiosa." },
+        { id: 6,
+          excerpt: "«L'accampamento era così umido che spesso i cavalli avevano l'acqua fino al ventre, e il pane e la carne stavano appesi al chiodo più alto» (Hagendorf, 1636, sull'invasione asburgica della Francia).",
+          question: "Che funzione ha questo dettaglio nel racconto dell''Anno di Corbie'?",
+          options: ["Mostrare la potenza dell'esercito imperiale", "Mostrare che le condizioni materiali (fango, umidità, fame) fermarono l'avanzata più delle armi nemiche", "Sottolineare la ricchezza delle truppe", "Celebrare la cucina dei soldati"],
+          correct: 1,
+          explanation: "Hagendorf ribalta la narrazione eroica: la campagna fallisce per cause materiali (umidità, mancanza di cibo), non per sconfitta militare. È una testimonianza 'dal basso' che demistifica la grande guerra." },
+        { id: 7,
+          excerpt: "«Hanno brutalmente calpestato le leggi dell'Impero e la 'Libertà Germania'» (Gustavo Adolfo, Dichiarazione, 1630 ca.).",
+          question: "Come definisce Gustavo Adolfo la propria guerra in questa dichiarazione?",
+          options: ["Come conquista territoriale svedese", "Come difesa delle libertà germaniche e dell'ordine imperiale violato, non come aggressione", "Come crociata contro i protestanti", "Come vendetta personale contro Ferdinando II"],
+          correct: 1,
+          explanation: "Gustavo Adolfo presenta la spedizione come difesa della 'Libertà Germania' e delle leggi imperiali. È una strategia di legittimazione: si presenta come liberatore, non come invasore, per ottenere appoggio presso i principi tedeschi." },
+        { id: 8,
+          excerpt: "«Qui giace e marcisce il potente signore Wallenstein, che radunò una forza immensa ma non diede mai una battaglia... A forza di consultare le stelle e rimandare, ha perso molta terra e molta gente.» (Epitaffio satirico viennese, marzo 1634).",
+          question: "Quale immagine di Wallenstein trasmette questo epitaffio satirico?",
+          options: ["Quella di un eroe martire", "Quella di un comandante potente ma indeciso, incapace di tradurre la forza in vittoria, dedito all'astrologia e all'attesa", "Quella di un santo protettore dei soldati", "Quella di un traditore al soldo della Svezia"],
+          correct: 1,
+          explanation: "L'epitaffio (satirico, quindi ostile) costruisce l'immagine di un uomo potente ma paralizzato dall'astrologia e dall'indecisione. È una fonte che riflette il punto di vista dei suoi nemici, non un giudizio storico neutro." },
+        { id: 9,
+          excerpt: "«Ah, Dio prezioso, misericordioso e buono, che povero villaggio devastato e smembrato era Stausebach a quel tempo!» (Caspar Preis, diario, 1648).",
+          question: "Che tipo di fonte è il diario di Preis e cosa ci permette di vedere?",
+          options: ["Una fonte ufficiale che descrive le clausole del trattato", "Una fonte 'dal basso' che mostra la guerra vissuta dai civili, con attenzione ai costi materiali e alle sofferenze quotidiane", "Un documento militare sulle tattiche di guerra", "Una cronaca di corte"],
+          correct: 1,
+          explanation: "Preis scrive come contadino: il suo diario ci restituisce la dimensione vissuta della guerra e della pace (acquartieramenti, tasse, ricostruzione). È una fonte che completa e corregge la narrazione 'alta' dei trattati." },
+        { id: 10,
+          excerpt: "«L'Imperatore decretò la confisca totale o parziale dei feudi... La metà di tutte le terre del regno cambiò proprietario... Tra i maggiori beneficiari vi fu il colonnello Albrecht von Wallenstein» (cronaca della repressione asburgica in Boemia, 1621-23).",
+          question: "Quale conseguenza politica ebbe la confisca dei beni in Boemia dopo la Montagna Bianca?",
+          options: ["L'indebolimento definitivo degli Asburgo", "Il consolidamento del potere asburgico attraverso la ridistribuzione delle terre a una nuova aristocrazia cattolica fedele, con l'ascesa economica di Wallenstein", "La restituzione delle terre ai protestanti", "La fine del conflitto"],
+          correct: 1,
+          explanation: "Le confische trasformarono la Boemia in una base di potere asburgico: una nuova aristocrazia cattolica legata alla dinastia sostituì quella protestante. È una delle radici della ricchezza e del potere di Wallenstein." }
+    ];
+
+    /* ================= POOL 4: PROSPETTIVE CONTRAPPOSTE (5 coppie) ================= */
+    const comparePool = [
+        { id: 1,
+          title: "La Defenestrazione di Praga (1618)",
+          leftAuthor: "Wilhelm von Slavata (reggente imperiale)",
+          leftText: "«In tutto l'Impero... si è considerato un crimine vergognoso e inaudito... gli assalitori, nella loro perversa malvagità, non vollero sentire ragione, verità o giustizia...»",
+          rightAuthor: "Apologia dei Ceti Boemi (25 maggio 1618)",
+          rightText: "«Abbiamo proceduto contro due di essi, ovvero Wilhelm Slavata e Jaroslav Martinitz, come distruttori della giustizia e della pace generale del regno... li abbiamo gettati fuori dalla finestra secondo l'antica consuetudine boema»",
+          question: "Qual è la differenza fondamentale tra le due rappresentazioni?",
+          options: [
+            "Slavata parla da vittima e descrive un crimine; l'Apologia presenta il gesto come giustizia legittima contro funzionari che avevano violato le libertà del regno",
+            "Entrambe concordano che si trattò di un errore degli insorti",
+            "L'Apologia nega che i due reggenti siano stati gettati dalla finestra",
+            "Slavata elogia il gesto come atto eroico"
+          ],
+          correct: 0,
+          explanation: "Le due fonti raccontano lo stesso evento in modo opposto: Slavata (vittima) parla di crimine e malvagità; l'Apologia (insorti) parla di giustizia contro 'distruttori della pace'. Il confronto mostra come la stessa azione cambi senso a seconda del punto di vista e degli obiettivi politici." },
+        { id: 2,
+          title: "La distruzione di Magdeburgo (1631)",
+          leftAuthor: "Johann Daniel Friese (abitante di Magdeburgo)",
+          leftText: "«Percorrendo alcuni vicoli vedemmo diversi morti, stesi a terra uno accanto all'altro... Vedemmo moltissimi morti e alcune donne completamente nude... era uno spettacolo terribile»",
+          rightAuthor: "Pappenheim (generale imperiale)",
+          rightText: "«Considero che se ne siano andate oltre 20.000 anime. Di certo è dai tempi della distruzione di Gerusalemme che non si vedeva un'opera e una punizione divina più terribile. Tutti i nostri soldati sono diventati ricchi. Dio è con noi.»",
+          question: "Quale contrasto emerge dal confronto tra le due testimonianze?",
+          options: [
+            "Entrambe celebrano la vittoria imperiale",
+            "Friese descrive l'orrore concreto e umano delle vittime; Pappenheim interpreta la strage come 'punizione divina' e la collega al bottino, in una lettura provvidenzialistica e trionfale",
+            "Pappenheim condanna la violenza sui civili",
+            "Friese accusa i suoi concittadini di codardia"
+          ],
+          correct: 1,
+          explanation: "Il contrasto è stridente: Friese racconta il massacro con gli occhi delle vittime; Pappenheim lo trasforma in teologia della vittoria ('Dio è con noi') e in logica del bottino. Le fonti non si limitano a raccontare: interpretano, e questa differenza è essa stessa oggetto di analisi storica." },
+        { id: 3,
+          title: "Il ritratto di Wallenstein",
+          leftAuthor: "Johannes Kepler (oroscopo, 1608)",
+          leftText: "«Questo giovane possiede un animo inquieto, ambizioso e insaziabile... Le sue costellazioni indicano che accumulerà ricchezze immense e comanderà grandi armate, ma indicano altresì che... la sua fine sarà tragica e violenta per mano di congiurati»",
+          rightAuthor: "Epitaffio satirico viennese (marzo 1634)",
+          rightText: "«Qui giace e marcisce il potente signore Wallenstein, che radunò una forza immensa ma non diede mai una battaglia... A forza di consultare le stelle e rimandare, ha perso molta terra e molta gente.»",
+          question: "Come si differenziano i due ritratti di Wallenstein?",
+          options: [
+            "Kepler ne fa un ritratto astrologico carico di destino tragico; l'epitaffio ne fa una caricatura satirica di comandante potente ma indeciso e inconcludente",
+            "Entrambi celebrano Wallenstein come eroe",
+            "Kepler e l'epitaffio dicono la stessa cosa con parole diverse",
+            "L'epitaffio è scritto da Wallenstein stesso"
+          ],
+          correct: 0,
+          explanation: "Kepler costruisce un ritratto astrologico solenne, che anticipa la fine tragica; l'epitaffio (satirico e ostile) ne fa una caricatura: potenza sprecata, astrologia come scusa, indecisione. Sono due generi letterari diversi, con funzioni diverse: uno profetico-dotto, l'altro polemico-popolare." },
+        { id: 4,
+          title: "La memoria di Gustavo Adolfo",
+          leftAuthor: "Colonnello Robert Monro (al servizio della Svezia)",
+          leftText: "«La sua dote più grande era l'umanità e la disciplina che sapeva infondere nelle truppe: nei suoi accampamenti non si tolleravano le bestemmie né i saccheggi incontrollati... i soldati lo amavano come un padre»",
+          rightAuthor: "Gazzetta di Monaco (cattolica, 1633)",
+          rightText: "«Nei pulpiti protestanti si prega per l'anima del re affinché sia accolto tra i santi martiri. Tra i cattolici vi fu grande giubilo, e a Ratisbona i Gesuiti inscenarono una commedia satirica che irrideva il defunto re.»",
+          question: "Come si articola la memoria contrapposta di Gustavo Adolfo?",
+          options: [
+            "I cattolici ne celebrarono la santità",
+            "Monro ne fa un ritratto encomiastico di comandante esemplare; i cattolici ne celebrano la morte con giubilo e ne irridono la memoria con commedie satiriche",
+            "Entrambe le fonti lo descrivono come un tiranno",
+            "Monro e la Gazzetta concordano sul giudizio morale"
+          ],
+          correct: 1,
+          explanation: "Le due fonti testimoniano una vera e propria 'guerra delle memorie': il re svedese è santo martire per i protestanti, reo e ridicolo per i cattolici. Il confronto mostra che la memoria storica si costruisce anche con strumenti culturali (prediche, commedie, gazzette)." },
+        { id: 5,
+          title: "La pace: il testo e la vita",
+          leftAuthor: "Instrumentum Pacis (1648)",
+          leftText: "«Sia fra gli uni e gli altri una perpetua dimenticanza [amnistia] di tutti gli atti e disgusti fatti da ambe le parti... Quei sudditi che nel 1624 non avevano l'esercizio pubblico della propria religione siano pacificamente tollerati»",
+          rightAuthor: "Caspar Preis (contadino, diario 1648-49)",
+          rightText: "«Ora, nell'anno 1648, arrivò la cara pace... le truppe furono distribuite in tutta la Germania... Noi poveri dovevamo provvedere a loro, dovevamo dare loro denaro, e dare avena e fieno ai cavalli. Noi poveri abitanti di Stausebach dovevamo mantenere un cavaliere con una donna e tre cavalli.»",
+          question: "Quale scarto emerge tra il testo giuridico e la testimonianza contadina?",
+          options: [
+            "Nessuno: la pace del 1648 pose immediatamente fine a ogni sofferenza",
+            "Tra l'amnistia e la tolleranza 'sulla carta' e la continuazione concreta degli acquartieramenti e delle contribuzioni: la pace formale non coincide con la pace materiale",
+            "Preis fraintende il trattato",
+            "La pace di Vestfalia fu firmata solo nel 1650"
+          ],
+          correct: 1,
+          explanation: "La pace 'sulla carta' (amnistia, tolleranza, restituzioni) non si traduce immediatamente in pace 'vissuta': i soldati restano, le contribuzioni continuano, i villaggi devono mantenere le truppe. Le fonti 'dal basso' permettono di misurare lo scarto tra diritto e vita quotidiana." }
+    ];
+
+    /* ================= POOL 5: CAUSE/EFFETTI (8 coppie) ================= */
+    const causesPairs = [
+        { id: "c1", cause: "La Lettera di Maestà (1609) garantisce libertà religiosa ai protestanti boemi", effect: "I nobili boemi la invocano come garanzia violata e legittimano la loro rivolta (Apologia 1618)" },
+        { id: "c2", cause: "La defenestrazione di Praga (23 maggio 1618)", effect: "Scoppia la guerra: i ceti boemi si organizzano militarmente e offrono la corona a Federico V" },
+        { id: "c3", cause: "La vittoria imperiale alla Montagna Bianca (1620)", effect: "La Boemia è annessa agli Asburgo, confisca delle terre e ricattolicizzazione forzata (1621-23)" },
+        { id: "c4", cause: "Il Trattato di Bärwalde (1631)", effect: "La Francia cattolica finanzia l'esercito svedese: la Svezia può mantenere 30.000 fanti e 6.000 cavalli in Germania" },
+        { id: "c5", cause: "La morte di Gustavo Adolfo a Lützen (1632)", effect: "La Svezia perde la guida carismatica e subisce la sconfitta di Nördlingen (1634), firmando la Pace di Praga (1635)" },
+        { id: "c6", cause: "La Pace di Praga (1635) esclude la Svezia e le potenze straniere", effect: "La Svezia e la Francia rifiutano la pace separata e proseguono la guerra (fase francese 1635-1648)" },
+        { id: "c7", cause: "L'assassinio di Wallenstein a Eger (25 febbraio 1634)", effect: "L'Impero perde l'imprenditore militare che gli forniva eserciti enormi, ma anche un potenziale rivale interno" },
+        { id: "c8", cause: "La Pace di Vestfalia (1648) stabilisce amnistia e tolleranza", effect: "Le truppe restano nei territori tedeschi fino al 1649: la 'pace' si traduce in nuovi acquartieramenti e tasse (Preis, Heberle)" }
+    ];
+
+    /* ================= POOL 6: RETORICA (8, mostra 6) ================= */
+    const rhetoricPool = [
+        { id: 1,
+          excerpt: "«Li abbiamo gettati fuori dalla finestra secondo l'antica consuetudine boema» (Apologia, 1618).",
+          question: "Quale mossa retorica compie l'Apologia usando l'espressione 'antica consuetudine'?",
+          options: ["Rende il gesto un atto folkloristico senza importanza politica", "Sposta il piano dalla ribellione a un diritto tradizionale: trasforma la violenza in giustizia legittima", "Chiede scusa per l'accaduto", "Rivela che il gesto fu improvvisato"],
+          correct: 1,
+          explanation: "L''antica consuetudine' trasforma un atto di fazione in atto giuridico: l'Apologia cerca di sottrarre il gesto all'accusa di ribellione e di collocarlo in una sfera di legittimità tradizionale." },
+        { id: 2,
+          excerpt: "«Tutti i nostri soldati sono diventati ricchi. Dio è con noi.» (Pappenheim, 1631).",
+          question: "Quale strategia retorica è evidente in queste due frasi accostate?",
+          options: ["Un'ironia amara sulla guerra", "Un accostamento tra bottino e favore divino che trasforma il massacro in segno di elezione celeste", "Una richiesta di aiuto ai principi cattolici", "Una critica alla cupidigia dei soldati"],
+          correct: 1,
+          explanation: "L'accostamento fulmineo (bottino + 'Dio è con noi') opera una legittimazione teologica della violenza: chi vince e si arricchisce è 'dalla parte di Dio'." },
+        { id: 3,
+          excerpt: "«Cito, Cito, Citissime, Cito!» (Wallenstein a Pappenheim, 15 novembre 1632).",
+          question: "Quale effetto produce la quadruplice ripetizione dell'avverbio latino?",
+          options: ["Un tono solenne e cerimoniale", "Un senso di urgenza disperata che restituisce la drammaticità del momento", "Una citazione colta per impressionare i superiori", "Un errore di battitura"],
+          correct: 1,
+          explanation: "La quadruplice ripetizione (in latino, lingua dei comandi militari) crea un effetto di panico e concitazione: restituisce la pressione psicologica del momento e rende il documento una testimonianza viva, non un rapporto ufficiale." },
+        { id: 4,
+          excerpt: "«Ah, Dio prezioso, misericordioso e buono, che povero villaggio devastato e smembrato era Stausebach a quel tempo!» (Caspar Preis, 1648).",
+          question: "Che funzione ha l'invocazione religiosa nel diario di Preis?",
+          options: ["È un puro ornamento letterario", "Trasforma il racconto personale in preghiera e in lamento collettivo, dando senso religioso alla sofferenza", "Serve a impressionare i superiori", "Rivela che Preis era un teologo"],
+          correct: 1,
+          explanation: "Preis scrive come credente: il lamento personale diventa preghiera e memoria condivisa. La dimensione religiosa non è un ornamento, ma la cornice in cui il dolore acquista senso e può essere narrato." },
+        { id: 5,
+          excerpt: "Nelle Memorie di Richelieu, l'intervento francese è presentato come 'rimedio al male' e 'inevitabile'.",
+          question: "Perché Richelieu insiste sull''inevitabilità' dell'ingresso in guerra?",
+          options: ["Per giustificare le spese militari", "Perché la retorica dell'inevitabilità serve a presentare la scelta politica come necessità difensiva, non come aggressione", "Perché era costretto dal Papa", "Per mostrare la propria modestia"],
+          correct: 1,
+          explanation: "L''inevitabilità' è una categoria retorica potente: trasforma una scelta di opportunità politica in necessità storica. Richelieu costruisce così la legittimità dell'intervento francese davanti alla corte e alla posterità." },
+        { id: 6,
+          excerpt: "«La presente Lega è istituita unicamente per la difesa e la preservazione della vera Santa Fede Cattolica Romana» (Atto della Lega Cattolica, 1609).",
+          question: "Qual è la funzione dell'avverbio 'unicamente'?",
+          options: ["Indica che la Lega non ha altri scopi oltre la difesa della fede", "Sottintende che la Lega agisce anche militarmente contro i protestanti, ma vuole presentarsi come difensiva", "Smentisce il carattere religioso della Lega", "Indica che la Lega è vietata"],
+          correct: 1,
+          explanation: "Il 'unicamente' è un avverbio di legittimazione: serve a presentare la Lega come difensiva e religiosa, escludendo l'accusa di essere strumento politico-militare. Il testo retoricamente nasconde ciò che l'atto stesso, di fatto, organizza: un esercito." },
+        { id: 7,
+          excerpt: "«Hanno brutalmente calpestato le leggi dell'Impero e la 'Libertà Germania'» (Gustavo Adolfo, Dichiarazione).",
+          question: "Perché Gustavo Adolfo usa l'espressione 'Libertà Germania'?",
+          options: ["Perché vuole apparire un principe tedesco", "Perché si appropria del lessico della libertà imperiale per legittimare la propria spedizione come difensiva", "Perché non conosceva il tedesco", "Perché era alleato dei francesi"],
+          correct: 1,
+          explanation: "Appropriarsi della 'Libertà Germania' significa presentarsi come difensore dell'Impero contro chi lo viola (gli Asburgo). Gustavo Adolfo parla il linguaggio dei principi tedeschi per farsi accettare come liberatore, non come invasore." },
+        { id: 8,
+          excerpt: "«Dio, l'Altissimo, mi è testimone che non lo faccio per mia volontà o desiderio di combattere» (Gustavo Adolfo, discorso prima della spedizione).",
+          question: "Che tipo di argomentazione costruisce questa formula?",
+          options: ["Un'ammissione di debolezza", "Una captatio benevolentiae: l'oratore si presenta come strumento di una volontà superiore, non come aggressore", "Un'ironia", "Un rifiuto della guerra"],
+          correct: 1,
+          explanation: "È una mossa classica di legittimazione: chi parla si sottrae alla responsabilità personale della guerra, presentandosi come strumento di Dio e come soccorritore dei fratelli oppressi. La guerra diventa così 'difensiva' e 'religiosa'." }
+    ];
+
+    /* ================= POOL 7: FONTI ↔ TEMI (8 coppie) ================= */
+    const themesDocs = [
+        { id: "d1", doc: "Lettera di Maestà (1609)" },
+        { id: "d2", doc: "Atto costitutivo della Lega Cattolica (1609)" },
+        { id: "d3", doc: "Testimonianza di Wilhelm von Slavata sulla defenestrazione (1618)" },
+        { id: "d4", doc: "Trattato di Bärwalde (1631)" },
+        { id: "d5", doc: "Trattato dell'Aia (1625)" },
+        { id: "d6", doc: "Pace di Praga (1635)" },
+        { id: "d7", doc: "Diario del pastore Martin Bötzinger (1640)" },
+        { id: "d8", doc: "Instrumentum Pacis (1648)" }
+    ];
+    const themesDefs = [
+        { id: "t1", matchId: "d1", text: "Le garanzie di libertà religiosa boema che i protestanti invocheranno come violate nel 1618." },
+        { id: "t2", matchId: "d2", text: "La risposta militare cattolica all'Unione Protestante, con comando affidato a Massimiliano di Baviera." },
+        { id: "t3", matchId: "d3", text: "Il punto di vista della vittima sulla defenestrazione, con accenti di martirio e di condanna morale." },
+        { id: "t4", matchId: "d4", text: "Il sostegno finanziario della Francia cattolica alla Svezia protestante: trionfo della ragion di Stato." },
+        { id: "t5", matchId: "d5", text: "L'ingresso della Danimarca nella guerra con finanziamenti inglesi e olandesi." },
+        { id: "t6", matchId: "d6", text: "Il tentativo di pacificazione interna tra Impero e principi tedeschi, con espulsione degli stranieri." },
+        { id: "t7", matchId: "d7", text: "La violenza sui civili e lo 'Schwedentrunk', testimonianza dal basso delle sofferenze della guerra." },
+        { id: "t8", matchId: "d8", text: "Il trattato di pace finale: amnistia, anno normativo 1624, estensione ai calvinisti, sovranità degli Stati." }
+    ];
+
+    /* ================= POOL 8: CLOZE (2 testi) ================= */
+    const clozePool = [
+        {
+            text: `La Defenestrazione di Praga (23 maggio 1618) è raccontata da due fonti contrapposte. Da un lato la testimonianza di <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Wilhelm von Slavata">Wilhelm von Slavata</option><option value="Cristiano di Anhalt">Cristiano di Anhalt</option><option value="Federico V">Federico V</option></select>, uno dei reggenti scaraventati dalla finestra, che parla di un "crimine vergognoso e inaudito"; dall'altro l'<select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Apologia dei Ceti Boemi">Apologia dei Ceti Boemi</option><option value="Lettera di Maestà">Lettera di Maestà</option><option value="Instrumentum Pacis">Instrumentum Pacis</option></select>, redatta due giorni dopo, che presenta il gesto come legittima difesa contro i "distruttori della giustizia". Gli insorti giustificarono l'atto come compiuto "secondo l'<select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="antica consuetudine boema">antica consuetudine boema</option><option value="legge salica">legge salica</option><option value="volontà di Dio">volontà di Dio</option></select>". La scintilla religiosa risaliva alla <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Lettera di Maestà">Lettera di Maestà</option><option value="Pace di Augusta">Pace di Augusta</option><option value="Bolla d'oro">Bolla d'oro</option></select> del 1609, con cui <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Rodolfo II">Rodolfo II</option><option value="Ferdinando II">Ferdinando II</option><option value="Mattia">Mattia</option></select> aveva garantito ai protestanti boemi libertà di culto. Sul piano militare, i protestanti si erano organizzati nell'<select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Unione Protestante">Unione Protestante</option><option value="Lega Cattolica">Lega Cattolica</option><option value="Confederazione Boema">Confederazione Boema</option></select> (1608) e i cattolici avevano risposto con la <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Lega Cattolica">Lega Cattolica</option><option value="Santa Alleanza">Santa Alleanza</option><option value="Compagnia di Gesù">Compagnia di Gesù</option></select> (1609), guidata da Massimiliano di Baviera.`,
+            answers: { 1: "Wilhelm von Slavata", 2: "Apologia dei Ceti Boemi", 3: "antica consuetudine boema", 4: "Lettera di Maestà", 5: "Rodolfo II", 6: "Unione Protestante", 7: "Lega Cattolica" }
+        },
+        {
+            text: `Il dossier restituisce ritratti complessi delle due figure chiave del conflitto. Wallenstein è descritto da <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Keplero">Keplero</option><option value="Galileo">Galileo</option><option value="Tycho Brahe">Tycho Brahe</option></select> nel 1608 come un uomo "ambizioso e insaziabile", destinato a fine "tragica e violenta". Il suo ruolo di <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="imprenditore militare">imprenditore militare</option><option value="cardinale">cardinale</option><option value="diplomatico">diplomatico</option></select> gli permise di mantenere enormi eserciti vivendo sulle risorse dei territori occupati. La sua morte avvenne a <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Eger">Eger</option><option value="Lützen">Lützen</option><option value="Praga">Praga</option></select> il 25 febbraio 1634, per mano di cospiratori. Gustavo Adolfo è ritratto da <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Monro">Monro</option><option value="Pappenheim">Pappenheim</option><option value="Wallenstein">Wallenstein</option></select> come un comandante amato dai soldati e rigoroso sulla disciplina; ma la <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Gazzetta di Monaco">Gazzetta di Monaco</option><option value="Gazzetta di Francoforte">Gazzetta di Francoforte</option><option value="Gazzetta di Stoccolma">Gazzetta di Stoccolma</option></select> riferisce che i cattolici ne celebrarono la morte con giubilo e ne irrisero la memoria. Il re svedese morì a <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Lützen">Lützen</option><option value="Breitenfeld">Breitenfeld</option><option value="Rocroi">Rocroi</option></select> nel <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1632">1632</option><option value="1630">1630</option><option value="1634">1634</option></select>.`,
+            answers: { 1: "Keplero", 2: "imprenditore militare", 3: "Eger", 4: "Monro", 5: "Gazzetta di Monaco", 6: "Lützen", 7: "1632" }
+        }
+    ];
+
+    /* ============ RENDER: ATTRIBUZIONE ============ */
+    function renderAttr() {
+        state.activeAttr = shuffle(attrPool).slice(0, 8);
+        const c = document.getElementById('attr-container');
+        c.innerHTML = state.activeAttr.map((q, i) => `
+            <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+                <div class="text-xs font-bold text-sky-300 uppercase tracking-wider">Citazione ${i+1}</div>
+                <div class="quote-box">${q.quote}</div>
+                <div class="text-xs text-slate-400 italic">Chi parla? / Da quale documento?</div>
+                <div class="space-y-2">
+                    ${q.options.map((o, oi) => `<button onclick="selectAttr(${q.id}, ${oi})" class="attr-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}
+                </div>
+                <div id="attr-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectAttr(qId, oIdx) {
+        playSound('click');
+        const q = attrPool.find(x => x.id === qId);
+        state.attrAnswers[qId] = oIdx;
+        document.querySelectorAll(`.attr-opt-${qId}`).forEach(b => { b.disabled = true; b.classList.add('opacity-50','cursor-not-allowed'); });
+        const fb = document.getElementById(`attr-fb-${qId}`); fb.classList.remove('hidden');
+        if (oIdx === q.correct) { playSound('correct'); fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700"; fb.innerHTML = `<strong>Corretto!</strong> ${q.explanation}`; }
+        else { playSound('error'); fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700"; fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER: V/F ============ */
+    function renderTF() {
+        state.activeTF = shuffle(tfPool).slice(0, 8);
+        const c = document.getElementById('tf-container');
+        c.innerHTML = state.activeTF.map((q, i) => `
+            <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800">
+                <p class="text-xs text-slate-200">${i+1}. ${q.text}</p>
+                <div class="flex gap-2">
+                    <button onclick="answerTF(${q.id}, true)" class="tf-opt-${q.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button>
+                    <button onclick="answerTF(${q.id}, false)" class="tf-opt-${q.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button>
+                </div>
+                <div id="tf-fb-${q.id}" class="hidden text-xs pt-1"></div>
+            </div>
+        `).join('');
+    }
+    function answerTF(id, choice) {
+        playSound('click');
+        const q = tfPool.find(x => x.id === id);
+        state.tfAnswers[id] = choice;
+        document.querySelectorAll(`.tf-opt-${id}`).forEach(b => { b.disabled = true; b.classList.add('opacity-50','cursor-not-allowed'); });
+        const fb = document.getElementById(`tf-fb-${id}`); fb.classList.remove('hidden');
+        if (choice === q.isTrue) { playSound('correct'); fb.className = "text-xs text-emerald-300"; fb.innerText = `Esatto! ${q.explanation}`; }
+        else { playSound('error'); fb.className = "text-xs text-rose-300"; fb.innerText = `Sbagliato. ${q.explanation}`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER: ANALISI ============ */
+    function renderAnalysis() {
+        state.activeAnalysis = shuffle(analysisPool).slice(0, 6);
+        const c = document.getElementById('analysis-container');
+        c.innerHTML = state.activeAnalysis.map((q, i) => `
+            <div class="glass-card p-5 rounded-2xl space-y-3 border border-teal-500/30">
+                <div class="text-xs font-bold text-teal-300 uppercase tracking-wider">Documento ${i+1}</div>
+                <div class="quote-box">${q.excerpt}</div>
+                <div class="font-bold text-slate-100 text-sm">${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((o, oi) => `<button onclick="selectAnalysis(${q.id}, ${oi})" class="an-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}
+                </div>
+                <div id="an-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectAnalysis(qId, oIdx) {
+        playSound('click');
+        const q = analysisPool.find(x => x.id === qId);
+        state.analysisAnswers[qId] = oIdx;
+        document.querySelectorAll(`.an-opt-${qId}`).forEach(b => { b.disabled = true; b.classList.add('opacity-50','cursor-not-allowed'); });
+        const fb = document.getElementById(`an-fb-${qId}`); fb.classList.remove('hidden');
+        if (oIdx === q.correct) { playSound('correct'); fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700"; fb.innerHTML = `<strong>Interpretazione corretta!</strong> ${q.explanation}`; }
+        else { playSound('error'); fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700"; fb.innerHTML = `<strong>Rileggi il documento.</strong> ${q.explanation}`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER: CONFRONTO ============ */
+    function renderCompare() {
+        const c = document.getElementById('compare-container');
+        c.innerHTML = comparePool.map((q, i) => `
+            <div class="glass-card p-5 rounded-2xl space-y-4 border border-purple-500/30">
+                <div class="text-xs font-bold text-purple-300 uppercase tracking-wider">Confronto ${i+1} — ${q.title}</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700">
+                        <div class="text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">Fonte A — ${q.leftAuthor}</div>
+                        <div class="text-xs italic text-slate-300 leading-relaxed">${q.leftText}</div>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700">
+                        <div class="text-[10px] uppercase tracking-wider text-sky-400 font-bold mb-1">Fonte B — ${q.rightAuthor}</div>
+                        <div class="text-xs italic text-slate-300 leading-relaxed">${q.rightText}</div>
+                    </div>
+                </div>
+                <div class="font-bold text-slate-100 text-sm">${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((o, oi) => `<button onclick="selectCompare(${q.id}, ${oi})" class="cmp-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}
+                </div>
+                <div id="cmp-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectCompare(qId, oIdx) {
+        playSound('click');
+        const q = comparePool.find(x => x.id === qId);
+        state.compareAnswers[qId] = oIdx;
+        document.querySelectorAll(`.cmp-opt-${qId}`).forEach(b => { b.disabled = true; b.classList.add('opacity-50','cursor-not-allowed'); });
+        const fb = document.getElementById(`cmp-fb-${qId}`); fb.classList.remove('hidden');
+        if (oIdx === q.correct) { playSound('correct'); fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700"; fb.innerHTML = `<strong>Ottimo confronto!</strong> ${q.explanation}`; }
+        else { playSound('error'); fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700"; fb.innerHTML = `<strong>Rileggi le due fonti.</strong> ${q.explanation}`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER: CAUSE/EFFETTI ============ */
+    function renderCauses() {
+        document.getElementById('causes-terms').innerHTML = causesPairs.map(c => `<button onclick="selectCause('${c.id}')" id="cause-btn-${c.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-fuchsia-500/50 transition-all">${c.cause}</button>`).join('');
+        document.getElementById('causes-defs').innerHTML = shuffle(causesPairs).map(c => `<button onclick="selectEffect('${c.id}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-fuchsia-500/50 transition-all">${c.effect}</button>`).join('');
+    }
+    function selectCause(id) {
+        state.selectedTermId = id; playSound('click');
+        causesPairs.forEach(c => {
+            const b = document.getElementById(`cause-btn-${c.id}`);
+            if (b) b.className = (c.id === id) ? "w-full text-left p-3 rounded-xl border-2 border-fuchsia-500 bg-fuchsia-950/40 text-xs text-fuchsia-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-fuchsia-500/50";
+        });
+    }
+    function selectEffect(id) {
+        if (!state.selectedTermId) return;
+        const fb = document.getElementById('causes-feedback');
+        if (state.selectedTermId === id) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Catena causale corretta!"; state.causesPairs[id] = true; }
+        else { playSound('error'); fb.className = "text-rose-400 font-bold"; fb.innerText = "Non è questo l'effetto. Riprova!"; }
+        state.selectedTermId = null; updateGlobalScore();
+    }
+
+    /* ============ RENDER: RETORICA ============ */
+    function renderRhetoric() {
+        state.activeRhetoric = shuffle(rhetoricPool).slice(0, 6);
+        const c = document.getElementById('rhetoric-container');
+        c.innerHTML = state.activeRhetoric.map((q, i) => `
+            <div class="glass-card p-5 rounded-2xl space-y-3 border border-orange-500/30">
+                <div class="text-xs font-bold text-orange-300 uppercase tracking-wider">Analisi ${i+1}</div>
+                <div class="quote-box">${q.excerpt}</div>
+                <div class="font-bold text-slate-100 text-sm">${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((o, oi) => `<button onclick="selectRhetoric(${q.id}, ${oi})" class="rh-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}
+                </div>
+                <div id="rh-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectRhetoric(qId, oIdx) {
+        playSound('click');
+        const q = rhetoricPool.find(x => x.id === qId);
+        state.rhetoricAnswers[qId] = oIdx;
+        document.querySelectorAll(`.rh-opt-${qId}`).forEach(b => { b.disabled = true; b.classList.add('opacity-50','cursor-not-allowed'); });
+        const fb = document.getElementById(`rh-fb-${qId}`); fb.classList.remove('hidden');
+        if (oIdx === q.correct) { playSound('correct'); fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700"; fb.innerHTML = `<strong>Ottima analisi!</strong> ${q.explanation}`; }
+        else { playSound('error'); fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700"; fb.innerHTML = `<strong>Rifletti meglio.</strong> ${q.explanation}`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER: FONTI↔TEMI ============ */
+    function renderThemes() {
+        document.getElementById('themes-docs').innerHTML = themesDocs.map(d => `<button onclick="selectDoc('${d.id}')" id="doc-btn-${d.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50 transition-all">${d.doc}</button>`).join('');
+        document.getElementById('themes-defs').innerHTML = shuffle(themesDefs).map(d => `<button onclick="selectTheme('${d.matchId}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50 transition-all">${d.text}</button>`).join('');
+    }
+    function selectDoc(id) {
+        state.selectedTermId = id; playSound('click');
+        themesDocs.forEach(d => {
+            const b = document.getElementById(`doc-btn-${d.id}`);
+            if (b) b.className = (d.id === id) ? "w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50";
+        });
+    }
+    function selectTheme(matchId) {
+        if (!state.selectedTermId) return;
+        const fb = document.getElementById('themes-feedback');
+        if (state.selectedTermId === matchId) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Abbinamento corretto!"; state.themesPairs[matchId] = true; }
+        else { playSound('error'); fb.className = "text-rose-400 font-bold"; fb.innerText = "Abbinamento errato. Riprova!"; }
+        state.selectedTermId = null; updateGlobalScore();
+    }
+
+    /* ============ RENDER: CLOZE ============ */
+    function renderCloze() {
+        state.activeClozeIndex = Math.floor(Math.random() * clozePool.length);
+        const cur = clozePool[state.activeClozeIndex];
+        document.getElementById('cloze-body-container').innerHTML = `<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm text-slate-200 border border-slate-800">${cur.text}</div>`;
+        const btn = document.getElementById('btn-check-cloze');
+        btn.disabled = false; btn.classList.remove('opacity-50','cursor-not-allowed');
+        document.getElementById('cloze-feedback').innerText = "";
+    }
+    function checkCloze() {
+        const cur = clozePool[state.activeClozeIndex];
+        const ans = cur.answers;
+        let correct = 0; const total = Object.keys(ans).length;
+        for (let i = 1; i <= total; i++) {
+            const el = document.getElementById(`cloze-${i}`);
+            if (el) {
+                el.disabled = true;
+                if (el.value === ans[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold"; }
+                else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold"; }
+            }
+        }
+        const btn = document.getElementById('btn-check-cloze');
+        btn.disabled = true; btn.classList.add('opacity-50','cursor-not-allowed');
+        state.clozeScore = Math.round((correct / total) * 100);
+        const fb = document.getElementById('cloze-feedback');
+        if (correct === total) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = `Eccellente! ${correct}/${total} lacune corrette.`; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/${total}. Le risposte errate sono evidenziate.`; }
+        updateGlobalScore();
+    }
+
+    /* ============ PUNTEGGIO (12 + 12 + 15 + 15 + 12 + 10 + 10 + 14 = 100) ============ */
+    function updateGlobalScore() {
+        const attrCorrect = state.activeAttr.filter(q => state.attrAnswers[q.id] === q.correct).length;
+        const tfCorrect = state.activeTF.filter(q => state.tfAnswers[q.id] === q.isTrue).length;
+        const anCorrect = state.activeAnalysis.filter(q => state.analysisAnswers[q.id] === q.correct).length;
+        const cmpCorrect = comparePool.filter(q => state.compareAnswers[q.id] === q.correct).length;
+        const causesCorrect = Object.keys(state.causesPairs).length;
+        const rhCorrect = state.activeRhetoric.filter(q => state.rhetoricAnswers[q.id] === q.correct).length;
+        const themesCorrect = Object.keys(state.themesPairs).length;
+
+        const total = Math.round(
+            (state.activeAttr.length ? (attrCorrect / state.activeAttr.length) * 12 : 0) +
+            (state.activeTF.length ? (tfCorrect / state.activeTF.length) * 12 : 0) +
+            (state.activeAnalysis.length ? (anCorrect / state.activeAnalysis.length) * 15 : 0) +
+            (cmpCorrect / comparePool.length) * 15 +
+            (causesCorrect / causesPairs.length) * 12 +
+            (state.activeRhetoric.length ? (rhCorrect / state.activeRhetoric.length) * 10 : 0) +
+            (themesCorrect / themesDocs.length) * 10 +
+            (state.clozeScore / 100) * 14
+        );
+        document.getElementById('global-score-text').innerText = `${total} / 100`;
+        return total;
+    }
+
+    function updateReport() {
+        const score = updateGlobalScore();
+        document.getElementById('report-score').innerText = `${score} / 100 XP`;
+        document.getElementById('report-student').innerHTML = `Studente: <span class="font-bold text-slate-100">${state.studentName}</span>`;
+        const badge = document.getElementById('report-badge');
+        if (score >= 90) badge.innerText = "Maestro delle Fonti (Eccellente)";
+        else if (score >= 75) badge.innerText = "Analista Esperto (Buono)";
+        else if (score >= 55) badge.innerText = "Lettore Attento (Sufficiente)";
+        else badge.innerText = "Apprendista delle Fonti (Insufficiente)";
+    }
+
+    function switchTab(tabId) {
+        playSound('click');
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.remove('hidden');
+        if (tabId === 'tab-report') updateReport();
+    }
+
+    function resetAll() {
+        state.attrAnswers = {}; state.tfAnswers = {}; state.analysisAnswers = {}; state.compareAnswers = {};
+        state.causesPairs = {}; state.rhetoricAnswers = {}; state.themesPairs = {};
+        state.clozeScore = 0; state.selectedTermId = null;
+        renderAttr(); renderTF(); renderAnalysis(); renderCompare();
+        renderCauses(); renderRhetoric(); renderThemes(); renderCloze();
+        updateGlobalScore(); switchTab('tab-studio');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        renderAttr(); renderTF(); renderAnalysis(); renderCompare();
+        renderCauses(); renderRhetoric(); renderThemes(); renderCloze();
+        updateGlobalScore();
+    });
+</script>
+</body>
+</html>

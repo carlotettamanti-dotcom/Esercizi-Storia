@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piattaforma Didattica: I Franchi e l'Impero Carolingio</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,8 +27,6 @@
         .tab-btn.active { background-color: #2563eb; color: #ffffff; border-color: #60a5fa; box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.5); }
         .glass-card { background: linear-gradient(135deg, rgba(21, 29, 48, 0.85), rgba(15, 23, 42, 0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .badge-glow { box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
-        .map-pin { transition: transform 0.2s ease; }
-        .map-pin:hover { transform: scale(1.25); z-index: 30; }
         @media print {
             body * { visibility: hidden; }
             #printable-certificate, #printable-certificate * { visibility: visible; }
@@ -78,7 +75,7 @@
     <nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
             <button onclick="switchTab('tab-studio')" class="tab-btn active px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent">
-                <i class="fa-solid fa-map text-amber-400"></i> 0. Quadro Storico Completo
+                <i class="fa-solid fa-map text-amber-400"></i> 0. Quadro Storico
             </button>
             <button onclick="switchTab('tab-mcq')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
                 <i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz Multiplo (10 Q)
@@ -86,17 +83,17 @@
             <button onclick="switchTab('tab-tf')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
                 <i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. Vero o Falso (8 Q)
             </button>
-            <button onclick="switchTab('tab-map')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-earth-europe text-amber-400"></i> 3. Mappa Impero Carolingio
+            <button onclick="switchTab('tab-geo')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-earth-europe text-amber-400"></i> 3. Geografia Storica (5 Q)
             </button>
             <button onclick="switchTab('tab-timeline')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-timeline text-purple-400"></i> 4. Cronologia (8 Eventi)
+                <i class="fa-solid fa-timeline text-purple-400"></i> 4. Cronologia & Date
             </button>
             <button onclick="switchTab('tab-matching')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-diagram-project text-rose-400"></i> 5. Concetti (8 Abbinamenti)
+                <i class="fa-solid fa-diagram-project text-rose-400"></i> 5. Concetti (5 Abbinamenti)
             </button>
             <button onclick="switchTab('tab-cloze')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-pen-nib text-amber-400"></i> 6. Testo Guidato (10 Lacune)
+                <i class="fa-solid fa-pen-nib text-amber-400"></i> 6. Testo Guidato (Variabile)
             </button>
             <button onclick="switchTab('tab-report')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
                 <i class="fa-solid fa-certificate text-yellow-400"></i> Certificato
@@ -112,7 +109,7 @@
             <div class="glass-card p-6 sm:p-8 rounded-2xl border-amber-500/20 relative overflow-hidden">
                 <div class="max-w-3xl space-y-3">
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                        <i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico Integrato • Documentazione Completa
+                        <i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico Integrato • Storia Medievale
                     </span>
                     <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-amber-400">I Franchi e il Codice dell'Europa</h2>
                     <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
@@ -155,7 +152,7 @@
             </div>
 
             <div class="text-center pt-4">
-                <button onclick="switchTab('tab-mcq')" class="bg-amber-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-amber-600">Inizia il Test di Valutazione ➔</button>
+                <button onclick="switchTab('tab-mcq')" class="bg-amber-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-amber-600">Inizia il Test sui Franchi ➔</button>
             </div>
         </section>
 
@@ -177,93 +174,63 @@
             <div id="tf-container" class="space-y-4"></div>
         </section>
 
-   <!-- TAB 3: MAPPA INTERATTIVA -->
-        <section id="tab-map" class="tab-content hidden space-y-6">
-            <div class="border-b border-slate-800 pb-4">
-                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 3: Cartina Geografica dell'Impero Carolingio</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Osserva i punti numerati sulla cartina geografica dell'Europa occidentale e associa ciascun numero alla località corretta.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Cartina Geografica Vettoriale dell'Europa -->
-                <div class="lg:col-span-7 glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center bg-slate-950 border border-slate-800 min-h-[420px]">
-                    <div class="w-full h-[380px] relative rounded-xl overflow-hidden bg-[#0a1322] border border-slate-800 shadow-2xl">
-                        
-                        <!-- SVG Europa Occidentale (Francia, Germania, Italia) -->
-                        <svg class="w-full h-full object-contain" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="500" height="500" fill="#080e1a"/>
-                            
-                            <!-- Isole Britanniche -->
-                            <path d="M 100,80 C 130,70 140,110 120,130 C 100,120 90,90 100,80 Z" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
-
-                            <!-- CONTINENTE EUROPEO (Francia, Germania, Italia, Nord Spagna) -->
-                            <path d="M 80,240 
-                                     C 110,210 130,180 160,160 
-                                     C 190,140 220,130 260,120 
-                                     C 310,110 380,100 440,120 
-                                     C 450,170 420,220 380,240 
-                                     C 360,260 340,290 350,330 
-                                     C 360,370 330,420 300,450 
-                                     C 280,440 270,410 280,380 
-                                     C 270,350 250,320 230,310 
-                                     C 200,320 180,350 140,360 
-                                     C 110,340 100,290 80,240 Z" 
-                                  fill="#181a29" stroke="#f59e0b" stroke-width="2"/>
-
-                            <!-- Penisola Italiana -->
-                            <path d="M 280,310 C 310,320 330,360 350,410 C 330,420 310,380 290,340 Z" fill="#111c2e" stroke="#f59e0b" stroke-width="1.5"/>
-
-                            <text x="140" y="240" fill="#f59e0b" font-size="11" font-family="sans-serif" font-weight="bold" opacity="0.4">REGNO DEI FRANCHI</text>
-                            <text x="310" y="180" fill="#38bdf8" font-size="10" font-family="sans-serif" font-weight="bold" opacity="0.4">SASSONIA</text>
-                        </svg>
-
-                        <!-- PIN POSIZIONATI -->
-                        <!-- Pin 1: Aquisgrana (Nord Europa/Germania) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 28%; left: 48%;" title="Punto 1">1</div>
-                        
-                        <!-- Pin 2: Poitiers (Francia Centro-Ovest) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 48%; left: 28%;" title="Punto 2">2</div>
-                        
-                        <!-- Pin 3: Roma (Italia) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-rose-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 78%; left: 64%;" title="Punto 3">3</div>
-                        
-                        <!-- Pin 4: Pavia (Nord Italia) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 62%; left: 56%;" title="Punto 4">4</div>
-                        
-                        <!-- Pin 5: Verdun (Francia Orientale) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 38%; left: 42%;" title="Punto 5">5</div>
-                    </div>
-                    
-                    <div class="text-[11px] text-slate-400 mt-3 text-center">
-                        <i class="fa-solid fa-map-marked-alt mr-1 text-amber-400"></i> Cartina dell'Impero Carolingio: associa i numeri ai centri dell'Impero.
-                    </div>
+        <!-- TAB 3: GEOGRAFIA STORICA -->
+        <section id="tab-geo" class="tab-content hidden space-y-6">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div>
+                    <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 3: Geografia e Territori dell'Impero Carolingio</h2>
+                    <p class="text-xs sm:text-sm text-slate-400">Identifica la posizione delle Marche, delle capitali e delle regioni storiche rispetto all'Europa odierna.</p>
                 </div>
-
-                <!-- Domande Mappa -->
-                <div class="lg:col-span-5 space-y-4">
-                    <div id="map-questions-container" class="space-y-3"></div>
-                    <button onclick="checkMapQuiz()" id="check-map-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 rounded-xl transition-all shadow-lg text-xs sm:text-sm">
-                        <i class="fa-solid fa-check mr-1.5"></i> Verifica Mappa
-                    </button>
-                    <div id="map-feedback" class="text-xs font-semibold"></div>
-                </div>
+                <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-amber-400"></i> Risposte bloccate al primo clic</span>
             </div>
+            <div id="geo-container" class="space-y-6"></div>
         </section>
 
-        <!-- TAB 4: TIMELINE -->
-        <section id="tab-timeline" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400">Esercizio 4: Riordino Cronologico Avanzato</h2>
-            <div class="glass-card p-6 rounded-2xl space-y-6">
-                <div id="timeline-list" class="space-y-3"></div>
-                <button onclick="checkTimeline()" id="btn-check-timeline" class="bg-purple-600 text-white font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-check-double"></i> Verifica Sequenza</button>
-                <div id="timeline-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        <!-- TAB 4: TIMELINE (DIVISA IN DUE PARTE) -->
+        <section id="tab-timeline" class="tab-content hidden space-y-8">
+            <div>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 4: Cronologia & Date dell'Età Carolingia</h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">Completa le due sezioni sottostanti per verificare il senso del tempo storico.</p>
+            </div>
+
+            <!-- PARTE 1: ORDINAMENTO CRONOLOGICO (SENZA DATE MOSTRATE) -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span>
+                    <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte A: Riordino degli Eventi Storici</h3>
+                </div>
+                <p class="text-xs text-slate-400">Sposta gli eventi verso l'alto o verso il basso per posizionarli in ordine dal più antico (1) al più recente (8).</p>
+                
+                <div id="timeline-list" class="space-y-2.5"></div>
+                
+                <button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                    <i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine Cronologico
+                </button>
+                <div id="timeline-order-feedback" class="text-xs sm:text-sm font-semibold"></div>
+            </div>
+
+            <!-- PARTE 2: ASSOCIAZIONE EVENTO - DATA -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span>
+                    <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte B: Associazione Evento - Anno Corretto</h3>
+                </div>
+                <p class="text-xs text-slate-400">Associa a ciascun evento storico l'anno esatto in cui si è verificato.</p>
+                
+                <div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                
+                <button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                    <i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Abbinamento Date
+                </button>
+                <div id="timeline-dates-feedback" class="text-xs sm:text-sm font-semibold"></div>
             </div>
         </section>
 
         <!-- TAB 5: MATCHING -->
         <section id="tab-matching" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400">Esercizio 5: Abbinamento Lessico e Istituzioni</h2>
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 5: Abbinamento Concetti (5 Coppie)</h2>
             <div class="glass-card p-6 rounded-2xl space-y-6">
+                <p class="text-xs text-slate-400">Clicca prima su un termine a sinistra e poi sulla sua definizione corretta a destra.</p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div id="matching-terms" class="space-y-2.5"></div>
                     <div id="matching-defs" class="space-y-2.5"></div>
@@ -272,14 +239,19 @@
             </div>
         </section>
 
-        <!-- TAB 6: CLOZE -->
+        <!-- TAB 6: CLOZE (TESTO DINAMICO CON 3 OPZIONI) -->
         <section id="tab-cloze" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Cloze Test Storiografico Integrale</h2>
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Testo Guidato a Completamento</h2>
+                <button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg">
+                    <i class="fa-solid fa-rotate mr-1"></i> Cambia Testo
+                </button>
+            </div>
             <div class="glass-card p-6 rounded-2xl space-y-6">
-                <div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm sm:text-base text-slate-200">
-                    Nel 496 d.C. <select id="cloze-1" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Clodoveo">Clodoveo</option><option value="Meroveo">Meroveo</option></select> si convertì al cattolicesimo. Per la <select id="cloze-2" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Legge Salica">Legge Salica</option><option value="Ordinatio">Ordinatio</option></select> il regno venne diviso. Nel 732 Carlo Martello vince a <select id="cloze-3" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Poitiers">Poitiers</option><option value="Verden">Verden</option></select>, mentre nel 751 <select id="cloze-4" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Pipino il Breve">Pipino il Breve</option><option value="Carlo Magno">Carlo Magno</option></select> depone il re fannullone. L'impero carolingio fu diviso in <select id="cloze-5" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Contee">Contee</option><option value="Ducati">Ducati</option></select> e zone di confine militarizzate chiamate <select id="cloze-6" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Marche">Marche</option><option value="Pagi">Pagi</option></select>. La riserva padronale era il <select id="cloze-7" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Dominicum">Dominicum</option><option value="Massaricium">Massaricium</option></select>, la moneta unica il denaro d'argento (1 libbra = <select id="cloze-8" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="240 Denari">240 Denari</option><option value="100 Denari">100 Denari</option></select>). Nel 843 con il Trattato di <select id="cloze-9" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Verdun (843)">Verdun (843)</option><option value="Quierzy">Quierzy</option></select> l'impero si suddivise, e nell'877 con il Capitolare di <select id="cloze-10" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Quierzy">Quierzy</option><option value="Poitiers">Poitiers</option></select> i feudi maggiori divennero ereditari.
-                </div>
-                <button onclick="checkCloze()" id="btn-check-cloze" class="bg-amber-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl">Verifica Testo</button>
+                <div id="cloze-body-container"></div>
+                <button onclick="checkCloze()" id="btn-check-cloze" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md">
+                    <i class="fa-solid fa-check mr-1.5"></i> Verifica Testo
+                </button>
                 <div id="cloze-feedback" class="text-xs sm:text-sm font-semibold"></div>
             </div>
         </section>
@@ -308,9 +280,10 @@
     <!-- App Logic -->
     <script>
         const state = { 
-            studentName: "Studente", audioEnabled: true, mcqAnswers: {}, tfAnswers: {}, mapAnswers: {},
-            timelineOrder: [0,1,2,3,4,5,6,7], matchingPairs: {}, clozeScore: 0, selectedTermId: null,
-            activeMCQ: [], activeTF: []
+            studentName: "Studente", audioEnabled: true, mcqAnswers: {}, tfAnswers: {}, geoAnswers: {},
+            timelineOrder: [0,1,2,3,4,5,6,7], timelineDateAnswers: {},
+            matchingPairs: {}, clozeScore: 0, selectedTermId: null, activeClozeIndex: 0,
+            activeMCQ: [], activeTF: [], activeGeo: []
         };
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -337,7 +310,7 @@
             return res;
         }
 
-        // POOL ESTESO MCQ FRANCHI (15 Domande)
+        // POOL MCQ
         const mcqPool = [
             { id: 1, question: "Quale fu il fondamentale significato politico della conversione di Clodoveo nel 496 d.C.?", options: ["Alleanza con gli Arabi", "Rottura con i Vescovi", "Appoggio cruciale della Chiesa e delle élite gallo-romane", "Invasione di Bisanzio"], correct: 2, explanation: "Garantì ai Franchi la legittimazione istituzionale dell'episcopato romano." },
             { id: 2, question: "In che cosa consisteva il limite causato dalla Legge Salica nella dinastia Merovingia?", options: ["Il regno era considerato patrimonio privato diviso tra tutti i figli maschi", "Divieto di sposarsi", "Tasse al Papa", "No assemblee"], correct: 0, explanation: "La concezione patrimoniale portava alla frammentazione continua del territorio." },
@@ -345,18 +318,13 @@
             { id: 4, question: "Come risolse Pipino il Breve il golpe del 751 d.C.?", options: ["Sconfisse la flotta", "Chiese a Papa Zaccaria se fosse giusto che fosse re chi non aveva potere effettivo", "Approvò una legge", "Abdicò"], correct: 1, explanation: "Papa Zaccaria avallò la deposizione del re fannullone Childerico III." },
             { id: 5, question: "Campagna militare più dura e prolungata di Carlo Magno (772-804)?", options: ["Conquista di Pavia", "Guerra di Sassonia con la distruzione dell'Irminsul e il massacro di Verden", "Spedizione di Cordova", "Bretagna"], correct: 1, explanation: "La guerra contro i Sassoni durò oltre trent'anni con battesimi forzati." },
             { id: 6, question: "Differenza tra Contee e Marche carolingie?", options: ["Ecclesiastici vs Contadini", "Contee zone interne civili; Marche ampie zone di confine militarizzate", "Solo Italia vs Germania", "Feudi ereditari"], correct: 1, explanation: "Le Marche erano zone di confine rette da un Marchese con poteri militari." },
-            { id: 7, question: "Chi erano i Missi Dominici e quale compito svolgevano?", options: ["Guardie del corpo", "Inviati regi a coppia (un laico e un ecclesiastico) per ispezionare conti e marchese", "Mercanti frisoni", "Insegnanti"], correct: 1, explanation: "Isppezionavano la giustizia e diffondevano i Capitolari." },
+            { id: 7, question: "Chi erano i Missi Dominici e quale compito svolgevano?", options: ["Guardie del corpo", "Inviati regi a coppia (un laico e un ecclesiastico) per ispezionare conti e marchese", "Mercanti frisoni", "Insegnanti"], correct: 1, explanation: "Ispezionavano la giustizia e diffondevano i Capitolari." },
             { id: 8, question: "Riforma monetaria di Carlo Magno?", options: ["Monometallismo aureo", "Baratto", "Monometallismo Argenteo (1 Libbra d'argento = 20 Soldi = 240 Denari)", "Cartamoneta"], correct: 2, explanation: "Il denaro d'argento divenne la moneta unica standardizzata dell'Impero." },
             { id: 9, question: "Le tre parti originate dal Trattato di Verdun dell'843 d.C.?", options: ["Spagna, Inghilterra, Sicilia", "Francia Occidentale, Lotaringia/Italia, Francia Orientale/Germania", "Bisanzio, Roma, Cordova", "Neustria, Sassonia, Baviera"], correct: 1, explanation: "Divise l'impero tra i tre figli di Ludovico il Pio." },
-            { id: 10, question: "Capitolare di Quierzy dell'877 d.C.?", options: ["Scrittura carolina", "Ereditarietà formale dei feudi maggiori", "Cattedra di greco", "Cessione di Roma"], correct: 1, explanation: "Riconobbe l'ereditarietà dei feudi maggiori frammentando l'autorità imperiale." },
-            { id: 11, question: "Quale palazzo divenne la residenza preferita e capitale dell'impero di Carlo Magno?", options: ["Parigi", "Aquisgrana (Aachen)", "Pavia", "Roma"], correct: 1, explanation: "Carlo stabilì ad Aquisgrana la sua corte con la famosa Cappella Palatina." },
-            { id: 12, question: "Cos'era la 'Schola Palatina' guidata da Alcuino di York?", options: ["Un'accademia militare", "Un centro propulsore della rinascita culturale carolingia", "Un tribunale supremo", "Un monastero benedettino"], correct: 1, explanation: "Sotto la guida di Alcuino, radunò i più grandi intellettuali dell'epoca." },
-            { id: 13, question: "Quale sovrano sconfigge i Longobardi a Pavia nel 774 d.C.?", options: ["Pipino il Breve", "Carlo Martello", "Carlo Magno", "Clodoveo"], correct: 2, explanation: "Carlo Magno pose fine al regno longobardo e cinse la corona di re dei Longobardi." },
-            { id: 14, question: "Qual era la funzione delle 'corvées' nel sistema curtense?", options: ["Tasse in moneta d'oro", "Giornate di lavoro gratuito dovute dai contadini sul Dominicum", "Preghiere per il signore", "Servizio di guardia notturna"], correct: 1, explanation: "Erano prestazioni d'opera gratuite che i contadini del Massaricium dovevano svolgere sulla riserva." },
-            { id: 15, question: "Come venne ribattezzata la scrittura chiara e standardizzata introdotta da Carlo Magno?", options: ["Scrittura Gotica", "Minuscola Carolina", "Corsivo Romano", "Unciale Burocratica"], correct: 1, explanation: "La Minuscola Carolina rese uniforme e leggibile la produzione dei codici." }
+            { id: 10, question: "Capitolare di Quierzy dell'877 d.C.?", options: ["Scrittura carolina", "Ereditarietà formale dei feudi maggiori", "Cattedra di greco", "Cessione di Roma"], correct: 1, explanation: "Riconobbe l'ereditarietà dei feudi maggiori frammentando l'autorità imperiale." }
         ];
 
-        // POOL ESTESO V/F FRANCHI (12 Domande)
+        // POOL V/F
         const tfPool = [
             { id: 1, text: "Carlo Magno era un sovrano minuto che amava miniare codici nello scriptorium.", isTrue: false, explanation: "FALSO: Era alto 1,92 m, robusto e guerriero." },
             { id: 2, text: "Il Giuramento di Fedeltà dell'802 d.C. fu reso obbligatorio sopra i 12 anni.", isTrue: true, explanation: "VERO: Ogni maschio libero dai 12 anni doveva giurare fedeltà." },
@@ -365,38 +333,65 @@
             { id: 5, text: "L'incoronazione nell'800 d.C. fu un semplice restauro dell'antico Impero Romano.", isTrue: false, explanation: "FALSO: Fu una sintesi geopolitica nuova di cultura romana, fede cristiana e armi franche." },
             { id: 6, text: "Nel 774 d.C. Carlo Magno sconfigge i Longobardi deponendo re Desiderio.", isTrue: true, explanation: "VERO: Si proclamò Rex Francorum et Langobardorum." },
             { id: 7, text: "I re merovingi venivano chiamati 'reges criniti' (re dalle lunghe chiome).", isTrue: true, explanation: "VERO: La chioma simboleggiava il carisma sacrale." },
-            { id: 8, text: "L'esercito carolingio respinse facilmente le incursioni dei Vichinghi.", isTrue: false, explanation: "FALSO: La lenta leva feudale era inefficace contro le incursioni veloci." },
-            { id: 9, text: "La Promissio Carisiaca di Pipino il Breve gettò le basi per lo Stato della Chiesa.", isTrue: true, explanation: "VERO: Promise al Papa i territori sottratti ai Longobardi." },
-            { id: 10, text: "Carlo Magno conosceva diverse lingue tra cui il latino e capiva il greco.", isTrue: true, explanation: "VERO: Parlava correntemente il franco, il latino e comprendeva il greco." },
-            { id: 11, text: "I feudi minori diventarono ereditari con il Capitolare di Quierzy.", isTrue: false, explanation: "FALSO: Quierzy riguardava i FEUDI MAGGIORI; i minori lo diventeranno nel 1037 (Constitutio de feudis)." },
-            { id: 12, text: "Aquisgrana era la capitale permanente stabilita fin dal tempo di Clodoveo.", isTrue: false, explanation: "FALSO: Clodoveo scelse Parigi, Aquisgrana fu scelta da Carlo Magno." }
+            { id: 8, text: "L'esercito carolingio respinse facilmente le incursioni dei Vichinghi.", isTrue: false, explanation: "FALSO: La lenta leva feudale era inefficace contro le incursioni veloci." }
         ];
 
-        const mapData = [
-            { id: 1, pin: 1, question: "1. Capitale e sede della corte prediletta da Carlo Magno:", options: ["Aquisgrana", "Roma", "Parigi", "Poitiers"], correct: 0 },
-            { id: 2, pin: 2, question: "2. Luogo della storica battaglia del 732 d.C. vinta da Carlo Martello:", options: ["Poitiers", "Aquisgrana", "Verdun", "Pavia"], correct: 0 },
-            { id: 3, pin: 3, question: "3. Città dove Carlo Magno fu incoronato Imperatore la Notte di Natale dell'800 d.C.:", options: ["Roma", "Pavia", "Aquisgrana", "Reims"], correct: 0 },
-            { id: 4, pin: 4, question: "4. Capitale del Regno Longobardo conquistata da Carlo Magno nel 774 d.C.:", options: ["Pavia", "Ravenna", "Verona", "Spoleto"], correct: 0 },
-            { id: 5, pin: 5, question: "5. Sede del famoso Trattato dell'843 d.C. che divise l'Impero tra i tre nipoti:", options: ["Verdun", "Quierzy", "Strasburgo", "Aquisgrana"], correct: 0 }
+        // POOL GEOGRAFIA STORICA
+        const geoPool = [
+            { id: 1, question: "A quale paese o territorio moderno corrisponde prevalentemente l'antica 'Marca Avara' fondata da Carlo Magno a est?", options: ["All'Ungheria e Austria orientale", "Alla Polonia", "Alla Grecia", "Alla Spagna"], correct: 0, explanation: "La Marca Avara proteggeva il confine orientale lungo il Danubio (attuale Ungheria/Austria)." },
+            { id: 2, question: "In quale stato moderno si trova oggi Aquisgrana (Aachen), la capitale prediletta di Carlo Magno?", options: ["In Germania (vicino ai confini con Belgio e Olanda)", "In Francia", "In Svizzera", "In Austria"], correct: 0, explanation: "Aquisgrana si trova nella Renania Settentrionale-Vestfalia, nell'ovest della Germania." },
+            { id: 3, question: "A quale territorio attuale corrispondeva la 'Marca di Spagna' (Marca Hispanica) istituita a protezione dei Pirenei?", options: ["Alla Catalogna (Spagna del Nord)", "All'Andalusia", "Al Portogallo", "Al Marocco"], correct: 0, explanation: "La Marca di Spagna comprendeva la zona cuscinetto tra i Pirenei e il fiume Ebro (Catalogna)." },
+            { id: 4, question: "Quale fiume segnava storicamente il confine nord-orientale più avanzato dell'Impero Carolingio contro le popolazioni Slave?", options: ["Il fiume Elba", "La Senna", "Il Tamigi", "Il Po"], correct: 0, explanation: "L'Elba segnava la frontiera orientale imperiale di sicurezza." },
+            { id: 5, question: "Con il Trattato di Verdun dell'843 d.C., la 'Francia Occidentalis' assegnata a Carlo il Calvo ha dato origine a quale stato moderno?", options: ["Alla Francia", "Alla Germania", "All'Italia", "All'Inghilterra"], correct: 0, explanation: "La Francia Occidentale costituì il nucleo del futuro Regno di Francia." }
         ];
 
-        const timelineData = [
-            { id: 0, year: "496 d.C.", title: "Battesimo di Clodoveo" },
-            { id: 1, year: "732 d.C.", title: "Battaglia di Poitiers" },
-            { id: 2, year: "751 d.C.", title: "Golpe di Pipino il Breve" },
-            { id: 3, year: "782 d.C.", title: "Massacro di Verden" },
-            { id: 4, year: "800 d.C.", title: "Incoronazione Imperiale" },
-            { id: 5, year: "802 d.C.", title: "Giuramento di Fedeltà" },
-            { id: 6, year: "843 d.C.", title: "Trattato di Verdun" },
-            { id: 7, year: "877 d.C.", title: "Capitolare di Quierzy" }
+        // DATI CRONOLOGIA PARTE 1 (TITOLI SENZA DATE)
+        const timelineEvents = [
+            { id: 0, title: "Battesimo di Clodoveo a Reims" },
+            { id: 1, title: "Vittoria di Carlo Martello a Poitiers contro le truppe arabo-berbere" },
+            { id: 2, title: "Colpo di Stato di Pipino il Breve e deposizione dell'ultimo re merovingio" },
+            { id: 3, title: "Massacro di Verden durante la trentennale Guerra di Sassonia" },
+            { id: 4, title: "Incoronazione di Carlo Magno a Roma da parte di Papa Leone III" },
+            { id: 5, title: "Emanazione del Giuramento di Fedeltà obbligatorio sopra i 12 anni" },
+            { id: 6, title: "Trattato di Verdun e spartizione dell'Impero carolingio" },
+            { id: 7, title: "Promulgazione del Capitolare di Quierzy sull'ereditarietà dei feudi maggiori" }
         ];
 
-        const matchingTerms = [{ id: "m1", term: "Dominicum" }, { id: "m2", term: "Massaricium" }, { id: "m3", term: "Corvées" }, { id: "m4", term: "Denaro" }];
+        // DATI CRONOLOGIA PARTE 2 (ASSOCIAZIONE EVENTO - DATA)
+        const timelineDateItems = [
+            { id: 1, event: "Battesimo di Clodoveo", correctDate: "496 d.C.", options: ["496 d.C.", "732 d.C.", "800 d.C."] },
+            { id: 2, event: "Battaglia di Poitiers", correctDate: "732 d.C.", options: ["711 d.C.", "732 d.C.", "751 d.C."] },
+            { id: 3, event: "Inizio regno di Pipino il Breve", correctDate: "751 d.C.", options: ["732 d.C.", "751 d.C.", "800 d.C."] },
+            { id: 4, event: "Incoronazione di Carlo Magno", correctDate: "800 d.C.", options: ["774 d.C.", "800 d.C.", "843 d.C."] },
+            { id: 5, event: "Trattato di Verdun", correctDate: "843 d.C.", options: ["800 d.C.", "843 d.C.", "877 d.C."] }
+        ];
+
+        // MATCHING (5 COPPIE EXACT)
+        const matchingTerms = [
+            { id: "m1", term: "Dominicum" }, 
+            { id: "m2", term: "Massaricium" }, 
+            { id: "m3", term: "Corvées" }, 
+            { id: "m4", term: "Denaro" },
+            { id: "m5", term: "Missi Dominici" }
+        ];
         const matchingDefs = [
-            { id: "d1", matchId: "m1", text: "Riserva padronale gestita direttamente dal signore." },
-            { id: "d2", matchId: "m2", text: "Poderi (mansi) affidati alle famiglie contadine." },
-            { id: "d3", matchId: "m3", text: "Giornate di lavoro gratuito dovute sul Dominicum." },
-            { id: "d4", matchId: "m4", text: "Moneta d'argento unica della riforma monetaria." }
+            { id: "d1", matchId: "m1", text: "Riserva padronale gestita direttamente dal signore tramite i propri servi." },
+            { id: "d2", matchId: "m2", text: "Poderi (mansi) affidati alle famiglie contadine libere o servili." },
+            { id: "d3", matchId: "m3", text: "Giornate di lavoro gratuito che i contadini dovevano prestare sul Dominicum." },
+            { id: "d4", matchId: "m4", text: "Moneta d'argento standard introdotta dalla riforma monetaria carolingia." },
+            { id: "d5", matchId: "m5", text: "Inviati regi a coppia (un laico e un ecclesiastico) per ispezionare le province." }
+        ];
+
+        // POOL TESTI CLOZE (VARIABILI A 3 OPZIONI)
+        const clozePool = [
+            {
+                text: `Nel 496 d.C. il re <select id="cloze-1" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Clodoveo">Clodoveo</option><option value="Meroveo">Meroveo</option><option value="Pipino">Pipino</option></select> si convertì al cattolicesimo. Per la <select id="cloze-2" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Legge Salica">Legge Salica</option><option value="Ordinatio Imperii">Ordinatio Imperii</option><option value="Constitutio">Constitutio</option></select>, il regno venne considerato un bene privato. Nel 732 Carlo Martello vince la battaglia di <select id="cloze-3" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Poitiers">Poitiers</option><option value="Verden">Verden</option><option value="Aquisgrana">Aquisgrana</option></select>, mentre nel 751 <select id="cloze-4" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Pipino il Breve">Pipino il Breve</option><option value="Carlo Magno">Carlo Magno</option><option value="Lotario">Lotario</option></select> depone l'ultimo re fannullone. L'Impero fu diviso in zone interne dette <select id="cloze-5" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Contee">Contee</option><option value="Marche">Marche</option><option value="Duchè">Duchè</option></select> e zone militarizzate di confine chiamate <select id="cloze-6" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Marche">Marche</option><option value="Pagi">Pagi</option><option value="Farae">Farae</option></select>. La riserva padronale era il <select id="cloze-7" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Dominicum">Dominicum</option><option value="Massaricium">Massaricium</option><option value="Manso">Manso</option></select>, la moneta d'argento era il denaro (1 libbra = <select id="cloze-8" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="240 Denari">240 Denari</option><option value="100 Denari">100 Denari</option><option value="50 Denari">50 Denari</option></select>). Nel 843 con il Trattato di <select id="cloze-9" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Verdun (843)">Verdun (843)</option><option value="Quierzy">Quierzy</option><option value="Strasburgo">Strasburgo</option></select> l'impero si suddivise, e nell'877 con il Capitolare di <select id="cloze-10" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Quierzy">Quierzy</option><option value="Poitiers">Poitiers</option><option value="Reims">Reims</option></select> i feudi maggiori divennero ereditari.`,
+                answers: { 1: "Clodoveo", 2: "Legge Salica", 3: "Poitiers", 4: "Pipino il Breve", 5: "Contee", 6: "Marche", 7: "Dominicum", 8: "240 Denari", 9: "Verdun (843)", 10: "Quierzy" }
+            },
+            {
+                text: `L'amministrazione dell'Impero carolingio prevedeva l'invio dei <select id="cloze-1" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Missi Dominici">Missi Dominici</option><option value="Gastaldi">Gastaldi</option><option value="Tribuni">Tribuni</option></select> per controllare l'operato dei conti. La capitale prediletta da Carlo Magno fu <select id="cloze-2" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Aquisgrana">Aquisgrana</option><option value="Parigi">Parigi</option><option value="Pavia">Pavia</option></select>, dove venne fondata la Schola Palatina guidata dall'intellettuale <select id="cloze-3" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Alcuino di York">Alcuino di York</option><option value="Paolo Diacono">Paolo Diacono</option><option value="Eginardo">Eginardo</option></select>. Per rendere trasparenti e uniformi i documenti legali, fu adottata una nuova grafia chiamata <select id="cloze-4" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Minuscola Carolina">Minuscola Carolina</option><option value="Corsiva Gotica">Corsiva Gotica</option><option value="Unciale">Unciale</option></select>. L'economia curtense si basava sulle prestazioni di lavoro gratuite chiamate <select id="cloze-5" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Corvées">Corvées</option><option value="Guidrigildi">Guidrigildi</option><option value="Decime">Decime</option></select>. Il 25 Dicembre dell'anno <select id="cloze-6" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="800 d.C.">800 d.C.</option><option value="774 d.C.">774 d.C.</option><option value="843 d.C.">843 d.C.</option></select>, Carlo Magno fu incoronato a Roma da Papa <select id="cloze-7" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Leone III">Leone III</option><option value="Stefano II">Stefano II</option><option value="Zaccaria">Zaccaria</option></select>. Alla sua morte successe il figlio <select id="cloze-8" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Ludovico il Pio">Ludovico il Pio</option><option value="Carlo il Calvo">Carlo il Calvo</option><option value="Lotario">Lotario</option></select>, i cui tre eredi stipularono i Giuramenti di <select id="cloze-9" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Strasburgo">Strasburgo</option><option value="Verdun">Verdun</option><option value="Sutri">Sutri</option></select> e il successivo trattato di pacificazione dell'843.`,
+                answers: { 1: "Missi Dominici", 2: "Aquisgrana", 3: "Alcuino di York", 4: "Minuscola Carolina", 5: "Corvées", 6: "800 d.C.", 7: "Leone III", 8: "Ludovico il Pio", 9: "Strasburgo" }
+            }
         ];
 
         function renderMCQ() {
@@ -407,7 +402,7 @@
                     <div class="font-bold text-slate-100 text-sm">${idx + 1}. ${q.question}</div>
                     <div class="space-y-2">
                         ${q.options.map((opt, oIdx) => `
-                            <button onclick="selectMCQ(${q.id}, ${oIdx})" id="mcq-btn-${q.id}-${oIdx}" class="mcq-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all">${opt}</button>
+                            <button onclick="selectMCQ(${q.id}, ${oIdx})" id="mcq-btn-${q.id}-${oIdx}" class="mcq-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
                         `).join('')}
                     </div>
                     <div id="mcq-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
@@ -420,7 +415,6 @@
             const q = mcqPool.find(item => item.id === qId);
             state.mcqAnswers[qId] = oIdx;
 
-            // BLOCCA TUTTI I PULSANTI DI QUESTA DOMANDA
             document.querySelectorAll(`.mcq-option-${qId}`).forEach(btn => {
                 btn.disabled = true;
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -460,7 +454,6 @@
             const item = tfPool.find(d => d.id === id);
             state.tfAnswers[id] = choice;
 
-            // BLOCCA I PULSANTI VERO/FALSO
             document.querySelectorAll(`.tf-option-${id}`).forEach(btn => {
                 btn.disabled = true;
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -473,49 +466,55 @@
             updateGlobalScore();
         }
 
-        function renderMapQuiz() {
-            const container = document.getElementById('map-questions-container');
-            container.innerHTML = mapData.map((q) => `
-                <div class="glass-card p-3.5 rounded-xl space-y-2">
-                    <label class="block text-xs font-bold text-slate-200">${q.question}</label>
-                    <select id="map-select-${q.id}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-amber-300 focus:outline-none">
-                        <option value="">-- Seleziona Luogo --</option>
-                        ${q.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                    </select>
+        function renderGeo() {
+            state.activeGeo = shuffle(geoPool).slice(0, 5);
+            const container = document.getElementById('geo-container');
+            container.innerHTML = state.activeGeo.map((q, idx) => `
+                <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+                    <div class="font-bold text-slate-100 text-sm"><i class="fa-solid fa-compass text-amber-400 mr-2"></i>${idx + 1}. ${q.question}</div>
+                    <div class="space-y-2">
+                        ${q.options.map((opt, oIdx) => `
+                            <button onclick="selectGeo(${q.id}, ${oIdx})" id="geo-btn-${q.id}-${oIdx}" class="geo-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div id="geo-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
                 </div>
             `).join('');
         }
 
-        function checkMapQuiz() {
-            let correct = 0;
-            mapData.forEach(q => {
-                const el = document.getElementById(`map-select-${q.id}`);
-                el.disabled = true;
-                if (el.value === q.options[q.correct]) {
-                    correct++;
-                    el.className = "w-full bg-emerald-950 border border-emerald-500 rounded-lg p-2 text-xs text-emerald-300 font-bold";
-                } else {
-                    el.className = "w-full bg-rose-950 border border-rose-500 rounded-lg p-2 text-xs text-rose-300 font-bold";
-                }
-            });
-            document.getElementById('check-map-btn').disabled = true;
-            document.getElementById('check-map-btn').classList.add('opacity-50', 'cursor-not-allowed');
+        function selectGeo(qId, oIdx) {
+            playSound('click');
+            const q = geoPool.find(item => item.id === qId);
+            state.geoAnswers[qId] = oIdx;
 
-            const fb = document.getElementById('map-feedback');
-            if(correct === mapData.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold pt-2"; fb.innerText = "Perfetto! Mappa identificata al 100%."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold pt-2"; fb.innerText = `Risposte corrette sulla mappa: ${correct} su ${mapData.length}.`; }
-            state.mapScore = Math.round((correct / mapData.length) * 100);
+            document.querySelectorAll(`.geo-option-${qId}`).forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+
+            const fb = document.getElementById(`geo-feedback-${qId}`);
+            fb.classList.remove('hidden');
+            if(oIdx === q.correct) {
+                playSound('correct');
+                fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
+                fb.innerHTML = `<strong>Esatto!</strong> ${q.explanation}`;
+            } else {
+                playSound('error');
+                fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
+                fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`;
+            }
             updateGlobalScore();
         }
 
-        function renderTimeline() {
+        // RENDER CRONOLOGIA PARTE A (ORDINAMENTO SITO SENZA DATE)
+        function renderTimelineOrder() {
             const list = document.getElementById('timeline-list');
             list.innerHTML = state.timelineOrder.map((dataIdx, currentPos) => `
                 <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
-                    <span class="text-purple-300 font-bold">${currentPos + 1}. ${timelineData[dataIdx].title}</span>
+                    <span class="text-purple-300 font-bold">${currentPos + 1}. ${timelineEvents[dataIdx].title}</span>
                     <div class="flex gap-1">
-                        <button onclick="moveTimeline(${currentPos}, -1)" class="p-1 text-purple-400"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button onclick="moveTimeline(${currentPos}, 1)" class="p-1 text-purple-400"><i class="fa-solid fa-chevron-down"></i></button>
+                        <button onclick="moveTimeline(${currentPos}, -1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button>
+                        <button onclick="moveTimeline(${currentPos}, 1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button>
                     </div>
                 </div>
             `).join('');
@@ -523,58 +522,125 @@
 
         function moveTimeline(pos, dir) {
             const target = pos + dir;
-            if(target < 0 || target >= timelineData.length) return;
+            if(target < 0 || target >= timelineEvents.length) return;
             const temp = state.timelineOrder[pos];
             state.timelineOrder[pos] = state.timelineOrder[target];
             state.timelineOrder[target] = temp;
-            renderTimeline();
+            renderTimelineOrder();
         }
 
-        function checkTimeline() {
+        function checkTimelineOrder() {
             let correct = 0;
             state.timelineOrder.forEach((v, i) => { if(v === i) correct++; });
-            const fb = document.getElementById('timeline-feedback');
-            document.getElementById('btn-check-timeline').disabled = true;
-            document.getElementById('btn-check-timeline').classList.add('opacity-50', 'cursor-not-allowed');
+            const fb = document.getElementById('timeline-order-feedback');
+            document.getElementById('btn-check-timeline-order').disabled = true;
+            document.getElementById('btn-check-timeline-order').classList.add('opacity-50', 'cursor-not-allowed');
 
-            if(correct === timelineData.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Perfetto! Sequenza corretta al 100%."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Elementi in ordine corretto: ${correct} su ${timelineData.length}.`; }
+            if(correct === timelineEvents.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Perfetto! Sequenza cronologica esatta al 100%."; }
+            else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Eventi in posizione corretta: ${correct} su ${timelineEvents.length}.`; }
             updateGlobalScore();
         }
 
+        // RENDER CRONOLOGIA PARTE B (ASSOCIAZIONE EVENTO - DATA)
+        function renderTimelineDates() {
+            const container = document.getElementById('timeline-dates-container');
+            container.innerHTML = timelineDateItems.map((item) => `
+                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <div class="text-xs font-bold text-slate-200">${item.event}</div>
+                    <select id="timeline-date-select-${item.id}" onchange="selectTimelineDate(${item.id}, this.value)" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs">
+                        <option value="">-- Seleziona l'anno --</option>
+                        ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                </div>
+            `).join('');
+        }
+
+        function selectTimelineDate(id, val) {
+            state.timelineDateAnswers[id] = val;
+        }
+
+        function checkTimelineDates() {
+            let correct = 0;
+            timelineDateItems.forEach(item => {
+                const sel = document.getElementById(`timeline-date-select-${item.id}`);
+                if(sel) sel.disabled = true;
+                if(state.timelineDateAnswers[item.id] === item.correctDate) correct++;
+            });
+            const fb = document.getElementById('timeline-dates-feedback');
+            document.getElementById('btn-check-timeline-dates').disabled = true;
+            document.getElementById('btn-check-timeline-dates').classList.add('opacity-50', 'cursor-not-allowed');
+
+            if(correct === timelineDateItems.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Eccellente! Tutte le date sono state associate correttamente."; }
+            else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Date associate correttamente: ${correct} su ${timelineDateItems.length}.`; }
+            updateGlobalScore();
+        }
+
+        // RENDER MATCHING (5 COPPIE)
         function renderMatching() {
             const termsContainer = document.getElementById('matching-terms');
             const defsContainer = document.getElementById('matching-defs');
-            termsContainer.innerHTML = matchingTerms.map(t => `<button onclick="selectTerm('${t.id}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200">${t.term}</button>`).join('');
-            defsContainer.innerHTML = matchingDefs.map(d => `<button onclick="selectDef('${d.matchId}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300">${d.text}</button>`).join('');
+            termsContainer.innerHTML = matchingTerms.map(t => `<button onclick="selectTerm('${t.id}')" id="term-btn-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50">${t.term}</button>`).join('');
+            defsContainer.innerHTML = shuffle(matchingDefs).map(d => `<button onclick="selectDef('${d.matchId}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50">${d.text}</button>`).join('');
         }
 
-        function selectTerm(id) { state.selectedTermId = id; playSound('click'); }
+        function selectTerm(id) { 
+            state.selectedTermId = id; 
+            playSound('click'); 
+            matchingTerms.forEach(t => {
+                const btn = document.getElementById(`term-btn-${t.id}`);
+                if(btn) btn.className = (t.id === id) ? "w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200";
+            });
+        }
+
         function selectDef(matchId) {
             if(!state.selectedTermId) return;
             const fb = document.getElementById('matching-feedback');
-            if(state.selectedTermId === matchId) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Abbinamento corretto!"; }
-            else { playSound('error'); fb.className = "text-rose-400 font-bold"; fb.innerText = "Abbinamento errato. Riprova!"; }
+            if(state.selectedTermId === matchId) { 
+                playSound('correct'); 
+                fb.className = "text-emerald-400 font-bold"; 
+                fb.innerText = "Abbinamento corretto!"; 
+                state.matchingPairs[matchId] = true;
+            } else { 
+                playSound('error'); 
+                fb.className = "text-rose-400 font-bold"; 
+                fb.innerText = "Abbinamento errato. Seleziona un altro termine e riprova!"; 
+            }
             state.selectedTermId = null;
             updateGlobalScore();
         }
 
+        // RENDER CLOZE (TESTO DINAMICO CON 3 OPZIONI)
+        function renderCloze() {
+            state.activeClozeIndex = Math.floor(Math.random() * clozePool.length);
+            const currentCloze = clozePool[state.activeClozeIndex];
+            const container = document.getElementById('cloze-body-container');
+            container.innerHTML = `<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm sm:text-base text-slate-200 border border-slate-800">${currentCloze.text}</div>`;
+            document.getElementById('btn-check-cloze').disabled = false;
+            document.getElementById('btn-check-cloze').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('cloze-feedback').innerText = "";
+        }
+
         function checkCloze() {
-            const answers = { 1: "Clodoveo", 2: "Legge Salica", 3: "Poitiers", 4: "Pipino il Breve", 5: "Contee", 6: "Marche", 7: "Dominicum", 8: "240 Denari", 9: "Verdun (843)", 10: "Quierzy" };
+            const currentCloze = clozePool[state.activeClozeIndex];
+            const answers = currentCloze.answers;
             let correct = 0;
-            for(let i=1; i<=10; i++) {
+            const total = Object.keys(answers).length;
+
+            for(let i=1; i<=total; i++) {
                 const el = document.getElementById(`cloze-${i}`);
-                el.disabled = true;
-                if(el.value === answers[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1"; }
-                else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1"; }
+                if(el) {
+                    el.disabled = true;
+                    if(el.value === answers[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold"; }
+                    else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold"; }
+                }
             }
             document.getElementById('btn-check-cloze').disabled = true;
             document.getElementById('btn-check-cloze').classList.add('opacity-50', 'cursor-not-allowed');
 
-            state.clozeScore = Math.round((correct / 10) * 100);
+            state.clozeScore = Math.round((correct / total) * 100);
             const fb = document.getElementById('cloze-feedback');
-            if(correct === 10) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Eccellente! 10/10 corretto."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/10. Correggi le caselle rosse.`; }
+            if(correct === total) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = `Eccellente! ${correct}/${total} lacune completate correttamente.`; }
+            else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/${total}. Le risposte errate sono evidenziate in rosso.`; }
             updateGlobalScore();
         }
 
@@ -584,18 +650,26 @@
             
             let tfCorrect = 0; 
             state.activeTF.forEach(d => { if(state.tfAnswers[d.id] === d.isTrue) tfCorrect++; });
-            
-            let timelineCorrect = 0; 
-            state.timelineOrder.forEach((v, i) => { if(v === i) timelineCorrect++; });
 
-            const mapScorePoints = (state.mapScore || 0) * 0.15;
+            let geoCorrect = 0;
+            state.activeGeo.forEach(g => { if(state.geoAnswers[g.id] === g.correct) geoCorrect++; });
+            
+            let timelineOrderCorrect = 0; 
+            state.timelineOrder.forEach((v, i) => { if(v === i) timelineOrderCorrect++; });
+
+            let timelineDatesCorrect = 0;
+            timelineDateItems.forEach(item => { if(state.timelineDateAnswers[item.id] === item.correctDate) timelineDatesCorrect++; });
+
+            let matchingCorrect = Object.keys(state.matchingPairs).length;
 
             const total = Math.round(
-                (state.activeMCQ.length ? (mcqCorrect / state.activeMCQ.length) * 25 : 0) + 
+                (state.activeMCQ.length ? (mcqCorrect / state.activeMCQ.length) * 20 : 0) + 
                 (state.activeTF.length ? (tfCorrect / state.activeTF.length) * 20 : 0) + 
-                mapScorePoints +
-                (timelineCorrect / 8) * 15 + 
-                (state.clozeScore / 100) * 25
+                (state.activeGeo.length ? (geoCorrect / state.activeGeo.length) * 15 : 0) +
+                (timelineOrderCorrect / 8) * 10 + 
+                (timelineDatesCorrect / 5) * 10 +
+                (matchingCorrect / 5) * 10 +
+                (state.clozeScore / 100) * 15
             );
 
             document.getElementById('global-score-text').innerText = `${total} / 100`;
@@ -621,12 +695,19 @@
         }
 
         function resetAll() {
-            state.mcqAnswers = {}; state.tfAnswers = {}; state.mapAnswers = {}; state.timelineOrder = [0,1,2,3,4,5,6,7]; state.clozeScore = 0; state.mapScore = 0;
-            renderMCQ(); renderTF(); renderMapQuiz(); renderTimeline(); renderMatching();
+            state.mcqAnswers = {}; state.tfAnswers = {}; state.geoAnswers = {}; 
+            state.timelineOrder = [0,1,2,3,4,5,6,7]; state.timelineDateAnswers = {};
+            state.matchingPairs = {}; state.clozeScore = 0;
+            renderMCQ(); renderTF(); renderGeo(); renderTimelineOrder(); renderTimelineDates(); renderMatching(); renderCloze();
             updateGlobalScore(); switchTab('tab-studio');
         }
 
-        window.addEventListener('DOMContentLoaded', () => { renderMCQ(); renderTF(); renderMapQuiz(); renderTimeline(); renderMatching(); updateGlobalScore(); });
+        window.addEventListener('DOMContentLoaded', () => { 
+            renderMCQ(); renderTF(); renderGeo(); 
+            renderTimelineOrder(); renderTimelineDates(); 
+            renderMatching(); renderCloze(); 
+            updateGlobalScore(); 
+        });
     </script>
 </body>
 </html>

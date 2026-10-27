@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piattaforma Didattica: La Guerra dei Trent'anni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: { 450: '#10b981' },
+                        medieval: { dark: '#080d16', card: '#111927', border: '#1f2a3e' }
+                    },
+                    fontFamily: { cinzel: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080d16; color: #f1f5f9; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .tab-btn.active { background-color: #059669; color: #ffffff; border-color: #34d399; box-shadow: 0 4px 20px -2px rgba(5, 150, 105, 0.5); }
+        .glass-card { background: linear-gradient(135deg, rgba(17, 25, 39, 0.85), rgba(10, 15, 26, 0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .badge-glow { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-certificate, #printable-certificate * { visibility: visible; }
+            #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-slate-950">
+
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center space-x-2 text-xs sm:text-sm">
+            <a href="index.html" class="text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-semibold">
+                <i class="fa-solid fa-house"></i> Home Portale
+            </a>
+            <span class="text-slate-600">/</span>
+            <a href="storia-moderna.html" class="text-slate-400 hover:text-emerald-400 transition-colors font-semibold">Storia Moderna</a>
+            <span class="text-slate-600">/</span>
+            <span class="text-emerald-400 font-bold">La Guerra dei Trent'anni</span>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+            <div class="relative flex items-center">
+                <i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+                <input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 w-40 sm:w-48">
+            </div>
+            <button onclick="toggleAudio()" id="sound-btn" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-emerald-400" title="Audio">
+                <i class="fa-solid fa-volume-high text-sm"></i>
+            </button>
+            <div class="flex items-center space-x-3 bg-slate-900 border border-emerald-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+                <div class="text-right">
+                    <span class="text-[10px] uppercase tracking-wider text-emerald-400/80 block font-bold">Punti XP</span>
+                    <span id="global-score-text" class="text-sm font-extrabold text-emerald-400">0 / 100</span>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Navigation Bar -->
+<nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+        <button onclick="switchTab('tab-studio')" class="tab-btn active px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent">
+            <i class="fa-solid fa-map text-emerald-400"></i> 0. Quadro Storico
+        </button>
+        <button onclick="switchTab('tab-mcq')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz (10)
+        </button>
+        <button onclick="switchTab('tab-tf')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. V/F (8)
+        </button>
+        <button onclick="switchTab('tab-geo')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-earth-europe text-teal-400"></i> 3. Geografia (5)
+        </button>
+        <button onclick="switchTab('tab-timeline')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-timeline text-purple-400"></i> 4. Cronologia
+        </button>
+        <button onclick="switchTab('tab-phases')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-layer-group text-orange-400"></i> 5. Fasi
+        </button>
+        <button onclick="switchTab('tab-causes')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-arrow-right-arrow-left text-fuchsia-400"></i> 6. Cause/Effetti
+        </button>
+        <button onclick="switchTab('tab-sources')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-scroll text-amber-400"></i> 7. Fonti
+        </button>
+        <button onclick="switchTab('tab-matching')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-diagram-project text-rose-400"></i> 8. Concetti
+        </button>
+        <button onclick="switchTab('tab-cloze')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-pen-nib text-amber-400"></i> 9. Testo Guidato
+        </button>
+        <button onclick="switchTab('tab-report')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900">
+            <i class="fa-solid fa-certificate text-yellow-400"></i> Certificato
+        </button>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+    <!-- TAB 0: STUDIO -->
+    <section id="tab-studio" class="tab-content space-y-8">
+        <div class="glass-card p-6 sm:p-8 rounded-2xl border-emerald-500/20 relative overflow-hidden">
+            <div class="max-w-3xl space-y-3">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico • Storia Moderna
+                </span>
+                <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400">La Guerra dei Trent'anni (1618-1648)</h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Il conflitto più sanguinoso dell'Europa moderna: dallo scontro religioso tra protestanti e cattolici alla defenestrazione di Praga, dalle quattro fasi (boema, danese, svedese, francese) fino alla Pace di Vestfalia che ridisegnò la mappa del continente e inaugurò l'idea di tolleranza religiosa.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-emerald-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-fire"></i></div>
+                <h3 class="font-bold text-lg text-slate-100">1. Le cause profonde</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Tre livelli di contesa: protestanti vs cattolici, stati del SRI vs governo centrale, stati europei tra loro.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-sky-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-crown"></i></div>
+                <h3 class="font-bold text-lg text-slate-100">2. La Pace di Augusta (1555)</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed"><em>Cuius regio eius religio</em>: la religione del principe determina quella dei sudditi. Riconosce solo luterani e cattolici, NON i calvinisti.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-purple-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-window-maximize"></i></div>
+                <h3 class="font-bold text-lg text-slate-100">3. Defenestrazione di Praga (1618)</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">I nobili boemi protestanti gettano dalla finestra i delegati imperiali. È l'evento che scatena la guerra.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-amber-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3 class="font-bold text-lg text-slate-100">4. Le 4 fasi</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Boemo-palatina (1618-1625) • Danese (1625-1629) • Svedese (1630-1635) • Francese (1636-1648).</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-rose-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-skull-crossbones"></i></div>
+                <h3 class="font-bold text-lg text-slate-100">5. La mortalità</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">La Germania passa da 17 a 10 milioni di abitanti: più di un terzo della popolazione muore, tra guerra e peste.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-teal-500/40 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-dove"></i></div>
+                <h3 class="font-bold text-lg text-slate-100">6. Pace di Vestfalia (1648)</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Indipendenza Province Unite e Svizzera, Francia e Svezia rafforzate, declino spagnolo. Nasce il "concerto europeo" e l'idea di tolleranza religiosa.</p>
+            </div>
+        </div>
+
+        <div class="text-center pt-4">
+            <button onclick="switchTab('tab-mcq')" class="bg-emerald-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-emerald-600">Inizia il Test sulla Guerra dei Trent'anni ➔</button>
+        </div>
+    </section>
+
+    <!-- TAB 1: MCQ -->
+    <section id="tab-mcq" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo (10 Quesiti Estratti)</h2>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate al primo clic</span>
+        </div>
+        <div id="mcq-container" class="space-y-6"></div>
+    </section>
+
+    <!-- TAB 2: VERO O FALSO -->
+    <section id="tab-tf" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso Motivato (8 Quesiti)</h2>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate al primo clic</span>
+        </div>
+        <div id="tf-container" class="space-y-4"></div>
+    </section>
+
+    <!-- TAB 3: GEOGRAFIA -->
+    <section id="tab-geo" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <div>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Geografia Storica del Conflitto</h2>
+                <p class="text-xs sm:text-sm text-slate-400">Luoghi, battaglie e territori della Guerra dei Trent'anni.</p>
+            </div>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-teal-400"></i> Risposte bloccate al primo clic</span>
+        </div>
+        <div id="geo-container" class="space-y-6"></div>
+    </section>
+
+    <!-- TAB 4: CRONOLOGIA -->
+    <section id="tab-timeline" class="tab-content hidden space-y-8">
+        <div>
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 4: Cronologia & Date</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Completa le due sezioni per verificare il senso del tempo storico.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+            <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span>
+                <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte A: Riordino degli Eventi (dal più antico all'ultimo)</h3>
+            </div>
+            <p class="text-xs text-slate-400">Sposta gli eventi con le frecce per ricostruire la sequenza cronologica.</p>
+            <div id="timeline-list" class="space-y-2.5"></div>
+            <button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                <i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine Cronologico
+            </button>
+            <div id="timeline-order-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+            <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span>
+                <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte B: Associazione Evento - Anno</h3>
+            </div>
+            <p class="text-xs text-slate-400">Associa a ciascun evento storico l'anno esatto.</p>
+            <div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            <button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                <i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Abbinamento Date
+            </button>
+            <div id="timeline-dates-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+    </section>
+
+    <!-- TAB 5: FASI DELLA GUERRA (RIDISEGNATO) -->
+    <section id="tab-phases" class="tab-content hidden space-y-8">
+        <div>
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-orange-400 border-b border-slate-800 pb-2">Esercizio 5: Le Quattro Fasi della Guerra — Classificazione e Ragionamento</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Metti alla prova la capacità di collocare gli eventi nel contesto giusto e di ragionare sulle cause profonde delle fasi.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-4 border border-orange-500/30">
+            <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-300 font-bold flex items-center justify-center text-xs">A</span>
+                <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte A: Classifica ciascun evento nella fase corretta</h3>
+            </div>
+            <p class="text-xs text-slate-400">Per ogni evento seleziona la fase in cui è avvenuto. <strong class="text-orange-300">Le date non sono indicate</strong>: ragiona su protagonisti, luoghi e contesto per collocarlo.</p>
+            <div id="phases-classify-container" class="space-y-2.5"></div>
+            <button onclick="checkPhasesClassify()" id="btn-check-phases-classify" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                <i class="fa-solid fa-tags mr-1.5"></i> Verifica Classificazione
+            </button>
+            <div id="phases-classify-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-4 border border-orange-500/30">
+            <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-300 font-bold flex items-center justify-center text-xs">B</span>
+                <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte B: Ragiona sulle fasi</h3>
+            </div>
+            <p class="text-xs text-slate-400">Non basta ricordare: leggi con attenzione e scegli la risposta che spiega il <em>perché</em> di ciascun esito.</p>
+            <div id="phases-reasoning-container" class="space-y-6"></div>
+        </div>
+    </section>
+
+    <!-- TAB 6: CAUSE ED EFFETTI -->
+    <section id="tab-causes" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-fuchsia-400">Esercizio 6: Cause ed Effetti</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Ragiona sulle concatenazioni storiche: a ogni causa associa l'effetto che ha prodotto.</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xs font-bold text-fuchsia-300 uppercase tracking-wider mb-3"><i class="fa-solid fa-bolt mr-1"></i> Cause</h3>
+                    <div id="causes-terms" class="space-y-2.5"></div>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-fuchsia-300 uppercase tracking-wider mb-3"><i class="fa-solid fa-arrow-right mr-1"></i> Effetti</h3>
+                    <div id="causes-defs" class="space-y-2.5"></div>
+                </div>
+            </div>
+            <div id="causes-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+    </section>
+
+    <!-- TAB 7: ANALISI DELLE FONTI -->
+    <section id="tab-sources" class="tab-content hidden space-y-6">
+        <div class="border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 7: Analisi delle Fonti</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Leggi ogni citazione e ragiona: cosa rivela sulle intenzioni, sulle strategie e sui limiti dei protagonisti?</p>
+        </div>
+        <div id="sources-container" class="space-y-6"></div>
+    </section>
+
+    <!-- TAB 8: MATCHING -->
+    <section id="tab-matching" class="tab-content hidden space-y-6">
+        <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 8: Abbinamento Concetti (5 Coppie)</h2>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <p class="text-xs text-slate-400">Clicca prima su un termine a sinistra e poi sulla sua definizione corretta a destra.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div id="matching-terms" class="space-y-2.5"></div>
+                <div id="matching-defs" class="space-y-2.5"></div>
+            </div>
+            <div id="matching-feedback" class="text-xs sm:text-sm font-semibold pt-2"></div>
+        </div>
+    </section>
+
+    <!-- TAB 9: CLOZE -->
+    <section id="tab-cloze" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 9: Testo Guidato a Completamento</h2>
+            <button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg">
+                <i class="fa-solid fa-rotate mr-1"></i> Cambia Testo
+            </button>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <div id="cloze-body-container"></div>
+            <button onclick="checkCloze()" id="btn-check-cloze" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md">
+                <i class="fa-solid fa-check mr-1.5"></i> Verifica Testo
+            </button>
+            <div id="cloze-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+    </section>
+
+    <!-- TAB 10: REPORT -->
+    <section id="tab-report" class="tab-content hidden space-y-6">
+        <div class="glass-card p-8 rounded-2xl text-center space-y-6">
+            <h2 class="font-cinzel text-2xl font-bold text-emerald-400">Valutazione Globale delle Competenze</h2>
+            <div class="text-4xl font-black text-emerald-400" id="report-score">0 / 100 XP</div>
+            <div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
+            <div class="flex justify-center gap-4">
+                <button onclick="window.print()" class="bg-emerald-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato PDF</button>
+                <button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia Esercizi</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 space-x-4">
+    <a href="index.html" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-house mr-1"></i> Home Portale</a>
+    <span>•</span>
+    <a href="storia-moderna.html" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-shield-halved mr-1"></i> Storia Moderna</a>
+</footer>
+
+<script>
+    const state = {
+        studentName: "Studente", audioEnabled: true,
+        mcqAnswers: {}, tfAnswers: {}, geoAnswers: {},
+        timelineOrder: [0,1,2,3,4,5,6,7], timelineDateAnswers: {},
+        phasesClassifyAnswers: {}, phasesReasoningAnswers: {},
+        causesPairs: {},
+        sourcesAnswers: {},
+        matchingPairs: {},
+        clozeScore: 0, selectedTermId: null, selectedCauseId: null,
+        activeClozeIndex: 0,
+        activeMCQ: [], activeTF: [], activeGeo: [],
+        timelineChecked: false, timelineDatesChecked: false
+    };
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        if (!state.audioEnabled) return;
+        try {
+            const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            if (type === 'click') { osc.frequency.setValueAtTime(400, audioCtx.currentTime); gain.gain.setValueAtTime(0.05, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.05); }
+            else if (type === 'correct') { osc.frequency.setValueAtTime(880, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
+            else if (type === 'error') { osc.frequency.setValueAtTime(220, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
+        } catch(e){}
+    }
+    function toggleAudio() { state.audioEnabled = !state.audioEnabled; }
+    function updateStudentName(val) { state.studentName = val || "Studente"; }
+    function shuffle(arr) {
+        let res = arr.slice();
+        for (let i = res.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [res[i], res[j]] = [res[j], res[i]];
+        }
+        return res;
+    }
+
+    /* ============ POOL MCQ (10 random da 15) ============ */
+    const mcqPool = [
+        { id: 1, question: "In quale periodo fu combattuta la Guerra dei Trent'anni?", options: ["1494-1559", "1618-1648", "1555-1600", "1700-1740"], correct: 1, explanation: "Il conflitto si svolse tra il 1618 (Defenestrazione di Praga) e il 1648 (Pace di Vestfalia)." },
+        { id: 2, question: "Cosa stabiliva la Pace di Augusta del 1555?", options: ["La libertà religiosa per tutti", "Il principio 'cuius regio eius religio'", "La supremazia del Papa sugli imperatori", "Il riconoscimento del calvinismo"], correct: 1, explanation: "Con 'cuius regio eius religio' la religione del principe determinava quella dei sudditi. Riconosceva luteranesimo e cattolicesimo, NON calvinismo." },
+        { id: 3, question: "Quale confessione NON fu riconosciuta dalla Pace di Augusta?", options: ["Cattolicesimo", "Luteranesimo", "Calvinismo", "Anglicanesimo"], correct: 2, explanation: "Il calvinismo restò escluso, e fu una delle cause delle tensioni successive." },
+        { id: 4, question: "Cosa accadde il 23 maggio 1618 a Praga?", options: ["La battaglia della Montagna Bianca", "La Defenestrazione dei delegati imperiali", "La firma della Pace di Praga", "La morte di Gustavo Adolfo"], correct: 1, explanation: "I nobili boemi protestanti gettarono dalla finestra del castello i tre delegati imperiali: è l'evento che scatena la guerra." },
+        { id: 5, question: "Chi era il 'Leone di Mezzanotte' della profezia di Paracelso?", options: ["Wallenstein", "Ferdinando II", "Gustavo Adolfo II di Svezia", "Richelieu"], correct: 2, explanation: "Il re svedese, biondo e proveniente dal nord, fu identificato nel 'leone giallo' che avrebbe sconfitto l'aquila (l'Impero)." },
+        { id: 6, question: "Quale fu la principale innovazione militare di Gustavo Adolfo?", options: ["L'uso della polvere da sparo per primo", "Eserciti mercenari permanenti", "Tattiche con piccoli quadrati, fuoco continuo ed esercito statale", "La cavalleria pesante corazzata"], correct: 2, explanation: "Divise l'esercito in quadrati agili, introdusse il fuoco continuo a file rotanti, cannonì leggeri e una leva statale obbligatoria." },
+        { id: 7, question: "Perché la cattolica Francia intervenne contro l'Impero (anch'esso cattolico)?", options: ["Per obbedire al Papa", "Per diffondere il protestantesimo", "Per motivi politici: limitare l'accerchiamento asburgico", "Per conquistare la Spagna"], correct: 2, explanation: "La guerra perse la sua matrice religiosa: la Francia, cattolica, si alleò con la Svezia protestante per ragioni di equilibrio politico." },
+        { id: 8, question: "Quale battaglia (1631) segnò la prima grande sconfitta dell'esercito imperiale?", options: ["Montagna Bianca", "Breitenfeld", "Lützen", "Rocroi"], correct: 1, explanation: "A Breitenfeld gli svedesi sconvolsero l'esercito imperiale: fu una svolta totale nella guerra." },
+        { id: 9, question: "Cosa avvenne a Magdeburgo durante la fase svedese?", options: ["Fu liberata da Gustavo Adolfo", "Fu distrutta brutalmente dagli imperiali, creando scandalo in Europa", "Divenne capitale dell'Impero", "Fu ceduta alla Francia"], correct: 1, explanation: "L'assedio e l'incendio della città protestante crearono una potente arma propagandistica in favore di Gustavo Adolfo." },
+        { id: 10, question: "Quale evento pose fine alla fase boemo-palatina?", options: ["La battaglia della Montagna Bianca (1620)", "La Pace di Vestfalia (1648)", "La morte di Gustavo Adolfo (1632)", "La defenestrazione di Praga (1618)"], correct: 0, explanation: "Con la Montagna Bianca l'esercito imperiale sconfisse i boemi: la Boemia fu annessa agli Asburgo e ricattolicizzata." },
+        { id: 11, question: "Chi guidò la Lega Cattolica fondata nel 1609?", options: ["Ferdinando II", "Massimiliano di Baviera", "Filippo II di Spagna", "Carlo V"], correct: 1, explanation: "La Lega Cattolica fu guidata da Massimiliano di Baviera, in risposta all'Unione Evangelica protestante." },
+        { id: 12, question: "Cosa ottenne la Francia con la Pace di Vestfalia?", options: ["La Boemia", "L'Alsazia e la Franca Contea", "Le Fiandre", "La Svezia"], correct: 1, explanation: "La Francia uscì rafforzata ottenendo Alsazia e Franca Contea; la Svezia guadagnò territori nel nord della Germania." },
+        { id: 13, question: "Quale conseguenza demografica ebbe la guerra in Germania?", options: ["Nessuna variazione", "La popolazione raddoppiò", "Passò da circa 17 a 10 milioni di abitanti", "Aumentò per l'immigrazione"], correct: 2, explanation: "La Germania perse più di un terzo della popolazione, tra guerra e peste del Seicento." },
+        { id: 14, question: "Chi era Albrecht von Wallenstein?", options: ["Un re di Boemia", "Un imprenditore militare che forniva eserciti mercenari all'imperatore", "Il Papa dell'epoca", "Un ammiraglio svedese"], correct: 1, explanation: "Wallenstein era un 'imprenditore della guerra' che reclutava e manteneva eserciti enormi, privatizzando di fatto il conflitto." },
+        { id: 15, question: "Quale principio innovativo emerse dalla Pace di Vestfalia?", options: ["La supremazia papale", "La sovranità territoriale e la tolleranza religiosa", "Il ritorno al Sacro Romano Impero unificato", "L'egemonia spagnola"], correct: 1, explanation: "Gli Stati si riconobbero reciprocamente come pari e sovrani: nacque il modello del 'concerto europeo'." }
+    ];
+
+    /* ============ POOL V/F (8 random da 10) ============ */
+    const tfPool = [
+        { id: 1, text: "La Guerra dei Trent'anni fu esclusivamente una guerra di religione.", isTrue: false, explanation: "FALSO: si intrecciavano motivazioni religiose, politiche, sociali ed economiche; la cattolica Francia combatté contro l'Impero cattolico per ragioni politiche." },
+        { id: 2, text: "La Pace di Augusta riconobbe anche il calvinismo.", isTrue: false, explanation: "FALSO: riconobbe solo cattolicesimo e luteranesimo; il calvinismo restò escluso." },
+        { id: 3, text: "I nobili boemi erano in maggioranza protestanti.", isTrue: true, explanation: "VERO: la Boemia era formalmente fedele all'imperatore e al cattolicesimo, ma i nobili più importanti erano protestanti." },
+        { id: 4, text: "Wallenstein forniva eserciti mercenari all'imperatore, finanziandosi anche con saccheggi e prestiti.", isTrue: true, explanation: "VERO: era un imprenditore militare che privatizzava la guerra, capace di mantenere eserciti enormi." },
+        { id: 5, text: "Gustavo Adolfo II morì a Lützen nel 1632.", isTrue: true, explanation: "VERO: il re svedese trovò la morte nella battaglia di Lützen, poco dopo la grande vittoria di Breitenfeld." },
+        { id: 6, text: "La Francia intervenne contro l'Impero per diffondere il protestantesimo.", isTrue: false, explanation: "FALSO: la Francia era cattolica; intervenne per limitare l'accerchiamento asburgico, per ragioni politiche." },
+        { id: 7, text: "La Pace di Vestfalia riconobbe l'indipendenza delle Province Unite e della Svizzera.", isTrue: true, explanation: "VERO: furono riconosciute le indipendenze olandese e svizzera; fu anche la fine del 'siglo de oro' spagnolo." },
+        { id: 8, text: "La popolazione tedesca diminuì di meno di un decimo durante la guerra.", isTrue: false, explanation: "FALSO: diminuì di più di un terzo, passando da circa 17 a 10 milioni di abitanti." },
+        { id: 9, text: "La fase danese si concluse con una grande vittoria dei protestanti.", isTrue: false, explanation: "FALSO: Cristiano IV di Danimarca fu duramente sconfitto dagli imperiali (con Wallenstein)." },
+        { id: 10, text: "Il cardinale Richelieu guidò la politica estera francese durante il conflitto.", isTrue: true, explanation: "VERO: sotto Luigi XIII, Richelieu fu l'artefice dell'intervento francese contro gli Asburgo." }
+    ];
+
+    /* ============ POOL GEOGRAFIA (5) ============ */
+    const geoPool = [
+        { id: 1, question: "In quale città avvenne la celebre defenestrazione che scatenò la guerra?", options: ["Vienna", "Praga", "Monaco", "Norimberga"], correct: 1, explanation: "Il 23 maggio 1618 i nobili boemi gettarono i delegati imperiali dalla finestra del castello di Praga." },
+        { id: 2, question: "Dove si tenne il congresso che pose fine alla guerra?", options: ["Vienna e Berlino", "Münster e Osnabrück, in Vestfalia", "Parigi e Londra", "Roma e Madrid"], correct: 1, explanation: "Tra il 1644 e il 1648 i diplomatici si riunirono nelle città di Münster e Osnabrück, nella regione tedesca della Vestfalia." },
+        { id: 3, question: "Dove fu combattuta la battaglia che chiuse la fase boemo-palatina?", options: ["Montagna Bianca, presso Praga", "Rocroi", "Lützen", "Breitenfeld"], correct: 0, explanation: "Nel 1620, presso Praga, l'esercito imperiale sconfisse i ribelli boemi nella battaglia della Montagna Bianca." },
+        { id: 4, question: "Quale battaglia (1643) fu una vittoria francese decisiva nell'ultima fase?", options: ["Lützen", "Rocroi", "Breitenfeld", "Nördlingen"], correct: 1, explanation: "A Rocroi (1643) i francesi ottennero la più importante vittoria della fase francese, segnando il declino della Spagna." },
+        { id: 5, question: "Quale città protestante fu brutalmente distrutta dagli imperiali nella fase svedese?", options: ["Magdeburgo", "Praga", "Dresda", "Vienna"], correct: 0, explanation: "La distruzione di Magdeburgo (1631) suscitò scandalo in Europa e diede a Gustavo Adolfo un'enorme arma propagandistica." }
+    ];
+
+    /* ============ CRONOLOGIA PARTE A ============ */
+    const timelineEvents = [
+        { id: 0, title: "Defenestrazione di Praga: i delegati imperiali gettati dalla finestra" },
+        { id: 1, title: "Battaglia della Montagna Bianca: sconfitta dei boemi e annessione della Boemia" },
+        { id: 2, title: "Intervento danese di Cristiano IV a sostegno dei protestanti" },
+        { id: 3, title: "Sbarco di Gustavo Adolfo II in Germania a capo degli svedesi" },
+        { id: 4, title: "Battaglia di Breitenfeld: prima grande sconfitta dell'esercito imperiale" },
+        { id: 5, title: "Morte di Gustavo Adolfo II nella battaglia di Lützen" },
+        { id: 6, title: "Ingresso diretto della Francia nella guerra a fianco degli svedesi" },
+        { id: 7, title: "Pace di Vestfalia: trattati di Münster e Osnabrück" }
+    ];
+
+    /* ============ CRONOLOGIA PARTE B ============ */
+    const timelineDateItems = [
+        { id: 1, event: "Defenestrazione di Praga", correctDate: "1618", options: ["1618", "1620", "1648"] },
+        { id: 2, event: "Battaglia della Montagna Bianca", correctDate: "1620", options: ["1618", "1620", "1632"] },
+        { id: 3, event: "Morte di Gustavo Adolfo a Lützen", correctDate: "1632", options: ["1630", "1632", "1643"] },
+        { id: 4, event: "Battaglia di Rocroi (vittoria francese)", correctDate: "1643", options: ["1635", "1643", "1648"] },
+        { id: 5, event: "Pace di Vestfalia", correctDate: "1648", options: ["1640", "1648", "1660"] }
+    ];
+
+    /* ============ ESERCIZIO 5: FASI ============ */
+    const phaseNames = ["Fase boemo-palatina", "Fase danese", "Fase svedese", "Fase francese"];
+
+    // Parte A: classificazione eventi (senza date mostrate)
+    const phaseClassifyItems = [
+        { id: 1, event: "Defenestrazione dei delegati imperiali dal castello di Praga", phase: 0 },
+        { id: 2, event: "Vittoria imperiale nella battaglia della Montagna Bianca", phase: 0 },
+        { id: 3, event: "Intervento del re Cristiano IV a sostegno dei protestanti", phase: 1 },
+        { id: 4, event: "Sconfitta dei Danesi e fine delle loro ambizioni egemoniche", phase: 1 },
+        { id: 5, event: "Sbarco in Germania di Gustavo Adolfo II a capo degli svedesi", phase: 2 },
+        { id: 6, event: "Distruzione e incendio di Magdeburgo da parte degli imperiali", phase: 2 },
+        { id: 7, event: "Morte di Gustavo Adolfo II nella battaglia di Lützen", phase: 2 },
+        { id: 8, event: "Ingresso diretto della Francia in guerra a fianco degli svedesi", phase: 3 },
+        { id: 9, event: "Battaglia di Rocroi: vittoria francese decisiva", phase: 3 },
+        { id: 10, event: "Congresso di Münster e Osnabrück per la pace", phase: 3 }
+    ];
+
+    // Parte B: ragionamento (3 domande)
+    const phasesReasoningPool = [
+        {
+            id: 1,
+            question: "Perché la fase danese si concluse così rapidamente con una sconfitta protestante?",
+            options: [
+                "Perché i Danesi non disponevano di un esercito",
+                "Perché l'imperatore poté contare sulle truppe mercenarie di Wallenstein, mentre i Danesi rimasero isolati",
+                "Perché la Svezia tradì i protestanti e si alleò con l'Impero",
+                "Perché la Francia attaccò la Danimarca"
+            ],
+            correct: 1,
+            explanation: "Il PDF sottolinea che proprio nel momento dell'attacco danese l'imperatore si rivolse a Wallenstein, imprenditore militare capace di radunare eserciti enormi finanziati da prestiti e saccheggi. Cristiano IV, privo di alleati solidi, fu rapidamente sconfitto."
+        },
+        {
+            id: 2,
+            question: "Quale fu la vera svolta della fase svedese, al di là delle vittorie militari?",
+            options: [
+                "La conquista di Praga",
+                "Breitenfeld dimostrò per la prima volta che l'esercito imperiale poteva essere sconfitto da un avversario di pari livello",
+                "La conversione di Gustavo Adolfo al cattolicesimo",
+                "La firma della Pace di Augusta"
+            ],
+            correct: 1,
+            explanation: "Il PDF definisce Breitenfeld 'una svolta totale nella guerra perché, per la prima volta, l'esercito imperiale veniva nettamente sconfitto da un'armata di pari livello'. Prima di allora la vittoria imperiale sembrava definitiva."
+        },
+        {
+            id: 3,
+            question: "Perché la fase francese fu decisiva per la sconfitta definitiva dell'Impero?",
+            options: [
+                "Perché la Francia era militarmente più forte della Spagna",
+                "Perché l'Impero, prostrato da vent'anni di guerra, dovette affrontare attacchi coordinati di Francia e Svezia (via terra) e delle Province Unite (via mare)",
+                "Perché la Francia impose il protestantesimo in tutta Europa",
+                "Perché il Papa scomunicò l'Imperatore"
+            ],
+            correct: 1,
+            explanation: "Il PDF chiarisce che dal 1644 era evidente che gli imperiali e gli spagnoli non riuscivano a reggere 'gli attacchi di terra di Francia e Svezia e da quelli marittimi dei Paesi Bassi'. L'Impero, stremato da vent'anni di guerra, cedette su più fronti."
+        }
+    ];
+
+    /* ============ CAUSE ED EFFETTI ============ */
+    const causesPairs = [
+        { id: "c1", cause: "La defenestrazione di Praga (1618)", effect: "Scoppia la Guerra dei Trent'anni con la rivolta boema." },
+        { id: "c2", cause: "La vittoria imperiale alla Montagna Bianca (1620)", effect: "La Boemia è annessa agli Asburgo e viene ricattolicizzata con la forza." },
+        { id: "c3", cause: "La brutale distruzione di Magdeburgo (1631)", effect: "In Europa si diffonde la propaganda anti-cattolica e Gustavo Adolfo guadagna nuovi alleati." },
+        { id: "c4", cause: "La morte di Gustavo Adolfo a Lützen (1632)", effect: "La Svezia perde slancio e nel 1635 è costretta alla Pace di Praga." },
+        { id: "c5", cause: "L'ingresso della Francia (1635)", effect: "L'Impero, attaccato su più fronti, subisce la sconfitta definitiva." }
+    ];
+
+    /* ============ ANALISI DELLE FONTI ============ */
+    const sourcesPool = [
+        {
+            id: 1,
+            author: "Ferdinando II d'Asburgo",
+            role: "Imperatore del Sacro Romano Impero (1619-1637)",
+            quote: "«Regnerei su un deserto piuttosto che tollerare l'eresia.»",
+            question: "Cosa rivela questa dichiarazione sulla politica religiosa di Ferdinando II?",
+            options: [
+                "Un'intransigenza assoluta: era disposto a devastare i suoi domini pur di imporre il cattolicesimo",
+                "La volontà di convertire i protestanti con il dialogo",
+                "La difesa della libertà religiosa per tutti i sudditi",
+                "L'intenzione di abdicare in favore di un principe protestante"
+            ],
+            correct: 0,
+            explanation: "La frase è emblematica dell'intransigenza cattolica di Ferdinando II: anteponeva l'ortodossia religiosa alla prosperità stessa dei suoi territori. Da qui derivò la repressione e la ricattolicizzazione forzata della Boemia dopo la Montagna Bianca."
+        },
+        {
+            id: 2,
+            author: "Gustavo Adolfo II di Svezia",
+            role: "Re di Svezia (1611-1632)",
+            quote: "«Dio, l'Altissimo, mi è testimone che non lo faccio per mia volontà o desiderio di combattere. I nostri vicini, fratelli e affini, incalzati più che mai, ci hanno esortato a condurre questa guerra. I nostri fratelli vanno liberati dal giogo papale.»",
+            question: "Quale strategia comunicativa emerge da questo discorso pronunciato prima della spedizione?",
+            options: [
+                "Ammette apertamente di voler conquistare l'Europa per ambizione personale",
+                "Rifiuta ogni motivazione religiosa e rivendica solo ragioni economiche",
+                "Presenta la guerra come missione religiosa e difensiva, giustificandola con la liberazione dei fratelli protestanti",
+                "Chiede l'aiuto del Papa per porre fine al conflitto"
+            ],
+            correct: 2,
+            explanation: "Gustavo Adolfo costruisce un racconto pubblico in cui la guerra è presentata come una missione religiosa e difensiva. Si presenta come liberatore dei protestanti oppressi, legittimando così il proprio intervento davanti all'opinione pubblica europea. È una mossa di comunicazione politica, non una semplice descrizione dei fatti."
+        },
+        {
+            id: 3,
+            author: "Fonte boema (dai documenti dell'epoca)",
+            role: "Osservazione sui nobili boemi",
+            quote: "«Tranne poche lodevoli eccezioni, i magnati erano più disposti a ribellarsi che a pagare.»",
+            question: "Cosa rivela questa citazione sui limiti della rivolta boema?",
+            options: [
+                "I nobili boemi erano poveri e non potevano finanziare un esercito",
+                "I nobili boemi preferivano ribellarsi ma non finanziare il conflitto, indebolendo la causa comune",
+                "I nobili boemi erano tutti devoti cattolici",
+                "I nobili boemi volevano la guerra per arricchirsi"
+            ],
+            correct: 1,
+            explanation: "La citazione mette in luce un punto di debolezza decisivo della rivolta boema: la mancanza di volontà dei magnati di finanziare il conflitto e di fare sacrifici comuni. L'individualismo e la difesa dei privilegi indebolirono la causa, contribuendo alla sconfitta della Montagna Bianca."
+        }
+    ];
+
+    /* ============ MATCHING (5 coppie) ============ */
+    const matchingTerms = [
+        { id: "m1", term: "Pace di Augusta (1555)" },
+        { id: "m2", term: "Defenestrazione di Praga" },
+        { id: "m3", term: "Wallenstein" },
+        { id: "m4", term: "Gustavo Adolfo II" },
+        { id: "m5", term: "Pace di Vestfalia (1648)" }
+    ];
+    const matchingDefs = [
+        { id: "d1", matchId: "m1", text: "Sancì il principio 'cuius regio eius religio'." },
+        { id: "d2", matchId: "m2", text: "Evento del 1618 che scatenò il conflitto." },
+        { id: "d3", matchId: "m3", text: "Imprenditore militare al servizio dell'imperatore." },
+        { id: "d4", matchId: "m4", text: "Il 'Leone di Mezzanotte' che sconfisse gli imperiali a Breitenfeld." },
+        { id: "d5", matchId: "m5", text: "Riconobbe l'indipendenza delle Province Unite e della Svizzera." }
+    ];
+
+    /* ============ CLOZE (3 testi ampliati) ============ */
+    const clozePool = [
+        {
+            text: `La Guerra dei Trent'anni fu combattuta tra il <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1618">1618</option><option value="1555">1555</option><option value="1700">1700</option></select> e il <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1648">1648</option><option value="1632">1632</option><option value="1700">1700</option></select> e fu uno dei conflitti più sanguinosi della storia europea. Le sue cause affondavano in secolari divisioni: da un lato lo scontro tra <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="protestanti">protestanti</option><option value="ortodossi">ortodossi</option><option value="pagani">pagani</option></select> e cattolici, dall'altro il conflitto tra gli Stati interni al <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Sacro Romano Impero">Sacro Romano Impero</option><option value="Regno di Francia">Regno di Francia</option><option value="Impero Ottomano">Impero Ottomano</option></select> e il governo centrale, e infine la rivalità tra gli Stati europei. Il Sacro Romano Impero non era uno Stato unitario, ma una federazione di circa <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="300">300</option><option value="30">30</option><option value="3000">3000</option></select> Stati, retti da un imperatore scelto per elezione ma ormai saldamente della dinastia degli <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Asburgo">Asburgo</option><option value="Borbone">Borbone</option><option value="Hohenzollern">Hohenzollern</option></select>. La Pace di <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Augusta">Augusta</option><option value="Vestfalia">Vestfalia</option><option value="Praga">Praga</option></select> del 1555 aveva sancito il principio '<select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="cuius regio eius religio">cuius regio eius religio</option><option value="libertas ecclesiae">libertas ecclesiae</option><option value="ius utendi">ius utendi</option></select>', secondo cui la religione del principe determinava quella dei sudditi, ma <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="il calvinismo">il calvinismo</option><option value="il luteranesimo">il luteranesimo</option><option value="l'anglicanesimo">l'anglicanesimo</option></select> non era stato riconosciuto. Fu la defenestrazione di <select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Praga">Praga</option><option value="Vienna">Vienna</option><option value="Monaco">Monaco</option></select> del 1618 a scatenare il conflitto, che si concluse con la Pace di <select id="cloze-11" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Vestfalia">Vestfalia</option><option value="Augusta">Augusta</option><option value="Utrecht">Utrecht</option></select>.`,
+            answers: { 1: "1618", 2: "1648", 3: "protestanti", 4: "Sacro Romano Impero", 5: "300", 6: "Asburgo", 7: "Augusta", 8: "cuius regio eius religio", 9: "il calvinismo", 10: "Praga", 11: "Vestfalia" }
+        },
+        {
+            text: `Tradizionalmente la guerra viene divisa in <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="4">4</option><option value="2">2</option><option value="6">6</option></select> fasi, ognuna delle quali prende il nome dal principale nemico dell'Impero in quel periodo. La prima, detta <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="boemo-palatina">boemo-palatina</option><option value="svedese">svedese</option><option value="francese">francese</option></select>, vide la rivolta dei nobili boemi e la loro sconfitta nella battaglia della <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Montagna Bianca">Montagna Bianca</option><option value="Montagna Nera">Montagna Nera</option><option value="Collina Verde">Collina Verde</option></select> (1620), seguita dall'annessione della Boemia agli Asburgo. La seconda, detta <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="danese">danese</option><option value="olandese">olandese</option><option value="spagnola">spagnola</option></select>, vide l'intervento del re Cristiano IV, che fu però duramente sconfitto anche grazie alle truppe mercenarie di <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Wallenstein">Wallenstein</option><option value="Richelieu">Richelieu</option><option value="Tilly">Tilly</option></select>. La terza, detta <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="svedese">svedese</option><option value="francese">francese</option><option value="danese">danese</option></select>, fu caratterizzata dall'ingresso in guerra di <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Gustavo Adolfo II">Gustavo Adolfo II</option><option value="Carlo XII">Carlo XII</option><option value="Federico V">Federico V</option></select>, che ottenne una grande vittoria a <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Breitenfeld">Breitenfeld</option><option value="Lützen">Lützen</option><option value="Rocroi">Rocroi</option></select> ma morì nel 1632 nella battaglia di <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Lützen">Lützen</option><option value="Breitenfeld">Breitenfeld</option><option value="Nördlingen">Nördlingen</option></select>. Infine la fase <select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="francese">francese</option><option value="svedese">svedese</option><option value="boemo-palatina">boemo-palatina</option></select> vide l'ingresso diretto della cattolica Francia a fianco degli svedesi protestanti, con la decisiva vittoria di <select id="cloze-11" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Rocroi">Rocroi</option><option value="Lützen">Lützen</option><option value="Magdeburgo">Magdeburgo</option></select> (1643) e la conseguente Pace di Vestfalia.`,
+            answers: { 1: "4", 2: "boemo-palatina", 3: "Montagna Bianca", 4: "danese", 5: "Wallenstein", 6: "svedese", 7: "Gustavo Adolfo II", 8: "Breitenfeld", 9: "Lützen", 10: "francese", 11: "Rocroi" }
+        },
+        {
+            text: `I trattati di <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Münster">Münster</option><option value="Vienna">Vienna</option><option value="Praga">Praga</option></select> e Osnabrück, firmati nel <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1648">1648</option><option value="1618">1618</option><option value="1555">1555</option></select>, posero fine alla guerra. Essi riconobbero l'indipendenza delle <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Province Unite">Province Unite</option><option value="Fiandre">Fiandre</option><option value="Svezia">Svezia</option></select> e della <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Svizzera">Svizzera</option><option value="Boemia">Boemia</option><option value="Baviera">Baviera</option></select>. La <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Francia">Francia</option><option value="Spagna">Spagna</option><option value="Inghilterra">Inghilterra</option></select> ottenne l'Alsazia e la Franca Contea, mentre la <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Svezia">Svezia</option><option value="Danimarca">Danimarca</option><option value="Polonia">Polonia</option></select> guadagnò territori nel nord della Germania. La <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Spagna">Spagna</option><option value="Francia">Francia</option><option value="Austria">Austria</option></select> iniziò il proprio declino, ponendo fine al cosiddetto <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="siglo de oro">siglo de oro</option><option value="siglo de plata">siglo de plata</option><option value="siglo de hierro">siglo de hierro</option></select>. Dal punto di vista demografico, la <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Germania">Germania</option><option value="Francia">Francia</option><option value="Italia">Italia</option></select> perse più di un <select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="terzo">terzo</option><option value="decimo">decimo</option><option value="quarto">quarto</option></select> della propria popolazione, passando da circa 17 a 10 milioni di abitanti, a causa della guerra e della <select id="cloze-11" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="peste">peste</option><option value="fame">fame</option><option value="siccità">siccità</option></select>. Sul lungo periodo, la guerra pose fine ai conflitti religiosi che avevano insanguinato l'Europa e aprì la strada all'idea di <select id="cloze-12" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="tolleranza">tolleranza</option><option value="intolleranza">intolleranza</option><option value="inquisizione">inquisizione</option></select> religiosa. Il congresso di Vestfalia divenne un modello per le future conferenze di pace, come quelle di <select id="cloze-13" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Vienna">Vienna</option><option value="Vestfalia">Vestfalia</option><option value="Monaco">Monaco</option></select> (1815) e Versailles (1919).`,
+            answers: { 1: "Münster", 2: "1648", 3: "Province Unite", 4: "Svizzera", 5: "Francia", 6: "Svezia", 7: "Spagna", 8: "siglo de oro", 9: "Germania", 10: "terzo", 11: "peste", 12: "tolleranza", 13: "Vienna" }
+        }
+    ];
+
+    /* ============ RENDER MCQ ============ */
+    function renderMCQ() {
+        state.activeMCQ = shuffle(mcqPool).slice(0, 10);
+        const container = document.getElementById('mcq-container');
+        container.innerHTML = state.activeMCQ.map((q, idx) => `
+            <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+                <div class="font-bold text-slate-100 text-sm">${idx + 1}. ${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((opt, oIdx) => `
+                        <button onclick="selectMCQ(${q.id}, ${oIdx})" class="mcq-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
+                    `).join('')}
+                </div>
+                <div id="mcq-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectMCQ(qId, oIdx) {
+        playSound('click');
+        const q = mcqPool.find(item => item.id === qId);
+        state.mcqAnswers[qId] = oIdx;
+        document.querySelectorAll(`.mcq-option-${qId}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`mcq-feedback-${qId}`);
+        fb.classList.remove('hidden');
+        if(oIdx === q.correct) {
+            playSound('correct');
+            fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
+            fb.innerHTML = `<strong>Corretto!</strong> ${q.explanation}`;
+        } else {
+            playSound('error');
+            fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
+            fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`;
+        }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER TF ============ */
+    function renderTF() {
+        state.activeTF = shuffle(tfPool).slice(0, 8);
+        const container = document.getElementById('tf-container');
+        container.innerHTML = state.activeTF.map((item, idx) => `
+            <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800">
+                <p class="text-xs text-slate-200">${idx + 1}. ${item.text}</p>
+                <div class="flex gap-2">
+                    <button onclick="answerTF(${item.id}, true)" class="tf-option-${item.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button>
+                    <button onclick="answerTF(${item.id}, false)" class="tf-option-${item.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button>
+                </div>
+                <div id="tf-feedback-${item.id}" class="hidden text-xs pt-1"></div>
+            </div>
+        `).join('');
+    }
+    function answerTF(id, choice) {
+        playSound('click');
+        const item = tfPool.find(d => d.id === id);
+        state.tfAnswers[id] = choice;
+        document.querySelectorAll(`.tf-option-${id}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`tf-feedback-${id}`);
+        fb.classList.remove('hidden');
+        if(choice === item.isTrue) { playSound('correct'); fb.className = "text-xs text-emerald-300"; fb.innerText = `Esatto! ${item.explanation}`; }
+        else { playSound('error'); fb.className = "text-xs text-rose-300"; fb.innerText = `Sbagliato. ${item.explanation}`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER GEO ============ */
+    function renderGeo() {
+        state.activeGeo = shuffle(geoPool).slice(0, 5);
+        const container = document.getElementById('geo-container');
+        container.innerHTML = state.activeGeo.map((q, idx) => `
+            <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+                <div class="font-bold text-slate-100 text-sm"><i class="fa-solid fa-compass text-teal-400 mr-2"></i>${idx + 1}. ${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((opt, oIdx) => `
+                        <button onclick="selectGeo(${q.id}, ${oIdx})" class="geo-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
+                    `).join('')}
+                </div>
+                <div id="geo-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectGeo(qId, oIdx) {
+        playSound('click');
+        const q = geoPool.find(item => item.id === qId);
+        state.geoAnswers[qId] = oIdx;
+        document.querySelectorAll(`.geo-option-${qId}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`geo-feedback-${qId}`);
+        fb.classList.remove('hidden');
+        if(oIdx === q.correct) {
+            playSound('correct');
+            fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
+            fb.innerHTML = `<strong>Esatto!</strong> ${q.explanation}`;
+        } else {
+            playSound('error');
+            fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
+            fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`;
+        }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER TIMELINE A ============ */
+    function renderTimelineOrder() {
+        const list = document.getElementById('timeline-list');
+        list.innerHTML = state.timelineOrder.map((dataIdx, currentPos) => `
+            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs gap-3">
+                <span class="text-purple-300 font-bold"><span class="text-slate-500 mr-1">${currentPos + 1}.</span>${timelineEvents[dataIdx].title}</span>
+                <div class="flex gap-1 shrink-0">
+                    <button onclick="moveTimeline(${currentPos}, -1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button>
+                    <button onclick="moveTimeline(${currentPos}, 1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function moveTimeline(pos, dir) {
+        if (state.timelineChecked) return;
+        const target = pos + dir;
+        if(target < 0 || target >= state.timelineOrder.length) return;
+        [state.timelineOrder[pos], state.timelineOrder[target]] = [state.timelineOrder[target], state.timelineOrder[pos]];
+        renderTimelineOrder();
+        playSound('click');
+    }
+    function checkTimelineOrder() {
+        let correct = 0;
+        state.timelineOrder.forEach((v, i) => { if(v === i) correct++; });
+        state.timelineChecked = true;
+        const fb = document.getElementById('timeline-order-feedback');
+        const btn = document.getElementById('btn-check-timeline-order');
+        btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed');
+        if(correct === timelineEvents.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Perfetto! Sequenza cronologica esatta."; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Eventi in posizione corretta: ${correct} su ${timelineEvents.length}. Osserva l'ordine e riprova con 'Ricomincia'.`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER TIMELINE B ============ */
+    function renderTimelineDates() {
+        const container = document.getElementById('timeline-dates-container');
+        container.innerHTML = timelineDateItems.map((item) => `
+            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+                <div class="text-xs font-bold text-slate-200">${item.event}</div>
+                <select id="timeline-date-select-${item.id}" onchange="selectTimelineDate(${item.id}, this.value)" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs">
+                    <option value="">-- Seleziona l'anno --</option>
+                    ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                </select>
+            </div>
+        `).join('');
+    }
+    function selectTimelineDate(id, val) { state.timelineDateAnswers[id] = val; }
+    function checkTimelineDates() {
+        let correct = 0;
+        timelineDateItems.forEach(item => {
+            const sel = document.getElementById(`timeline-date-select-${item.id}`);
+            if(sel) sel.disabled = true;
+            if(state.timelineDateAnswers[item.id] === item.correctDate) correct++;
+        });
+        const fb = document.getElementById('timeline-dates-feedback');
+        const btn = document.getElementById('btn-check-timeline-dates');
+        btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed');
+        if(correct === timelineDateItems.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Eccellente! Tutte le date sono corrette."; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Date corrette: ${correct} su ${timelineDateItems.length}.`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER FASI: PARTE A (CLASSIFICAZIONE) ============ */
+    function renderPhasesClassify() {
+        const container = document.getElementById('phases-classify-container');
+        container.innerHTML = phaseClassifyItems.map(item => `
+            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                <div class="text-xs text-slate-200 flex-grow"><span class="text-orange-400 font-bold mr-1">${item.id}.</span>${item.event}</div>
+                <select id="phase-classify-select-${item.id}" onchange="selectPhaseClassify(${item.id}, this.value)" class="bg-slate-950 text-orange-300 border border-slate-700 rounded-lg p-2 text-xs w-full sm:w-56">
+                    <option value="">-- Fase? --</option>
+                    ${phaseNames.map((name, idx) => `<option value="${idx}">${name}</option>`).join('')}
+                </select>
+            </div>
+        `).join('');
+    }
+    function selectPhaseClassify(id, val) { state.phasesClassifyAnswers[id] = val; }
+    function checkPhasesClassify() {
+        let correct = 0;
+        phaseClassifyItems.forEach(item => {
+            const sel = document.getElementById(`phase-classify-select-${item.id}`);
+            if(sel) sel.disabled = true;
+            if(state.phasesClassifyAnswers[item.id] === String(item.phase)) correct++;
+        });
+        const fb = document.getElementById('phases-classify-feedback');
+        const btn = document.getElementById('btn-check-phases-classify');
+        btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed');
+        if(correct === phaseClassifyItems.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Eccellente! Hai classificato correttamente tutti gli eventi nelle fasi giuste."; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Eventi classificati correttamente: ${correct} su ${phaseClassifyItems.length}. Rivedi protagonisti e contesti per ciascuna fase.`; }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER FASI: PARTE B (RAGIONAMENTO) ============ */
+    function renderPhasesReasoning() {
+        const container = document.getElementById('phases-reasoning-container');
+        container.innerHTML = phasesReasoningPool.map((q, idx) => `
+            <div class="space-y-3">
+                <div class="font-bold text-slate-100 text-sm">${idx + 1}. ${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((opt, oIdx) => `
+                        <button onclick="selectPhaseReasoning(${q.id}, ${oIdx})" class="phase-reason-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
+                    `).join('')}
+                </div>
+                <div id="phase-reason-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectPhaseReasoning(qId, oIdx) {
+        playSound('click');
+        const q = phasesReasoningPool.find(x => x.id === qId);
+        state.phasesReasoningAnswers[qId] = oIdx;
+        document.querySelectorAll(`.phase-reason-option-${qId}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`phase-reason-feedback-${qId}`);
+        fb.classList.remove('hidden');
+        if(oIdx === q.correct) {
+            playSound('correct');
+            fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
+            fb.innerHTML = `<strong>Ragionamento corretto!</strong> ${q.explanation}`;
+        } else {
+            playSound('error');
+            fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
+            fb.innerHTML = `<strong>Rileggi il PDF.</strong> ${q.explanation}`;
+        }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER CAUSE/EFFETTI ============ */
+    function renderCauses() {
+        document.getElementById('causes-terms').innerHTML = causesPairs.map(c => `
+            <button onclick="selectCause('${c.id}')" id="cause-term-btn-${c.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-fuchsia-500/50">${c.cause}</button>
+        `).join('');
+        document.getElementById('causes-defs').innerHTML = shuffle(causesPairs).map(c => `
+            <button onclick="selectEffect('${c.id}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-fuchsia-500/50">${c.effect}</button>
+        `).join('');
+    }
+    function selectCause(id) {
+        state.selectedCauseId = id; playSound('click');
+        causesPairs.forEach(c => {
+            const btn = document.getElementById(`cause-term-btn-${c.id}`);
+            if(btn) btn.className = (c.id === id)
+                ? "w-full text-left p-3 rounded-xl border-2 border-fuchsia-500 bg-fuchsia-950/40 text-xs text-fuchsia-200"
+                : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200";
+        });
+    }
+    function selectEffect(id) {
+        if(!state.selectedCauseId) return;
+        const fb = document.getElementById('causes-feedback');
+        if(state.selectedCauseId === id) {
+            playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Catena causale corretta!";
+            state.causesPairs[id] = true;
+        } else {
+            playSound('error'); fb.className = "text-rose-400 font-bold"; fb.innerText = "Non è questo l'effetto. Riprova!";
+        }
+        state.selectedCauseId = null;
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER FONTI ============ */
+    function renderSources() {
+        const container = document.getElementById('sources-container');
+        container.innerHTML = sourcesPool.map((s, idx) => `
+            <div class="glass-card p-6 rounded-2xl space-y-4 border border-amber-500/30">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-quote-left"></i></div>
+                    <div>
+                        <div class="font-bold text-slate-100 text-sm">Fonte ${idx + 1} — ${s.author}</div>
+                        <div class="text-xs text-slate-400 mb-2">${s.role}</div>
+                        <blockquote class="italic text-amber-200 text-sm border-l-2 border-amber-500/50 pl-3">${s.quote}</blockquote>
+                    </div>
+                </div>
+                <div class="font-bold text-slate-100 text-sm">${s.question}</div>
+                <div class="space-y-2">
+                    ${s.options.map((opt, oIdx) => `
+                        <button onclick="selectSource(${s.id}, ${oIdx})" class="source-option-${s.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
+                    `).join('')}
+                </div>
+                <div id="source-feedback-${s.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
+    function selectSource(sId, oIdx) {
+        playSound('click');
+        const s = sourcesPool.find(x => x.id === sId);
+        state.sourcesAnswers[sId] = oIdx;
+        document.querySelectorAll(`.source-option-${sId}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`source-feedback-${sId}`);
+        fb.classList.remove('hidden');
+        if(oIdx === s.correct) {
+            playSound('correct');
+            fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
+            fb.innerHTML = `<strong>Corretto!</strong> ${s.explanation}`;
+        } else {
+            playSound('error');
+            fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
+            fb.innerHTML = `<strong>Rileggi la fonte.</strong> ${s.explanation}`;
+        }
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER MATCHING ============ */
+    function renderMatching() {
+        document.getElementById('matching-terms').innerHTML = matchingTerms.map(t => `<button onclick="selectTerm('${t.id}')" id="term-btn-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50">${t.term}</button>`).join('');
+        document.getElementById('matching-defs').innerHTML = shuffle(matchingDefs).map(d => `<button onclick="selectDef('${d.matchId}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50">${d.text}</button>`).join('');
+    }
+    function selectTerm(id) {
+        state.selectedTermId = id; playSound('click');
+        matchingTerms.forEach(t => {
+            const btn = document.getElementById(`term-btn-${t.id}`);
+            if(btn) btn.className = (t.id === id) ? "w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200";
+        });
+    }
+    function selectDef(matchId) {
+        if(!state.selectedTermId) return;
+        const fb = document.getElementById('matching-feedback');
+        if(state.selectedTermId === matchId) {
+            playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Abbinamento corretto!";
+            state.matchingPairs[matchId] = true;
+        } else {
+            playSound('error'); fb.className = "text-rose-400 font-bold"; fb.innerText = "Abbinamento errato. Riprova!";
+        }
+        state.selectedTermId = null;
+        updateGlobalScore();
+    }
+
+    /* ============ RENDER CLOZE ============ */
+    function renderCloze() {
+        state.activeClozeIndex = Math.floor(Math.random() * clozePool.length);
+        const currentCloze = clozePool[state.activeClozeIndex];
+        document.getElementById('cloze-body-container').innerHTML = `<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm sm:text-base text-slate-200 border border-slate-800">${currentCloze.text}</div>`;
+        const btn = document.getElementById('btn-check-cloze');
+        btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        document.getElementById('cloze-feedback').innerText = "";
+    }
+    function checkCloze() {
+        const currentCloze = clozePool[state.activeClozeIndex];
+        const answers = currentCloze.answers;
+        let correct = 0;
+        const total = Object.keys(answers).length;
+        for(let i=1; i<=total; i++) {
+            const el = document.getElementById(`cloze-${i}`);
+            if(el) {
+                el.disabled = true;
+                if(el.value === answers[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold"; }
+                else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold"; }
+            }
+        }
+        const btn = document.getElementById('btn-check-cloze');
+        btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed');
+        state.clozeScore = Math.round((correct / total) * 100);
+        const fb = document.getElementById('cloze-feedback');
+        if(correct === total) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = `Eccellente! ${correct}/${total} lacune corrette.`; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/${total}. Le risposte errate sono evidenziate.`; }
+        updateGlobalScore();
+    }
+
+    /* ============ SCORE ============ */
+    function updateGlobalScore() {
+        let mcqCorrect = 0;
+        state.activeMCQ.forEach(q => { if(state.mcqAnswers[q.id] === q.correct) mcqCorrect++; });
+
+        let tfCorrect = 0;
+        state.activeTF.forEach(d => { if(state.tfAnswers[d.id] === d.isTrue) tfCorrect++; });
+
+        let geoCorrect = 0;
+        state.activeGeo.forEach(g => { if(state.geoAnswers[g.id] === g.correct) geoCorrect++; });
+
+        let timelineOrderCorrect = 0;
+        state.timelineOrder.forEach((v, i) => { if(v === i) timelineOrderCorrect++; });
+
+        let timelineDatesCorrect = 0;
+        timelineDateItems.forEach(item => { if(state.timelineDateAnswers[item.id] === item.correctDate) timelineDatesCorrect++; });
+
+        let phasesClassifyCorrect = 0;
+        phaseClassifyItems.forEach(item => { if(state.phasesClassifyAnswers[item.id] === String(item.phase)) phasesClassifyCorrect++; });
+
+        let phasesReasoningCorrect = 0;
+        phasesReasoningPool.forEach(q => { if(state.phasesReasoningAnswers[q.id] === q.correct) phasesReasoningCorrect++; });
+
+        let causesCorrect = Object.keys(state.causesPairs).length;
+
+        let sourcesCorrect = 0;
+        sourcesPool.forEach(s => { if(state.sourcesAnswers[s.id] === s.correct) sourcesCorrect++; });
+
+        let matchingCorrect = Object.keys(state.matchingPairs).length;
+
+        // Pesi: MCQ 15, TF 12, Geo 8, TL-A 6, TL-B 6, Fasi-A 8, Fasi-B 4, Cause 10, Fonti 9, Matching 10, Cloze 12 = 100
+        const total = Math.round(
+            (state.activeMCQ.length ? (mcqCorrect / state.activeMCQ.length) * 15 : 0) +
+            (state.activeTF.length ? (tfCorrect / state.activeTF.length) * 12 : 0) +
+            (state.activeGeo.length ? (geoCorrect / state.activeGeo.length) * 8 : 0) +
+            (timelineOrderCorrect / 8) * 6 +
+            (timelineDatesCorrect / 5) * 6 +
+            (phasesClassifyCorrect / 10) * 8 +
+            (phasesReasoningCorrect / 3) * 4 +
+            (causesCorrect / 5) * 10 +
+            (sourcesCorrect / 3) * 9 +
+            (matchingCorrect / 5) * 10 +
+            (state.clozeScore / 100) * 12
+        );
+        document.getElementById('global-score-text').innerText = `${total} / 100`;
+        return total;
+    }
+
+    function updateReport() {
+        const score = updateGlobalScore();
+        document.getElementById('report-score').innerText = `${score} / 100 XP`;
+        const badgeEl = document.getElementById('report-badge');
+        if(score >= 90) badgeEl.innerText = "Architetto della Pace di Vestfalia (Eccellente)";
+        else if(score >= 75) badgeEl.innerText = "Diplomatico di Münster (Buono)";
+        else if(score >= 55) badgeEl.innerText = "Cronista di Guerra (Sufficiente)";
+        else badgeEl.innerText = "Recluta Inesperto (Insufficiente)";
+    }
+
+    function switchTab(tabId) {
+        playSound('click');
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.remove('hidden');
+        if(tabId === 'tab-report') updateReport();
+    }
+
+    function resetAll() {
+        state.mcqAnswers = {}; state.tfAnswers = {}; state.geoAnswers = {};
+        state.timelineOrder = [0,1,2,3,4,5,6,7]; state.timelineDateAnswers = {};
+        state.phasesClassifyAnswers = {}; state.phasesReasoningAnswers = {};
+        state.causesPairs = {}; state.sourcesAnswers = {}; state.matchingPairs = {}; state.clozeScore = 0;
+        state.timelineChecked = false; state.timelineDatesChecked = false;
+        renderMCQ(); renderTF(); renderGeo();
+        renderTimelineOrder(); renderTimelineDates();
+        renderPhasesClassify(); renderPhasesReasoning();
+        renderCauses(); renderSources(); renderMatching(); renderCloze();
+        updateGlobalScore(); switchTab('tab-studio');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        renderMCQ(); renderTF(); renderGeo();
+        renderTimelineOrder(); renderTimelineDates();
+        renderPhasesClassify(); renderPhasesReasoning();
+        renderCauses(); renderSources(); renderMatching(); renderCloze();
+        updateGlobalScore();
+    });
+</script>
+</body>
+</html>

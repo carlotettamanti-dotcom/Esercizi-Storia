@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piattaforma Didattica: L'Arabia Pre-Islamica e la Civiltà Arabo-Islamica</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,8 +27,6 @@
         .tab-btn.active { background-color: #059669; color: #ffffff; border-color: #34d399; box-shadow: 0 4px 20px -2px rgba(5, 150, 105, 0.5); }
         .glass-card { background: linear-gradient(135deg, rgba(17, 25, 39, 0.85), rgba(10, 15, 26, 0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .badge-glow { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
-        .map-pin { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .map-pin:hover { transform: scale(1.25); z-index: 30; }
         @media print {
             body * { visibility: hidden; }
             #printable-certificate, #printable-certificate * { visibility: visible; }
@@ -78,7 +75,7 @@
     <nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
             <button onclick="switchTab('tab-studio')" class="tab-btn active px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent">
-                <i class="fa-solid fa-map text-emerald-400"></i> 0. Quadro Storico Completo
+                <i class="fa-solid fa-map text-emerald-400"></i> 0. Quadro Storico
             </button>
             <button onclick="switchTab('tab-mcq')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
                 <i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz Multiplo (10 Q)
@@ -86,17 +83,17 @@
             <button onclick="switchTab('tab-tf')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
                 <i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. Vero o Falso (8 Q)
             </button>
-            <button onclick="switchTab('tab-map')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-earth-africa text-teal-400"></i> 3. Mappa Geografica Interattiva
+            <button onclick="switchTab('tab-geo')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
+                <i class="fa-solid fa-earth-africa text-teal-400"></i> 3. Geografia Storica (5 Q)
             </button>
             <button onclick="switchTab('tab-timeline')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-timeline text-purple-400"></i> 4. Cronologia (8 Eventi)
+                <i class="fa-solid fa-timeline text-purple-400"></i> 4. Cronologia & Date
             </button>
             <button onclick="switchTab('tab-matching')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-diagram-project text-rose-400"></i> 5. Concetti (8 Abbinamenti)
+                <i class="fa-solid fa-diagram-project text-rose-400"></i> 5. Concetti (5 Abbinamenti)
             </button>
             <button onclick="switchTab('tab-cloze')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-pen-nib text-amber-400"></i> 6. Testo Guidato (10 Lacune)
+                <i class="fa-solid fa-pen-nib text-amber-400"></i> 6. Testo Guidato (Variabile)
             </button>
             <button onclick="switchTab('tab-report')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
                 <i class="fa-solid fa-certificate text-yellow-400"></i> Certificato
@@ -140,7 +137,7 @@
                 <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-amber-500/40 transition-all">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-mosque"></i></div>
                     <h3 class="font-bold text-lg text-slate-100">4. Pilastri, Sunniti e Sciiti</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">I doveri comprendono i 5 Pilastri (Shahada, Salat, Sawm, Hajj, Zakat). Dopo il 632 d.C. ci si divise tra Sunniti (scelta tra anziani) e Sciiti (seguaci di 'Ali).</p>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">I doveri comprendono i 5 Pilastri (Shahada, Salat, Sawm, Hajj, Zakat). Dopo il 632 d.C. ci si divisero tra Sunniti (scelta tra anziani) e Sciiti (seguaci di 'Ali).</p>
                 </div>
                 <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-rose-500/40 transition-all">
                     <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-horse-head"></i></div>
@@ -177,82 +174,63 @@
             <div id="tf-container" class="space-y-4"></div>
         </section>
 
-<!-- TAB 3: MAPPA INTERATTIVA -->
-        <section id="tab-map" class="tab-content hidden space-y-6">
-            <div class="border-b border-slate-800 pb-4">
-                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Cartina Geografica dell'Espansione Islamica</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Osserva i punti numerati sulla cartina storica dell'Euro-Mediterraneo e del Medio Oriente e associa ogni numero alla località corretta.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Cartina Geografica Vettoriale dell'Espansione Islamica -->
-                <div class="lg:col-span-7 glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center bg-slate-950 border border-slate-800 min-h-[420px]">
-                    <div class="w-full h-[380px] relative rounded-xl overflow-hidden bg-[#0a1322] border border-slate-800 shadow-2xl">
-                        
-                        <!-- Mappa SVG del Mediterraneo, Nord Africa e Penisola Arabica -->
-                        <svg class="w-full h-full object-contain" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="600" height="400" fill="#080e1a"/>
-                            
-                            <!-- Europa / Spagna -->
-                            <path d="M 30,100 L 120,90 L 130,160 L 60,180 Z" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-                            <!-- Francia -->
-                            <path d="M 70,30 L 150,40 L 130,90 L 50,80 Z" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-                            <!-- Nord Africa -->
-                            <path d="M 40,200 L 320,210 L 340,290 L 40,290 Z" fill="#112419" stroke="#10b981" stroke-width="1.5"/>
-                            <!-- Penisola Arabica e Medio Oriente -->
-                            <path d="M 330,130 L 550,120 L 580,320 L 420,380 L 380,260 Z" fill="#112419" stroke="#10b981" stroke-width="1.5"/>
-
-                            <text x="440" y="270" fill="#10b981" font-size="11" font-family="sans-serif" font-weight="bold" opacity="0.5">ARABIA</text>
-                            <text x="140" y="240" fill="#10b981" font-size="10" font-family="sans-serif" font-weight="bold" opacity="0.4">NORD AFRICA</text>
-                        </svg>
-
-                        <!-- PIN POSIZIONATI SUI PUNTI REALI -->
-                        <!-- Pin 1: La Mecca (Arabia del Sud/Ovest) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 70%; left: 74%;" title="Punto 1">1</div>
-                        
-                        <!-- Pin 2: Medina (Arabia Centro-Ovest) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-sky-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 58%; left: 70%;" title="Punto 2">2</div>
-                        
-                        <!-- Pin 3: Baghdad (Mesopotamia / Tigri) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-purple-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 36%; left: 68%;" title="Punto 3">3</div>
-                        
-                        <!-- Pin 4: Gibilterra / Spagna (Stretto tra Africa e Spagna) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-rose-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 48%; left: 12%;" title="Punto 4">4</div>
-                        
-                        <!-- Pin 5: Poitiers (Francia) -->
-                        <div class="map-pin absolute flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black text-xs border-2 border-white shadow-lg cursor-pointer" style="top: 16%; left: 15%;" title="Punto 5">5</div>
-                    </div>
-                    
-                    <div class="text-[11px] text-slate-400 mt-3 text-center">
-                        <i class="fa-solid fa-map-marked-alt mr-1 text-teal-400"></i> Cartina dell'Espansione Islamica: associa i numeri ai punti geografici.
-                    </div>
+        <!-- TAB 3: GEOGRAFIA STORICA -->
+        <section id="tab-geo" class="tab-content hidden space-y-6">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div>
+                    <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Geografia e Territori dell'Espansione Islamica</h2>
+                    <p class="text-xs sm:text-sm text-slate-400">Verifica la conoscenza dei confini, delle città chiave e dei territori del Califfato.</p>
                 </div>
-
-                <!-- Domande Mappa -->
-                <div class="lg:col-span-5 space-y-4">
-                    <div id="map-questions-container" class="space-y-3"></div>
-                    <button onclick="checkMapQuiz()" id="check-map-btn" class="w-full bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold py-2.5 rounded-xl transition-all shadow-lg text-xs sm:text-sm">
-                        <i class="fa-solid fa-check mr-1.5"></i> Verifica Mappa
-                    </button>
-                    <div id="map-feedback" class="text-xs font-semibold"></div>
-                </div>
+                <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-teal-400"></i> Risposte bloccate al primo clic</span>
             </div>
+            <div id="geo-container" class="space-y-6"></div>
         </section>
 
-        <!-- TAB 4: TIMELINE -->
-        <section id="tab-timeline" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400">Esercizio 4: Riordino Cronologico</h2>
-            <div class="glass-card p-6 rounded-2xl space-y-6">
-                <div id="timeline-list" class="space-y-3"></div>
-                <button onclick="checkTimeline()" id="btn-check-timeline" class="bg-purple-600 text-white font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-check-double"></i> Verifica Sequenza</button>
-                <div id="timeline-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        <!-- TAB 4: TIMELINE (DIVISA IN DUE PARTE) -->
+        <section id="tab-timeline" class="tab-content hidden space-y-8">
+            <div>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 4: Cronologia & Date Storiche</h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">Completa le due sezioni sottostanti per verificare il senso del tempo storico.</p>
+            </div>
+
+            <!-- PARTE 1: ORDINAMENTO CRONOLOGICO (SENZA DATE MOSTRATE) -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span>
+                    <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte A: Riordino degli Eventi Storici</h3>
+                </div>
+                <p class="text-xs text-slate-400">Sposta gli eventi verso l'alto o verso il basso per posizionarli in ordine dal più antico (1) al più recente (8).</p>
+                
+                <div id="timeline-list" class="space-y-2.5"></div>
+                
+                <button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                    <i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine Cronologico
+                </button>
+                <div id="timeline-order-feedback" class="text-xs sm:text-sm font-semibold"></div>
+            </div>
+
+            <!-- PARTE 2: ASSOCIAZIONE EVENTO - DATA -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span>
+                    <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte B: Associazione Evento - Anno Corretto</h3>
+                </div>
+                <p class="text-xs text-slate-400">Associa a ciascun evento storico l'anno esatto in cui si è verificato.</p>
+                
+                <div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                
+                <button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
+                    <i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Abbinamento Date
+                </button>
+                <div id="timeline-dates-feedback" class="text-xs sm:text-sm font-semibold"></div>
             </div>
         </section>
 
         <!-- TAB 5: MATCHING -->
         <section id="tab-matching" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400">Esercizio 5: Abbinamento Concetti</h2>
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 5: Abbinamento Concetti (5 Coppie)</h2>
             <div class="glass-card p-6 rounded-2xl space-y-6">
+                <p class="text-xs text-slate-400">Clicca prima su un termine a sinistra e poi sulla sua definizione corretta a destra.</p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div id="matching-terms" class="space-y-2.5"></div>
                     <div id="matching-defs" class="space-y-2.5"></div>
@@ -261,14 +239,19 @@
             </div>
         </section>
 
-        <!-- TAB 6: CLOZE -->
+        <!-- TAB 6: CLOZE (TESTO DINAMICO CON 3 OPZIONI) -->
         <section id="tab-cloze" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Testo Guidato (10 Lacune)</h2>
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Testo Guidato a Completamento</h2>
+                <button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg">
+                    <i class="fa-solid fa-rotate mr-1"></i> Cambia Testo
+                </button>
+            </div>
             <div class="glass-card p-6 rounded-2xl space-y-6">
-                <div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm sm:text-base text-slate-200">
-                    Nel <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="570 d.C.">570 d.C.</option><option value="622 d.C.">622 d.C.</option></select>, nacque <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Maometto">Maometto</option><option value="Ali">Ali</option></select> della tribù <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Quraysh">Quraysh</option><option value="Lakhmidi">Lakhmidi</option></select>. Nel 610 vide l'Arcangelo <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Gabriele">Gabriele</option><option value="Raffaele">Raffaele</option></select>. Nel <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="622 d.C.">622 d.C.</option><option value="630 d.C.">630 d.C.</option></select> compì l'<select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Egira">Egira</option><option value="Sunna">Sunna</option></select> fondando la <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Umma">Umma</option><option value="Fara">Fara</option></select>. I musulmani si divisero in Sunniti e <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Sciiti">Sciiti</option><option value="Sassanidi">Sassanidi</option></select>. Nel 711 <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Tariq ibn Ziyad">Tariq ibn Ziyad</option><option value="Al-Khwarizmi">Al-Khwarizmi</option></select> sbarcò in Spagna e la cultura araba sviluppò l'<select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Algebra">Algebra</option><option value="Geometria">Geometria</option></select>.
-                </div>
-                <button onclick="checkCloze()" id="btn-check-cloze" class="bg-emerald-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl">Verifica Testo</button>
+                <div id="cloze-body-container"></div>
+                <button onclick="checkCloze()" id="btn-check-cloze" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md">
+                    <i class="fa-solid fa-check mr-1.5"></i> Verifica Testo
+                </button>
                 <div id="cloze-feedback" class="text-xs sm:text-sm font-semibold"></div>
             </div>
         </section>
@@ -301,17 +284,10 @@
     <!-- App Logic -->
     <script>
         const state = { 
-            studentName: "Studente", 
-            audioEnabled: true, 
-            mcqAnswers: {}, 
-            tfAnswers: {}, 
-            mapAnswers: {},
-            timelineOrder: [0,1,2,3,4,5,6,7], 
-            matchingPairs: {}, 
-            clozeScore: 0, 
-            selectedTermId: null,
-            activeMCQ: [],
-            activeTF: []
+            studentName: "Studente", audioEnabled: true, mcqAnswers: {}, tfAnswers: {}, geoAnswers: {},
+            timelineOrder: [0,1,2,3,4,5,6,7], timelineDateAnswers: {},
+            matchingPairs: {}, clozeScore: 0, selectedTermId: null, activeClozeIndex: 0,
+            activeMCQ: [], activeTF: [], activeGeo: []
         };
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -338,7 +314,7 @@
             return res;
         }
 
-        // POOL ESTESO MCQ (16 Domande)
+        // POOL MCQ
         const mcqPool = [
             { id: 1, question: "Quale caratteristica definiva le popolazioni dell'Arabia pre-islamica?", options: ["Unico impero unificato", "Comunità culturale e linguistica ('arabiyya) divisa in tribù", "Popolo interamente nomade", "Tutti monoteisti a Gaza"], correct: 1, explanation: "Gli Arabi erano una comunità linguistica ('arabiyya) divisa tra nomadi al Nord e stanziali al Sud." },
             { id: 2, question: "Perché La Mecca era al centro della penisola arabica?", options: ["Capitale romana", "Snodo carovaniero tra Yemen e Gaza con la Ka'ba", "Sede imperiale sassanide", "Università di matematica"], correct: 1, explanation: "Era snodo carovaniero e sede del santuario della Ka'ba e della Pietra Nera." },
@@ -349,16 +325,10 @@
             { id: 7, question: "Cosa favorì l'espansione dei primi 4 califfi (632-661)?", options: ["Solo la flotta", "Crisi di Bizantini e Sassanidi, cavalleria veloce e tolleranza con la jizya", "Alleanza visigota", "Assenza di eserciti"], correct: 1, explanation: "Indebolimento degli imperi vicini, cavalleria rapida e applicazione della tassa jizya." },
             { id: 8, question: "Come conquistò la Spagna Tariq ibn Ziyad nel 711?", options: ["Sbarcando a Gibilterra e alleandosi con ebrei e cattolici oppressi", "Con trattati coi Franchi", "Dono bizantino", "Via terra dalle Alpi"], correct: 0, explanation: "Sbarcò con 12.000 mori trovando l'appoggio delle minoranze oppresse dai Visigoti." },
             { id: 9, question: "Origine della parola 'Algebra' e dello 'Zero'?", options: ["Dai greci", "Dal trattato 'Al Jabr' di Al-Khwarizmi e 'As-sifr' per lo zero", "Da Roma", "Da Parigi"], correct: 1, explanation: "Al-Khwarizmi scrisse 'Al Jabr' (Algebra) ed introdusse 'As-sifr' (Cifra/Zero)." },
-            { id: 10, question: "Serie di parole TUTTE d'origine araba?", options: ["Senato, console, legione", "Zucchero, magazzino, carciofo, ammiraglio, darsena, cifra", "Feudo, cavaliere, omaggio", "Guerra, faida, panca"], correct: 1, explanation: "Zucchero, magazzino, ammiraglio, darsena e cifra derivano direttamente dall'arabo." },
-            { id: 11, question: "Quale tra i seguenti NON è uno dei Cinque Pilastri dell'Islam?", options: ["Shahada (Professione di fede)", "Salat (Preghiera)", "Jihad armata obbligatoria", "Hajj (Pellegrinaggio)"], correct: 2, explanation: "I 5 Pilastri sono Shahada, Salat, Zakat (Elemosina), Sawm (Ramazan) e Hajj." },
-            { id: 12, question: "Dove fu spostata la capitale del Califfato sotto la dinastia Abbaside nel 750 d.C.?", options: ["A Damasco", "A Baghdad", "A Cordova", "A Gerusalemme"], correct: 1, explanation: "Gli Abbasidi fondarono e spostarono la capitale a Baghdad, centro di grande splendore culturale." },
-            { id: 13, question: "Chi arrestò l'avanzata araba nell'Europa nord-occidentale nel 732 d.C.?", options: ["Carlo Magno", "Carlo Martello a Poitiers", "Clodoveo", "Giustiniano"], correct: 1, explanation: "Carlo Martello sconfigge le truppe di Abd al-Rahman nella battaglia di Poitiers." },
-            { id: 14, question: "Chi era Khadija nella vita di Maometto?", options: ["La madre", "La prima moglie, ricca vedova e prima convertita", "La figlia", "Una poetessa della Mecca"], correct: 1, explanation: "Khadija fu la ricca mercantessa che sposò Maometto e lo sostenne nella prima Rivelazione." },
-            { id: 15, question: "Quale testo contiene gli insegnamenti spirituali e legislativi della rivelazione islamica?", options: ["La Sunna", "Il Corano", "Il Talmud", "Il Codice Giustinianeo"], correct: 1, explanation: "Il Corano è il testo sacro contenente le recitazioni divine trasmesse a Maometto." },
-            { id: 16, question: "Quale lingua divenne l'idioma ufficiale dell'amministrazione e della cultura dell'Impero Islamico?", options: ["Aramaico", "Greco", "Arabo", "Persiano"], correct: 2, explanation: "L'arabo divenne la lingua franca e istituzionale dal Mediterraneo alla Persia." }
+            { id: 10, question: "Serie di parole TUTTE d'origine araba?", options: ["Senato, console, legione", "Zucchero, magazzino, carciofo, ammiraglio, darsena, cifra", "Feudo, cavaliere, omaggio", "Guerra, faida, panca"], correct: 1, explanation: "Zucchero, magazzino, ammiraglio, darsena e cifra derivano direttamente dall'arabo." }
         ];
 
-        // POOL ESTESO V/F (12 Domande)
+        // POOL V/F
         const tfPool = [
             { id: 1, text: "Prima dell'Islam gli Arabi erano politicamente uniti sotto un solo Re.", isTrue: false, explanation: "FALSO: Erano divisi in varie tribù rivali." },
             { id: 2, text: "La Mecca pre-islamica era un centro politeista dove si venerava Allah con altre divinità.", isTrue: true, explanation: "VERO: Veneravano Allah insieme a divinità minori." },
@@ -367,49 +337,76 @@
             { id: 5, text: "La 'jizya' era la tassa di tolleranza versata dalle minoranze non musulmane.", isTrue: true, explanation: "VERO: Permetteva il culto praticato da cristiani ed ebrei." },
             { id: 6, text: "Gli Abbasidi spostarono la capitale a Baghdad.", isTrue: true, explanation: "VERO: Baghdad fu la capitale del rinascimento culturale." },
             { id: 7, text: "I numeri 'arabi' furono inventati direttamente a La Mecca.", isTrue: false, explanation: "FALSO: Sono di origine indiana, poi diffusi dagli arabi." },
-            { id: 8, text: "Parole come 'Cotone', 'Zecca' e 'Taccuino' derivano dall'arabo.", isTrue: true, explanation: "VERO: Sono prestiti entrati tramite i commerci." },
-            { id: 9, text: "Maometto impose fin da subito la conversione forzata di tutti gli ebrei e cristiani.", isTrue: false, explanation: "FALSO: Cristiani ed Ebrei erano considerati 'Gente del Libro' e tollerati." },
-            { id: 10, text: "La dinastia Omayyade aveva la sua capitale a Damasco.", isTrue: true, explanation: "VERO: Gli Omayyadi ressero l'impero da Damasco dal 661 al 750 d.C." },
-            { id: 11, text: "Al-Andalus era il nome arabo dato alla penisola iberica conquistata.", isTrue: true, explanation: "VERO: Corrispondeva all'attuale Spagna e Portogallo." },
-            { id: 12, text: "L'Islam proibisce la raffigurazione artistica della divinità e dei profeti.", isTrue: true, explanation: "VERO: Favorì lo sviluppo dell'aniconismo e della calligrafia decorativa." }
+            { id: 8, text: "Parole come 'Cotone', 'Zecca' e 'Taccuino' derivano dall'arabo.", isTrue: true, explanation: "VERO: Sono prestiti entrati tramite i commerci." }
         ];
 
-        const mapData = [
-            { id: 1, pin: 1, question: "1. Città santa dell'Islam, sede della Ka'ba e luogo di nascita di Maometto:", options: ["La Mecca", "Medina", "Damasco", "Baghdad"], correct: 0 },
-            { id: 2, pin: 2, question: "2. La città di Yathrib verso cui avvenne l'Egira nel 622 d.C.:", options: ["La Mecca", "Medina (Yathrib)", "Gerusalemme", "Il Cairo"], correct: 1 },
-            { id: 3, pin: 3, question: "3. Capitale del Califfato Abbaside fondata sul fiume Tigri:", options: ["Damasco", "Cordova", "Baghdad", "Teheran"], correct: 2 },
-            { id: 4, pin: 4, question: "4. Promontorio di sbarco in Spagna di Tariq ibn Ziyad nel 711 d.C.:", options: ["Sutri", "Gibilterra (Jabal Tariq)", "Sicilia", "Alessandria"], correct: 1 },
-            { id: 5, pin: 5, question: "5. Luogo della storica battaglia del 732 d.C. in Gallia:", options: ["Poitiers", "Verdun", "Aquisgrana", "Roma"], correct: 0 }
+        // POOL GEOGRAFIA STORICA
+        const geoPool = [
+            { id: 1, question: "A quale territorio o stato moderno corrispondeva storicamente la regione islamica di 'Al-Andalus'?", options: ["Alla Penisola Iberica (Spagna e Portogallo)", "Alla Grecia e ai Balcani", "Al Nord dell'Italia", "All'Egitto"], correct: 0, explanation: "Al-Andalus indicava i territori della Penisola Iberica governati dagli Arabi dal 711 d.C." },
+            { id: 2, question: "Quale fiume bagnava Baghdad, la gloriosa capitale fondata dalla dinastia Abbaside?", options: ["Nilo", "Tigri", "Eufrate", "Indo"], correct: 1, explanation: "Baghdad fu costruita sulle rive del fiume Tigri in Mesopotamia (odierno Iraq)." },
+            { id: 3, question: "Quale stretto di mare fu attraversato nel 711 d.C. dal generale Tariq ibn Ziyad per sbarcare in Europa?", options: ["Stretto di Messina", "Stretto di Gibilterra", "Dardanelli", "Bosforo"], correct: 1, explanation: "Il nome 'Gibilterra' deriva proprio da 'Jabal Tariq' (il Monte di Tariq)." },
+            { id: 4, question: "In quale territorio moderno si trovano oggi le due città sante dell'Islam, La Mecca e Medina (Yathrib)?", options: ["In Arabia Saudita", "In Giordania", "In Siria", "In Egitto"], correct: 0, explanation: "La Mecca e Medina si trovano nell'attuale Regno dell'Arabia Saudita (regione dell'Hjaz)." },
+            { id: 5, question: "Fino a quale confine orientale si estendeva la massima espansione del Califfato arabo-islamico attorno al 750 d.C.?", options: ["Fino alla Cina e al fiume Indo", "Fino alla Russia", "Fino a Costantinopoli", "Fino alla Germania"], correct: 0, explanation: "L'Impero andava dalla Spagna (Ovest) fino alle porte della Cina e al fiume Indo (Est)." }
         ];
 
-        const timelineData = [
-            { id: 0, title: "Nascita di Maometto (570 d.C.)" },
-            { id: 1, title: "Visione dell'Arcangelo Gabriele (610 d.C.)" },
-            { id: 2, title: "Morte di Khadija e Abu Talib (619 d.C.)" },
-            { id: 3, title: "L'Egira a Medina (622 d.C.)" },
-            { id: 4, title: "Ritorno trionfale a La Mecca (630 d.C.)" },
-            { id: 5, title: "Epoca dei Primi Quattro Califfi (632-661 d.C.)" },
-            { id: 6, title: "Sbarco in Spagna di Tariq (711 d.C.)" },
-            { id: 7, title: "Califfato Abbaside a Baghdad (749-945 d.C.)" }
+        // DATI CRONOLOGIA PARTE 1 (TITOLI SENZA DATE)
+        const timelineEvents = [
+            { id: 0, title: "Nascita di Maometto a La Mecca" },
+            { id: 1, title: "Prima Rivelazione e visione dell'Arcangelo Gabriele" },
+            { id: 2, title: "L'Egira (trasferimento a Medina e nascita della Umma)" },
+            { id: 3, title: "Ritorno trionfale di Maometto a La Mecca e purificazione della Ka'ba" },
+            { id: 4, title: "Periodo dei Primi Quattro Califfi 'Elettivi'" },
+            { id: 5, title: "Spostamento della capitale a Damasco sotto la dinastia Omayyade" },
+            { id: 6, title: "Sbarco di Tariq a Gibilterra e inizio della conquista della Spagna" },
+            { id: 7, title: "Fondazione di Baghdad come nuova capitale sotto la dinastia Abbaside" }
         ];
 
-        const matchingTerms = [{ id: "m1", term: "Umma" }, { id: "m2", term: "Ka'ba" }, { id: "m3", term: "Jizya" }, { id: "m4", term: "Al Jabr" }];
+        // DATI CRONOLOGIA PARTE 2 (ASSOCIAZIONE EVENTO - DATA)
+        const timelineDateItems = [
+            { id: 1, event: "Nascita di Maometto", correctDate: "570 d.C.", options: ["570 d.C.", "622 d.C.", "711 d.C."] },
+            { id: 2, event: "L'Egira (migrazione a Medina)", correctDate: "622 d.C.", options: ["610 d.C.", "622 d.C.", "632 d.C."] },
+            { id: 3, event: "Sbarco arabo a Gibilterra in Spagna", correctDate: "711 d.C.", options: ["650 d.C.", "711 d.C.", "732 d.C."] },
+            { id: 4, event: "Battaglia di Poitiers contro i Franchi", correctDate: "732 d.C.", options: ["711 d.C.", "732 d.C.", "800 d.C."] },
+            { id: 5, event: "Fondazione della capitale Baghdad", correctDate: "762 d.C.", options: ["622 d.C.", "711 d.C.", "762 d.C."] }
+        ];
+
+        // MATCHING (5 COPPIE EXACT)
+        const matchingTerms = [
+            { id: "m1", term: "Umma" }, 
+            { id: "m2", term: "Ka'ba" }, 
+            { id: "m3", term: "Jizya" }, 
+            { id: "m4", term: "Al-Andalus" },
+            { id: "m5", term: "Al Jabr" }
+        ];
         const matchingDefs = [
-            { id: "d1", matchId: "m1", text: "Comunità dei credenti uniti dalla fede." },
-            { id: "d2", matchId: "m2", text: "Santuario meccano con la Pietra Nera." },
-            { id: "d3", matchId: "m3", text: "Tassa di tolleranza religiosa." },
-            { id: "d4", matchId: "m4", text: "Trattato da cui deriva la parola Algebra." }
+            { id: "d1", matchId: "m1", text: "La comunità dei fedeli musulmani che supera i vincoli tribali." },
+            { id: "d2", matchId: "m2", text: "Santuario della Mecca custode della Pietra Nera." },
+            { id: "d3", matchId: "m3", text: "Tassa di tolleranza pagata dalle minoranze 'Gente del Libro'." },
+            { id: "d4", matchId: "m4", text: "Nome arabo dato ai territori della Penisola Iberica." },
+            { id: "d5", matchId: "m5", text: "Trattato matematico da cui deriva la parola 'Algebra'." }
+        ];
+
+        // POOL TESTI CLOZE (VARIABILI A 3 OPZIONI)
+        const clozePool = [
+            {
+                text: `Nel <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="570 d.C.">570 d.C.</option><option value="622 d.C.">622 d.C.</option><option value="711 d.C.">711 d.C.</option></select>, nacque <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Maometto">Maometto</option><option value="Ali">Ali</option><option value="Abu Bakr">Abu Bakr</option></select> della tribù dei <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Quraysh">Quraysh</option><option value="Lakhmidi">Lakhmidi</option><option value="Sassanidi">Sassanidi</option></select>. Nel 610 ebbe la visione dell'Arcangelo <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Gabriele">Gabriele</option><option value="Raffaele">Raffaele</option><option value="Michele">Michele</option></select>. Nel <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="622 d.C.">622 d.C.</option><option value="630 d.C.">630 d.C.</option><option value="732 d.C.">732 d.C.</option></select> compì l'<select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Egira">Egira</option><option value="Sunna">Sunna</option><option value="Jihad">Jihad</option></select> fondando la comunità della <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Umma">Umma</option><option value="Fara">Fara</option><option value="Curte">Curte</option></select>. In seguito i fedeli si divisero tra Sunniti e <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Sciiti">Sciiti</option><option value="Bizantini">Bizantini</option><option value="Sassanidi">Sassanidi</option></select>. Nel 711 il condottiero <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Tariq ibn Ziyad">Tariq ibn Ziyad</option><option value="Al-Khwarizmi">Al-Khwarizmi</option><option value="Saladino">Saladino</option></select> sbarcò in Spagna e la civiltà araba sviluppò la disciplina dell'<select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Algebra">Algebra</option><option value="Geometria">Geometria</option><option value="Astrologia">Astrologia</option></select>.`,
+                answers: { 1: "570 d.C.", 2: "Maometto", 3: "Quraysh", 4: "Gabriele", 5: "622 d.C.", 6: "Egira", 7: "Umma", 8: "Sciiti", 9: "Tariq ibn Ziyad", 10: "Algebra" }
+            },
+            {
+                text: `La città santa de La Mecca custodisce la <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Ka'ba">Ka'ba</option><option value="Moschea Blu">Moschea Blu</option><option value="Piramide">Piramide</option></select> e la Pietra Nera. I doveri fondamentali del musulmano sono stabiliti nei Cinque <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Pilastri">Pilastri</option><option value="Codici">Codici</option><option value="Decreti">Decreti</option></select>. Sotto la dinastia degli <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Omayyadi">Omayyadi</option><option value="Ottomani">Ottomani</option><option value="Mamelucchi">Mamelucchi</option></select>, la capitale fu spostata a <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Damasco">Damasco</option><option value="Baghdad">Baghdad</option><option value="Il Cairo">Il Cairo</option></select>. Successivamente, gli <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Abbasidi">Abbasidi</option><option value="Visigoti">Visigoti</option><option value="Bizantini">Bizantini</option></select> fondarono la città di <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Baghdad">Baghdad</option><option value="Cordova">Cordova</option><option value="Gerusalemme">Gerusalemme</option></select> sul fiume Tigri. Le minoranze religiose versavano la tassa chiamata <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Jizya">Jizya</option><option value="Guidrigildo">Guidrigildo</option><option value="Decima">Decima</option></select>. Nel campo della matematica, lo scienziato <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Al-Khwarizmi">Al-Khwarizmi</option><option value="Averroè">Averroè</option><option value="Avicenna">Avicenna</option></select> diffuse l'uso dello <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Zero">Zero</option><option value="Metro">Metro</option><option value="Compasso">Compasso</option></select>, mentre vocaboli come <select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Magazzino">Magazzino</option><option value="Feudo">Feudo</option><option value="Console">Console</option></select> sono entrati nella lingua italiana.`,
+                answers: { 1: "Ka'ba", 2: "Pilastri", 3: "Omayyadi", 4: "Damasco", 5: "Abbasidi", 6: "Baghdad", 7: "Jizya", 8: "Al-Khwarizmi", 9: "Zero", 10: "Magazzino" }
+            }
         ];
 
         function renderMCQ() {
             state.activeMCQ = shuffle(mcqPool).slice(0, 10);
             const container = document.getElementById('mcq-container');
             container.innerHTML = state.activeMCQ.map((q, idx) => `
-                <div class="glass-card p-5 rounded-2xl space-y-3">
+                <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
                     <div class="font-bold text-slate-100 text-sm">${idx + 1}. ${q.question}</div>
                     <div class="space-y-2">
                         ${q.options.map((opt, oIdx) => `
-                            <button onclick="selectMCQ(${q.id}, ${oIdx})" id="mcq-btn-${q.id}-${oIdx}" class="mcq-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all">${opt}</button>
+                            <button onclick="selectMCQ(${q.id}, ${oIdx})" id="mcq-btn-${q.id}-${oIdx}" class="mcq-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
                         `).join('')}
                     </div>
                     <div id="mcq-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
@@ -422,7 +419,6 @@
             const q = mcqPool.find(item => item.id === qId);
             state.mcqAnswers[qId] = oIdx;
 
-            // BLOCCA TUTTI I PULSANTI DI QUESTA DOMANDA (IMPOSSIBILE CAMBIARE RISPOSTA)
             document.querySelectorAll(`.mcq-option-${qId}`).forEach(btn => {
                 btn.disabled = true;
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -446,7 +442,7 @@
             state.activeTF = shuffle(tfPool).slice(0, 8);
             const container = document.getElementById('tf-container');
             container.innerHTML = state.activeTF.map((item, idx) => `
-                <div class="glass-card p-4 rounded-2xl space-y-2">
+                <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800">
                     <p class="text-xs text-slate-200">${idx + 1}. ${item.text}</p>
                     <div class="flex gap-2">
                         <button onclick="answerTF(${item.id}, true)" id="tf-btn-${item.id}-true" class="tf-option-${item.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button>
@@ -462,7 +458,6 @@
             const item = tfPool.find(d => d.id === id);
             state.tfAnswers[id] = choice;
 
-            // BLOCCA I PULSANTI VERO/FALSO
             document.querySelectorAll(`.tf-option-${id}`).forEach(btn => {
                 btn.disabled = true;
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -475,49 +470,55 @@
             updateGlobalScore();
         }
 
-        function renderMapQuiz() {
-            const container = document.getElementById('map-questions-container');
-            container.innerHTML = mapData.map((q) => `
-                <div class="glass-card p-3.5 rounded-xl space-y-2">
-                    <label class="block text-xs font-bold text-slate-200">${q.question}</label>
-                    <select id="map-select-${q.id}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-teal-300 focus:outline-none">
-                        <option value="">-- Seleziona Luogo --</option>
-                        ${q.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                    </select>
+        function renderGeo() {
+            state.activeGeo = shuffle(geoPool).slice(0, 5);
+            const container = document.getElementById('geo-container');
+            container.innerHTML = state.activeGeo.map((q, idx) => `
+                <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+                    <div class="font-bold text-slate-100 text-sm"><i class="fa-solid fa-compass text-teal-400 mr-2"></i>${idx + 1}. ${q.question}</div>
+                    <div class="space-y-2">
+                        ${q.options.map((opt, oIdx) => `
+                            <button onclick="selectGeo(${q.id}, ${oIdx})" id="geo-btn-${q.id}-${oIdx}" class="geo-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div id="geo-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
                 </div>
             `).join('');
         }
 
-        function checkMapQuiz() {
-            let correct = 0;
-            mapData.forEach(q => {
-                const el = document.getElementById(`map-select-${q.id}`);
-                el.disabled = true;
-                if (el.value === q.options[q.correct]) {
-                    correct++;
-                    el.className = "w-full bg-emerald-950 border border-emerald-500 rounded-lg p-2 text-xs text-emerald-300 font-bold";
-                } else {
-                    el.className = "w-full bg-rose-950 border border-rose-500 rounded-lg p-2 text-xs text-rose-300 font-bold";
-                }
-            });
-            document.getElementById('check-map-btn').disabled = true;
-            document.getElementById('check-map-btn').classList.add('opacity-50', 'cursor-not-allowed');
+        function selectGeo(qId, oIdx) {
+            playSound('click');
+            const q = geoPool.find(item => item.id === qId);
+            state.geoAnswers[qId] = oIdx;
 
-            const fb = document.getElementById('map-feedback');
-            if(correct === mapData.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold pt-2"; fb.innerText = "Perfetto! Mappa identificata al 100%."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold pt-2"; fb.innerText = `Risposte corrette sulla mappa: ${correct} su ${mapData.length}.`; }
-            state.mapScore = Math.round((correct / mapData.length) * 100);
+            document.querySelectorAll(`.geo-option-${qId}`).forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+
+            const fb = document.getElementById(`geo-feedback-${qId}`);
+            fb.classList.remove('hidden');
+            if(oIdx === q.correct) {
+                playSound('correct');
+                fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
+                fb.innerHTML = `<strong>Esatto!</strong> ${q.explanation}`;
+            } else {
+                playSound('error');
+                fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
+                fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`;
+            }
             updateGlobalScore();
         }
 
-        function renderTimeline() {
+        // RENDER CRONOLOGIA PARTE A (ORDINAMENTO SITO SENZA DATE)
+        function renderTimelineOrder() {
             const list = document.getElementById('timeline-list');
             list.innerHTML = state.timelineOrder.map((dataIdx, currentPos) => `
                 <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
-                    <span class="text-purple-300 font-bold">${currentPos + 1}. ${timelineData[dataIdx].title}</span>
+                    <span class="text-purple-300 font-bold">${currentPos + 1}. ${timelineEvents[dataIdx].title}</span>
                     <div class="flex gap-1">
-                        <button onclick="moveTimeline(${currentPos}, -1)" class="p-1 text-purple-400"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button onclick="moveTimeline(${currentPos}, 1)" class="p-1 text-purple-400"><i class="fa-solid fa-chevron-down"></i></button>
+                        <button onclick="moveTimeline(${currentPos}, -1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button>
+                        <button onclick="moveTimeline(${currentPos}, 1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button>
                     </div>
                 </div>
             `).join('');
@@ -525,58 +526,125 @@
 
         function moveTimeline(pos, dir) {
             const target = pos + dir;
-            if(target < 0 || target >= timelineData.length) return;
+            if(target < 0 || target >= timelineEvents.length) return;
             const temp = state.timelineOrder[pos];
             state.timelineOrder[pos] = state.timelineOrder[target];
             state.timelineOrder[target] = temp;
-            renderTimeline();
+            renderTimelineOrder();
         }
 
-        function checkTimeline() {
+        function checkTimelineOrder() {
             let correct = 0;
             state.timelineOrder.forEach((v, i) => { if(v === i) correct++; });
-            const fb = document.getElementById('timeline-feedback');
-            document.getElementById('btn-check-timeline').disabled = true;
-            document.getElementById('btn-check-timeline').classList.add('opacity-50', 'cursor-not-allowed');
+            const fb = document.getElementById('timeline-order-feedback');
+            document.getElementById('btn-check-timeline-order').disabled = true;
+            document.getElementById('btn-check-timeline-order').classList.add('opacity-50', 'cursor-not-allowed');
 
-            if(correct === timelineData.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Perfetto! Sequenza corretta al 100%."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Elementi in ordine corretto: ${correct} su ${timelineData.length}.`; }
+            if(correct === timelineEvents.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Perfetto! Sequenza cronologica esatta al 100%."; }
+            else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Eventi in posizione corretta: ${correct} su ${timelineEvents.length}.`; }
             updateGlobalScore();
         }
 
+        // RENDER CRONOLOGIA PARTE B (ASSOCIAZIONE EVENTO - DATA)
+        function renderTimelineDates() {
+            const container = document.getElementById('timeline-dates-container');
+            container.innerHTML = timelineDateItems.map((item) => `
+                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <div class="text-xs font-bold text-slate-200">${item.event}</div>
+                    <select id="timeline-date-select-${item.id}" onchange="selectTimelineDate(${item.id}, this.value)" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs">
+                        <option value="">-- Seleziona l'anno --</option>
+                        ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                </div>
+            `).join('');
+        }
+
+        function selectTimelineDate(id, val) {
+            state.timelineDateAnswers[id] = val;
+        }
+
+        function checkTimelineDates() {
+            let correct = 0;
+            timelineDateItems.forEach(item => {
+                const sel = document.getElementById(`timeline-date-select-${item.id}`);
+                if(sel) sel.disabled = true;
+                if(state.timelineDateAnswers[item.id] === item.correctDate) correct++;
+            });
+            const fb = document.getElementById('timeline-dates-feedback');
+            document.getElementById('btn-check-timeline-dates').disabled = true;
+            document.getElementById('btn-check-timeline-dates').classList.add('opacity-50', 'cursor-not-allowed');
+
+            if(correct === timelineDateItems.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Eccellente! Tutte le date sono state associate correttamente."; }
+            else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Date associate correttamente: ${correct} su ${timelineDateItems.length}.`; }
+            updateGlobalScore();
+        }
+
+        // RENDER MATCHING (5 COPPIE)
         function renderMatching() {
             const termsContainer = document.getElementById('matching-terms');
             const defsContainer = document.getElementById('matching-defs');
-            termsContainer.innerHTML = matchingTerms.map(t => `<button onclick="selectTerm('${t.id}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200">${t.term}</button>`).join('');
-            defsContainer.innerHTML = matchingDefs.map(d => `<button onclick="selectDef('${d.matchId}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300">${d.text}</button>`).join('');
+            termsContainer.innerHTML = matchingTerms.map(t => `<button onclick="selectTerm('${t.id}')" id="term-btn-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50">${t.term}</button>`).join('');
+            defsContainer.innerHTML = shuffle(matchingDefs).map(d => `<button onclick="selectDef('${d.matchId}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50">${d.text}</button>`).join('');
         }
 
-        function selectTerm(id) { state.selectedTermId = id; playSound('click'); }
+        function selectTerm(id) { 
+            state.selectedTermId = id; 
+            playSound('click'); 
+            matchingTerms.forEach(t => {
+                const btn = document.getElementById(`term-btn-${t.id}`);
+                if(btn) btn.className = (t.id === id) ? "w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200";
+            });
+        }
+
         function selectDef(matchId) {
             if(!state.selectedTermId) return;
             const fb = document.getElementById('matching-feedback');
-            if(state.selectedTermId === matchId) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Abbinamento corretto!"; }
-            else { playSound('error'); fb.className = "text-rose-400 font-bold"; fb.innerText = "Abbinamento errato. Riprova!"; }
+            if(state.selectedTermId === matchId) { 
+                playSound('correct'); 
+                fb.className = "text-emerald-400 font-bold"; 
+                fb.innerText = "Abbinamento corretto!"; 
+                state.matchingPairs[matchId] = true;
+            } else { 
+                playSound('error'); 
+                fb.className = "text-rose-400 font-bold"; 
+                fb.innerText = "Abbinamento errato. Seleziona un altro termine e riprova!"; 
+            }
             state.selectedTermId = null;
             updateGlobalScore();
         }
 
+        // RENDER CLOZE (TESTO DINAMICO CON 3 OPZIONI)
+        function renderCloze() {
+            state.activeClozeIndex = Math.floor(Math.random() * clozePool.length);
+            const currentCloze = clozePool[state.activeClozeIndex];
+            const container = document.getElementById('cloze-body-container');
+            container.innerHTML = `<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm sm:text-base text-slate-200 border border-slate-800">${currentCloze.text}</div>`;
+            document.getElementById('btn-check-cloze').disabled = false;
+            document.getElementById('btn-check-cloze').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('cloze-feedback').innerText = "";
+        }
+
         function checkCloze() {
-            const answers = { 1: "570 d.C.", 2: "Maometto", 3: "Quraysh", 4: "Gabriele", 5: "622 d.C.", 6: "Egira", 7: "Umma", 8: "Sciiti", 9: "Tariq ibn Ziyad", 10: "Algebra" };
+            const currentCloze = clozePool[state.activeClozeIndex];
+            const answers = currentCloze.answers;
             let correct = 0;
-            for(let i=1; i<=10; i++) {
+            const total = Object.keys(answers).length;
+
+            for(let i=1; i<=total; i++) {
                 const el = document.getElementById(`cloze-${i}`);
-                el.disabled = true;
-                if(el.value === answers[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1"; }
-                else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1"; }
+                if(el) {
+                    el.disabled = true;
+                    if(el.value === answers[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold"; }
+                    else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold"; }
+                }
             }
             document.getElementById('btn-check-cloze').disabled = true;
             document.getElementById('btn-check-cloze').classList.add('opacity-50', 'cursor-not-allowed');
 
-            state.clozeScore = Math.round((correct / 10) * 100);
+            state.clozeScore = Math.round((correct / total) * 100);
             const fb = document.getElementById('cloze-feedback');
-            if(correct === 10) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = "Eccellente! 10/10 corretto."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/10. Correggi le caselle rosse.`; }
+            if(correct === total) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = `Eccellente! ${correct}/${total} lacune completate correttamente.`; }
+            else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/${total}. Le risposte errate sono evidenziate in rosso.`; }
             updateGlobalScore();
         }
 
@@ -586,18 +654,26 @@
             
             let tfCorrect = 0; 
             state.activeTF.forEach(d => { if(state.tfAnswers[d.id] === d.isTrue) tfCorrect++; });
-            
-            let timelineCorrect = 0; 
-            state.timelineOrder.forEach((v, i) => { if(v === i) timelineCorrect++; });
 
-            const mapScorePoints = (state.mapScore || 0) * 0.15;
+            let geoCorrect = 0;
+            state.activeGeo.forEach(g => { if(state.geoAnswers[g.id] === g.correct) geoCorrect++; });
             
+            let timelineOrderCorrect = 0; 
+            state.timelineOrder.forEach((v, i) => { if(v === i) timelineOrderCorrect++; });
+
+            let timelineDatesCorrect = 0;
+            timelineDateItems.forEach(item => { if(state.timelineDateAnswers[item.id] === item.correctDate) timelineDatesCorrect++; });
+
+            let matchingCorrect = Object.keys(state.matchingPairs).length;
+
             const total = Math.round(
-                (state.activeMCQ.length ? (mcqCorrect / state.activeMCQ.length) * 25 : 0) + 
+                (state.activeMCQ.length ? (mcqCorrect / state.activeMCQ.length) * 20 : 0) + 
                 (state.activeTF.length ? (tfCorrect / state.activeTF.length) * 20 : 0) + 
-                mapScorePoints +
-                (timelineCorrect / 8) * 15 + 
-                (state.clozeScore / 100) * 25
+                (state.activeGeo.length ? (geoCorrect / state.activeGeo.length) * 15 : 0) +
+                (timelineOrderCorrect / 8) * 10 + 
+                (timelineDatesCorrect / 5) * 10 +
+                (matchingCorrect / 5) * 10 +
+                (state.clozeScore / 100) * 15
             );
 
             document.getElementById('global-score-text').innerText = `${total} / 100`;
@@ -623,12 +699,19 @@
         }
 
         function resetAll() {
-            state.mcqAnswers = {}; state.tfAnswers = {}; state.mapAnswers = {}; state.timelineOrder = [0,1,2,3,4,5,6,7]; state.clozeScore = 0; state.mapScore = 0;
-            renderMCQ(); renderTF(); renderMapQuiz(); renderTimeline(); renderMatching();
+            state.mcqAnswers = {}; state.tfAnswers = {}; state.geoAnswers = {}; 
+            state.timelineOrder = [0,1,2,3,4,5,6,7]; state.timelineDateAnswers = {};
+            state.matchingPairs = {}; state.clozeScore = 0;
+            renderMCQ(); renderTF(); renderGeo(); renderTimelineOrder(); renderTimelineDates(); renderMatching(); renderCloze();
             updateGlobalScore(); switchTab('tab-studio');
         }
 
-        window.addEventListener('DOMContentLoaded', () => { renderMCQ(); renderTF(); renderMapQuiz(); renderTimeline(); renderMatching(); updateGlobalScore(); });
+        window.addEventListener('DOMContentLoaded', () => { 
+            renderMCQ(); renderTF(); renderGeo(); 
+            renderTimelineOrder(); renderTimelineDates(); 
+            renderMatching(); renderCloze(); 
+            updateGlobalScore(); 
+        });
     </script>
 </body>
 </html>
