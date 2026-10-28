@@ -8,15 +8,10 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        emerald: { 450: '#10b981' },
-                        medieval: { dark: '#080d16', card: '#111927', border: '#1f2a3e' }
-                    },
-                    fontFamily: { cinzel: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
-                }
-            }
+            theme: { extend: {
+                colors: { emerald: { 450: '#10b981' }, medieval: { dark: '#080d16', card: '#111927', border: '#1f2a3e' } },
+                fontFamily: { cinzel: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+            }}
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -39,17 +34,12 @@
 <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="flex items-center space-x-2 text-xs sm:text-sm">
-            <a href="index.html" class="text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-semibold">
-                <i class="fa-solid fa-house"></i> Home Portale
-            </a>
+            <a href="index.html" class="text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-semibold"><i class="fa-solid fa-house"></i> Home Portale</a>
             <span class="text-slate-600">/</span>
-            <a href="storia-medievale.html" class="text-slate-400 hover:text-emerald-400 transition-colors font-semibold">
-                Storia Medievale
-            </a>
+            <a href="storia-medievale.html" class="text-slate-400 hover:text-emerald-400 transition-colors font-semibold">Storia Medievale</a>
             <span class="text-slate-600">/</span>
             <span class="text-emerald-400 font-bold">I Longobardi in Italia</span>
         </div>
-
         <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
             <div class="relative flex items-center">
                 <i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
@@ -63,213 +53,125 @@
                     <span class="text-[10px] uppercase tracking-wider text-emerald-400/80 block font-bold">Punti XP</span>
                     <span id="global-score-text" class="text-sm font-extrabold text-emerald-400">0 / 100</span>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs">
-                    <i class="fa-solid fa-bolt"></i>
-                </div>
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs"><i class="fa-solid fa-bolt"></i></div>
             </div>
         </div>
     </div>
 </header>
 
-    <!-- Navigation Bar -->
-    <nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
-        <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
-            <button onclick="switchTab('tab-studio')" class="tab-btn active px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent">
-                <i class="fa-solid fa-map text-emerald-400"></i> 0. Quadro Storico
-            </button>
-            <button onclick="switchTab('tab-mcq')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz Multiplo (10 Q)
-            </button>
-            <button onclick="switchTab('tab-tf')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. Vero o Falso (8 Q)
-            </button>
-            <button onclick="switchTab('tab-geo')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-earth-italy text-teal-400"></i> 3. Geografia Storica (5 Q)
-            </button>
-            <button onclick="switchTab('tab-timeline')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-timeline text-purple-400"></i> 4. Cronologia & Date
-            </button>
-            <button onclick="switchTab('tab-matching')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-diagram-project text-rose-400"></i> 5. Concetti (5 Abbinamenti)
-            </button>
-            <button onclick="switchTab('tab-cloze')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-pen-nib text-amber-400"></i> 6. Testo Guidato (Variabile)
-            </button>
-            <button onclick="switchTab('tab-report')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900">
-                <i class="fa-solid fa-certificate text-yellow-400"></i> Certificato
-            </button>
+<nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+        <button onclick="switchTab('tab-studio')" class="tab-btn active px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent"><i class="fa-solid fa-map text-emerald-400"></i> 0. Quadro Storico</button>
+        <button onclick="switchTab('tab-mcq')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz Multiplo (10 Q)</button>
+        <button onclick="switchTab('tab-tf')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. Vero o Falso (8 Q)</button>
+        <button onclick="switchTab('tab-geo')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-earth-italy text-teal-400"></i> 3. Geografia Storica (5 Q)</button>
+        <button onclick="switchTab('tab-timeline')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-timeline text-purple-400"></i> 4. Cronologia & Date</button>
+        <button onclick="switchTab('tab-matching')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-diagram-project text-rose-400"></i> 5. Concetti (5 Abbinamenti)</button>
+        <button onclick="switchTab('tab-cloze')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-pen-nib text-amber-400"></i> 6. Testo Guidato (Variabile)</button>
+        <button onclick="switchTab('tab-report')" class="tab-btn px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-certificate text-yellow-400"></i> Certificato</button>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+    <section id="tab-studio" class="tab-content space-y-8">
+        <div class="glass-card p-6 sm:p-8 rounded-2xl border-emerald-500/20 relative overflow-hidden">
+            <div class="max-w-3xl space-y-3">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"><i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico Integrato • Storia Medievale</span>
+                <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400">La Gens Langobardorum in Italia</h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Dalla migrazione e l'ingresso in Italia nel 568/569 d.C. con Alboino, l'Editto di Rotari, la conversione al Cattolicesimo, la Donazione di Sutri, fino alla caduta per mano di Carlo Magno e alla sopravvivenza della Longobardia Minore al Sud.</p>
+            </div>
         </div>
-    </nav>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-emerald-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-person-walking-luggage"></i></div><h3 class="font-bold text-lg text-slate-100">1. L'Invasione del 568/569 d.C.</h3><p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Guidati da Alboino, valicano le Alpi Giulie. Si crea la separazione tra Langobardia e Romania bizantina.</p></div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-sky-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-users-gear"></i></div><h3 class="font-bold text-lg text-slate-100">2. Farae, Arimanni e Gastaldi</h3><p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Struttura basata su Farae (clan guerrieri). I Gastaldi gestiscono le terre del Re in contrapposizione ai Duchi.</p></div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-purple-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-church"></i></div><h3 class="font-bold text-lg text-slate-100">3. Teodolinda e il Cattolicesimo</h3><p class="text-xs sm:text-sm text-slate-300 leading-relaxed">La regina Teodolinda avvia la conversione col Papa. Nel 653 d.C. il cattolicesimo diventa religione ufficiale.</p></div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-amber-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-book-journal-whills"></i></div><h3 class="font-bold text-lg text-slate-100">4. Editto di Rotari (643 d.C.)</h3><p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Prima codificazione in latino: sostituisce la faida (vendetta) col guidrigildo (risarcimento monetario).</p></div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-rose-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-landmark-flag"></i></div><h3 class="font-bold text-lg text-slate-100">5. Donazione di Sutri (728 d.C.)</h3><p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Liutprando dona il borgo di Sutri a Papa Gregorio II: nasce il primo nucleo dello Stato della Chiesa.</p></div>
+            <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-teal-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-language"></i></div><h3 class="font-bold text-lg text-slate-100">6. Caduta (774) e Longobardia Minore</h3><p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Carlo Magno sconfigge Desiderio a Pavia, ma i ducati del Sud (Benevento, Spoleto) dureranno ancora tre secoli.</p></div>
+        </div>
+        <div class="text-center pt-4"><button onclick="switchTab('tab-mcq')" class="bg-emerald-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-emerald-600">Inizia il Test sui Longobardi ➔</button></div>
+    </section>
 
-    <!-- Main Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <section id="tab-mcq" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo (10 Quesiti Estratti)</h2>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate al primo clic</span>
+        </div>
+        <div id="mcq-container" class="space-y-6"></div>
+    </section>
 
-        <!-- TAB 0: STUDIO -->
-        <section id="tab-studio" class="tab-content space-y-8">
-            <div class="glass-card p-6 sm:p-8 rounded-2xl border-emerald-500/20 relative overflow-hidden">
-                <div class="max-w-3xl space-y-3">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                        <i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico Integrato • Storia Medievale
-                    </span>
-                    <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400">La Gens Langobardorum in Italia</h2>
-                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                        Dalla migrazione e l'ingresso in Italia nel 568/569 d.C. con Alboino, l'Editto di Rotari, la conversione al Cattolicesimo, la Donazione di Sutri, fino alla caduta per mano di Carlo Magno e alla sopravvivenza della Longobardia Minore al Sud.
-                    </p>
-                </div>
+    <section id="tab-tf" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso Motivato (8 Quesiti Estratti)</h2>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate al primo clic</span>
+        </div>
+        <div id="tf-container" class="space-y-4"></div>
+    </section>
+
+    <section id="tab-geo" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <div><h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Geografia e Territori dell'Italia Longobarda</h2><p class="text-xs sm:text-sm text-slate-400">Verifica la conoscenza dei ducati, delle capitali e della divisione territoriale dell'Italia medievale.</p></div>
+            <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-teal-400"></i> Risposte bloccate al primo clic</span>
+        </div>
+        <div id="geo-container" class="space-y-6"></div>
+    </section>
+
+    <section id="tab-timeline" class="tab-content hidden space-y-8">
+        <div><h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 4: Cronologia & Date dell'Italia Longobarda</h2><p class="text-xs sm:text-sm text-slate-400 mt-1">Completa le due sezioni sottostanti per verificare il senso del tempo storico.</p></div>
+        <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span><h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte A: Riordino degli Eventi Storici</h3></div>
+            <p class="text-xs text-slate-400">Sposta gli eventi verso l'alto o verso il basso per posizionarli in ordine dal più antico (1) al più recente (8).</p>
+            <div id="timeline-list" class="space-y-2.5"></div>
+            <button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md"><i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine Cronologico</button>
+            <div id="timeline-order-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+            <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span><h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte B: Associazione Evento - Anno Corretto</h3></div>
+            <p class="text-xs text-slate-400">Associa a ciascun evento storico l'anno esatto in cui si è verificato.</p>
+            <div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            <button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md"><i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Abbinamento Date</button>
+            <div id="timeline-dates-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+    </section>
+
+    <section id="tab-matching" class="tab-content hidden space-y-6">
+        <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 5: Abbinamento Concetti (5 Coppie)</h2>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <p class="text-xs text-slate-400">Clicca prima su un termine a sinistra e poi sulla sua definizione corretta a destra.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div id="matching-terms" class="space-y-2.5"></div>
+                <div id="matching-defs" class="space-y-2.5"></div>
             </div>
+            <div id="matching-feedback" class="text-xs sm:text-sm font-semibold pt-2"></div>
+        </div>
+    </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-emerald-500/40 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-person-walking-luggage"></i></div>
-                    <h3 class="font-bold text-lg text-slate-100">1. L'Invasione del 568/569 d.C.</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Guidati da Alboino, valicano le Alpi Giulie. Si crea la separazione tra Langobardia e Romania bizantina.</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-sky-500/40 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-users-gear"></i></div>
-                    <h3 class="font-bold text-lg text-slate-100">2. Farae, Arimanni e Gastaldi</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Struttura basata su Farae (clan guerrieri). I Gastaldi gestiscono le terre del Re in contrapposizione ai Duchi.</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-purple-500/40 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-church"></i></div>
-                    <h3 class="font-bold text-lg text-slate-100">3. Teodolinda e il Cattolicesimo</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">La regina Teodolinda avvia la conversione col Papa. Nel 653 d.C. il cattolicesimo diventa religione ufficiale.</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-amber-500/40 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-book-journal-whills"></i></div>
-                    <h3 class="font-bold text-lg text-slate-100">4. Editto di Rotari (643 d.C.)</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Prima codificazione in latino: sostituisce la faida (vendetta) col guidrigildo (risarcimento monetario).</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-rose-500/40 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-landmark-flag"></i></div>
-                    <h3 class="font-bold text-lg text-slate-100">5. Donazione di Sutri (728 d.C.)</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Liutprando dona il borgo di Sutri a Papa Gregorio II: nasce il primo nucleo dello Stato della Chiesa.</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl space-y-4 hover:border-teal-500/40 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-language"></i></div>
-                    <h3 class="font-bold text-lg text-slate-100">6. Caduta (774) e Longobardia Minore</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Carlo Magno sconfigge Desiderio a Pavia, ma i ducati del Sud (Benevento, Spoleto) dureranno ancora tre secoli.</p>
-                </div>
-            </div>
+    <section id="tab-cloze" class="tab-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Testo Guidato a Completamento</h2>
+            <button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Cambia Testo</button>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-6">
+            <div id="cloze-body-container"></div>
+            <button onclick="checkCloze()" id="btn-check-cloze" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md"><i class="fa-solid fa-check mr-1.5"></i> Verifica Testo</button>
+            <div id="cloze-feedback" class="text-xs sm:text-sm font-semibold"></div>
+        </div>
+    </section>
 
-            <div class="text-center pt-4">
-                <button onclick="switchTab('tab-mcq')" class="bg-emerald-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-emerald-600">Inizia il Test sui Longobardi ➔</button>
+    <section id="tab-report" class="tab-content hidden space-y-6">
+        <div class="glass-card p-8 rounded-2xl text-center space-y-6">
+            <h2 class="font-cinzel text-2xl font-bold text-emerald-400">Valutazione Globale delle Competenze</h2>
+            <div class="text-4xl font-black text-emerald-400" id="report-score">0 / 100 XP</div>
+            <div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
+            <div class="flex justify-center gap-4">
+                <button onclick="window.print()" class="bg-emerald-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato PDF</button>
+                <button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia Esercizi</button>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- TAB 1: MCQ -->
-        <section id="tab-mcq" class="tab-content hidden space-y-6">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo (10 Quesiti Estratti)</h2>
-                <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate al primo clic</span>
-            </div>
-            <div id="mcq-container" class="space-y-6"></div>
-        </section>
-
-        <!-- TAB 2: VERO O FALSO -->
-        <section id="tab-tf" class="tab-content hidden space-y-6">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso Motivato (8 Quesiti Estratti)</h2>
-                <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate al primo clic</span>
-            </div>
-            <div id="tf-container" class="space-y-4"></div>
-        </section>
-
-        <!-- TAB 3: GEOGRAFIA STORICA -->
-        <section id="tab-geo" class="tab-content hidden space-y-6">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <div>
-                    <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400">Esercizio 3: Geografia e Territori dell'Italia Longobarda</h2>
-                    <p class="text-xs sm:text-sm text-slate-400">Verifica la conoscenza dei ducati, delle capitali e della divisione territoriale dell'Italia medievale.</p>
-                </div>
-                <span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-teal-400"></i> Risposte bloccate al primo clic</span>
-            </div>
-            <div id="geo-container" class="space-y-6"></div>
-        </section>
-
-        <!-- TAB 4: TIMELINE (DIVISA IN DUE PARTE) -->
-        <section id="tab-timeline" class="tab-content hidden space-y-8">
-            <div>
-                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 4: Cronologia & Date dell'Italia Longobarda</h2>
-                <p class="text-xs sm:text-sm text-slate-400 mt-1">Completa le due sezioni sottostanti per verificare il senso del tempo storico.</p>
-            </div>
-
-            <!-- PARTE 1: ORDINAMENTO CRONOLOGICO (SENZA DATE MOSTRATE) -->
-            <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
-                <div class="flex items-center gap-2">
-                    <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span>
-                    <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte A: Riordino degli Eventi Storici</h3>
-                </div>
-                <p class="text-xs text-slate-400">Sposta gli eventi verso l'alto o verso il basso per posizionarli in ordine dal più antico (1) al più recente (8).</p>
-                
-                <div id="timeline-list" class="space-y-2.5"></div>
-                
-                <button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
-                    <i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine Cronologico
-                </button>
-                <div id="timeline-order-feedback" class="text-xs sm:text-sm font-semibold"></div>
-            </div>
-
-            <!-- PARTE 2: ASSOCIAZIONE EVENTO - DATA -->
-            <div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
-                <div class="flex items-center gap-2">
-                    <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span>
-                    <h3 class="font-bold text-slate-100 text-sm sm:text-base">Parte B: Associazione Evento - Anno Corretto</h3>
-                </div>
-                <p class="text-xs text-slate-400">Associa a ciascun evento storico l'anno esatto in cui si è verificato.</p>
-                
-                <div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                
-                <button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-md">
-                    <i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Abbinamento Date
-                </button>
-                <div id="timeline-dates-feedback" class="text-xs sm:text-sm font-semibold"></div>
-            </div>
-        </section>
-
-        <!-- TAB 5: MATCHING -->
-        <section id="tab-matching" class="tab-content hidden space-y-6">
-            <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 5: Abbinamento Concetti (5 Coppie)</h2>
-            <div class="glass-card p-6 rounded-2xl space-y-6">
-                <p class="text-xs text-slate-400">Clicca prima su un termine a sinistra e poi sulla sua definizione corretta a destra.</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div id="matching-terms" class="space-y-2.5"></div>
-                    <div id="matching-defs" class="space-y-2.5"></div>
-                </div>
-                <div id="matching-feedback" class="text-xs sm:text-sm font-semibold pt-2"></div>
-            </div>
-        </section>
-
-        <!-- TAB 6: CLOZE (TESTO DINAMICO CON 3 OPZIONI) -->
-        <section id="tab-cloze" class="tab-content hidden space-y-6">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Testo Guidato a Completamento</h2>
-                <button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg">
-                    <i class="fa-solid fa-rotate mr-1"></i> Cambia Testo
-                </button>
-            </div>
-            <div class="glass-card p-6 rounded-2xl space-y-6">
-                <div id="cloze-body-container"></div>
-                <button onclick="checkCloze()" id="btn-check-cloze" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md">
-                    <i class="fa-solid fa-check mr-1.5"></i> Verifica Testo
-                </button>
-                <div id="cloze-feedback" class="text-xs sm:text-sm font-semibold"></div>
-            </div>
-        </section>
-
-        <!-- TAB 7: REPORT -->
-        <section id="tab-report" class="tab-content hidden space-y-6">
-            <div class="glass-card p-8 rounded-2xl text-center space-y-6">
-                <h2 class="font-cinzel text-2xl font-bold text-emerald-400">Valutazione Globale delle Competenze</h2>
-                <div class="text-4xl font-black text-emerald-400" id="report-score">0 / 100 XP</div>
-                <div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
-                <div class="flex justify-center gap-4">
-                    <button onclick="window.print()" class="bg-emerald-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato PDF</button>
-                    <button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia Esercizi</button>
-                </div>
-            </div>
-        </section>
-
-    </main>
+</main>
 
 <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 space-x-4">
     <a href="index.html" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-house mr-1"></i> Home Portale</a>
@@ -277,437 +179,422 @@
     <a href="storia-medievale.html" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-shield-halved mr-1"></i> Storia Medievale</a>
 </footer>
 
-    <!-- App Logic -->
-    <script>
-        const state = { 
-            studentName: "Studente", audioEnabled: true, mcqAnswers: {}, tfAnswers: {}, geoAnswers: {},
-            timelineOrder: [0,1,2,3,4,5,6,7], timelineDateAnswers: {},
-            matchingPairs: {}, clozeScore: 0, selectedTermId: null, activeClozeIndex: 0,
-            activeMCQ: [], activeTF: [], activeGeo: []
-        };
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+<script>
+    function shuffledTimelineOrder() {
+        let order;
+        do { order = shuffle([0,1,2,3,4,5,6,7]); } while (order.every((v, i) => v === i));
+        return order;
+    }
 
-        function playSound(type) {
-            if (!state.audioEnabled) return;
-            try {
-                const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                if (type === 'click') { osc.frequency.setValueAtTime(400, audioCtx.currentTime); gain.gain.setValueAtTime(0.05, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.05); }
-                else if (type === 'correct') { osc.frequency.setValueAtTime(880, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
-                else if (type === 'error') { osc.frequency.setValueAtTime(220, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
-            } catch(e){}
+    const state = {
+        studentName: "Studente", audioEnabled: true, mcqAnswers: {}, tfAnswers: {}, geoAnswers: {},
+        timelineOrder: shuffledTimelineOrder(), timelineDateAnswers: {},
+        matchingPairs: {}, clozeScore: 0, selectedTermId: null, activeClozeIndex: 0,
+        activeMCQ: [], activeTF: [], activeGeo: []
+    };
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        if (!state.audioEnabled) return;
+        try {
+            const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            if (type === 'click') { osc.frequency.setValueAtTime(400, audioCtx.currentTime); gain.gain.setValueAtTime(0.05, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.05); }
+            else if (type === 'correct') { osc.frequency.setValueAtTime(880, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
+            else if (type === 'error') { osc.frequency.setValueAtTime(220, audioCtx.currentTime); gain.gain.setValueAtTime(0.08, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
+        } catch(e){}
+    }
+    function toggleAudio() { state.audioEnabled = !state.audioEnabled; }
+    function updateStudentName(val) { state.studentName = val || "Studente"; }
+
+    function shuffle(arr) {
+        let res = arr.slice();
+        for (let i = res.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [res[i], res[j]] = [res[j], res[i]];
         }
+        return res;
+    }
 
-        function toggleAudio() { state.audioEnabled = !state.audioEnabled; }
-        function updateStudentName(val) { state.studentName = val || "Studente"; }
+    const mcqPool = [
+        { id: 1, question: "Quando e da dove entrarono in Italia i Longobardi guidati da Alboino?",
+          options: ["Nel 476 d.C., sbarcando dalla Sicilia bizantina", "Nel 568/569 d.C., valicando le Alpi dalla Pannonia", "Nel 751 d.C., giungendo via mare dall'Oriente", "Nell'800 d.C., scendendo dalla Gallia meridionale"],
+          correct: 1, explanation: "Nel 568/569 d.C. Alboino condusse la gens dalla Pannonia all'Italia." },
+        { id: 2, question: "Conseguenza geopolitica dell'invasione longobarda?",
+          options: ["L'unificazione politica dell'intera penisola", "La cacciata del Papa da Roma verso Oriente", "La bipartizione tra Longobardia e Romania", "La nascita di una colonia araba in Sicilia"],
+          correct: 2, explanation: "Ruppe l'unità della penisola divisa tra zona longobarda e zona bizantina." },
+        { id: 3, question: "Ruolo della regina Teodolinda?",
+          options: ["Impose l'uso ufficiale della lingua latina", "Di fede cattolica, favorì dialogo col Papa", "Tentò di imporre l'arianesimo a tutta la gens", "Costruì una potente flotta navale longobarda"],
+          correct: 1, explanation: "Teodolinda favorì il dialogo con Papa Gregorio Magno e la conversione." },
+        { id: 4, question: "Che cos'era la 'Fara'?",
+          options: ["Una moneta d'oro di conio longobardo", "Un gruppo di famiglie con funzioni militari", "La residenza ufficiale del re longobardo", "Una tassa fondiaria sui beni della Chiesa"],
+          correct: 1, explanation: "Unità sociale e militare base della struttura germanica." },
+        { id: 5, question: "Differenza tra Duchi e Gastaldi?",
+          options: ["I Duchi erano sacerdoti, i Gastaldi giudici", "I Duchi erano autonomi, i Gastaldi regi", "I Duchi vivevano in città, i Gastaldi in campagna", "Non vi era alcuna differenza tra le due cariche"],
+          correct: 1, explanation: "I Gastaldi controllavano il fisco regio frenando lo strapotere dei duchi." },
+        { id: 6, question: "Innovazione dell'Editto di Rotari (643 d.C.)?",
+          options: ["Introdusse la pena di morte per ogni reato", "Eliminò ogni forma di legge scritta nel regno", "Sostituì la faida con il guidrigildo monetario", "Importò in blocco il diritto romano giustinianeo"],
+          correct: 2, explanation: "Sostituì la violenta faida privata con una compensazione monetaria." },
+        { id: 7, question: "Chi erano gli 'Arimanni'?",
+          options: ["Uomini liberi guerrieri con pieni diritti", "Servi domestici addetti alla corte regia", "Mercanti bizantini stanziati nelle città costiere", "Artigiani semiliberi dipendenti dai monasteri"],
+          correct: 0, explanation: "Costituivano il popolo-esercito con diritti nell'assemblea." },
+        { id: 8, question: "Importanza della Donazione di Sutri (728 d.C.)?",
+          options: ["Consentì la conquista longobarda della Sicilia", "Costituì il primo nucleo del potere temporale papale", "Sancì una pace duratura con Carlo Magno", "Fondò una colonia militare bizantina in Italia"],
+          correct: 1, explanation: "Liutprando donò Sutri al Papa avviando lo Stato della Chiesa." },
+        { id: 9, question: "Cosa accadde ai dominii longobardi dopo la caduta di Pavia nel 774 d.C.?",
+          options: ["Tutti i Longobardi furono espulsi dalla penisola", "Il regno del Nord cadde, ma i ducati del Sud restarono", "Tutti i territori furono ceduti a Bisanzio", "Furono unificati sotto la sovranità del Papa"],
+          correct: 1, explanation: "La Longobardia Minore al Sud sopravvisse fino all'arrivo dei Normanni." },
+        { id: 10, question: "Parole italiane d'origine longobarda?",
+          options: ["Senato, console, legione, dittatore", "Guerra, faida, zuffa, guancia, schiena", "Computer, software, hardware, mouse", "Sultano, algebra, zero, algoritmo"],
+          correct: 1, explanation: "Lasciarono un'impronta profonda nel lessico guerresco e domestico." }
+    ];
 
-        function shuffle(arr) {
-            let res = arr.slice();
-            for (let i = res.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [res[i], res[j]] = [res[j], res[i]];
-            }
-            return res;
+    const tfPool = [
+        { id: 1, text: "I Longobardi ottennero il controllo totale dell'Italia grazie alla loro potente flotta.", isTrue: false, explanation: "FALSO: Non controllavano i mari e i Bizantini mantennero le coste e isole." },
+        { id: 2, text: "Il titolo 'rex totius Italiae' fu assunto da re Agilulfo per favorire l'integrazione.", isTrue: true, explanation: "VERO: Evidenziava la volontà di governare l'intera popolazione." },
+        { id: 3, text: "Il 'mundio' era la somma monetaria risarcita per l'uccisione di un guerriero.", isTrue: false, explanation: "FALSO: Era la tutela sulle donne. Il risarcimento era il guidrigildo." },
+        { id: 4, text: "Nel 653 d.C. il Cattolicesimo divenne la religione ufficiale della gens.", isTrue: true, explanation: "VERO: Scomparve l'Arianesimo e si completò la fusione culturale." },
+        { id: 5, text: "L'Editto di Rotari fu scritto in greco per omaggiare l'Imperatore di Costantinopoli.", isTrue: false, explanation: "FALSO: Fu redatto in LATINO con termini tecnici germanici." },
+        { id: 6, text: "I Gastaldi erano ufficiali regi posti a guardia del patrimonio della corona.", isTrue: true, explanation: "VERO: Bilanciavano l'autonomia dei duchi." },
+        { id: 7, text: "Nel 774 d.C. scomparve ogni traccia dei ducati longobardi in Italia.", isTrue: false, explanation: "FALSO: La Longobardia Minore al Sud continuò per altri tre secoli." },
+        { id: 8, text: "Termini come 'schiena', 'guancia', 'panca' e 'arraffare' derivano dal longobardo.", isTrue: true, explanation: "VERO: Sono prestiti linguistici entrati nel volgare." }
+    ];
+
+    const geoPool = [
+        { id: 1, question: "Da quale regione dell'Europa centrale provenivano i Longobardi prima di valicare le Alpi Giulie nel 568 d.C.?",
+          options: ["Dalla Pannonia (attuale Ungheria)", "Dalla Spagna visigota", "Dalla Gallia merovingia", "Dalla Grecia bizantina"],
+          correct: 0, explanation: "I Longobardi lasciarono la Pannonia (Ungheria) nel 568 d.C. spinti dall'avanzata degli Avari." },
+        { id: 2, question: "Quale città fu sede del primo ducato longobardo in Italia appena valicate le Alpi?",
+          options: ["Cividale del Friuli", "Pavia longobarda", "Milano imperiale", "Verona scaligera"],
+          correct: 0, explanation: "Cividale del Friuli fu la prima città occupata e sede del primo ducato affidato a Gisulfo." },
+        { id: 3, question: "Quale città divenne la capitale stabile del Regno Longobardo (Langobardia Maior)?",
+          options: ["Pavia", "Ravenna", "Roma", "Firenze"],
+          correct: 0, explanation: "Pavia fu la capitale istituzionale dal regno di Autari e Agilulfo fino al 774 d.C." },
+        { id: 4, question: "Quali erano i due ducati autonomi della 'Langobardia Minor' nel Centro-Sud Italia?",
+          options: ["Ducati di Spoleto e Benevento", "Ducati di Milano e Torino", "Ducati di Firenze e Siena", "Ducati di Verona e Brescia"],
+          correct: 0, explanation: "I ducati di Spoleto (Umbria) e Benevento (Campania) formavano la Langobardia Minor." },
+        { id: 5, question: "Che cos'era il 'Corridoio Bizantino' nella geografia dell'Italia del VII secolo?",
+          options: ["Una striscia che univa Roma a Ravenna", "Una rotta navale attorno alla Sicilia", "Un canale artificiale scavato sul Po", "Una fortezza militare sulle Alpi"],
+          correct: 0, explanation: "Il corridoio bizantino (attraverso l'Umbria) impediva la continuità territoriale longobarda tra Nord e Sud." }
+    ];
+
+    const timelineEvents = [
+        { id: 0, title: "Ingresso dei Longobardi in Italia da Alboino attraverso le Alpi Giulie" },
+        { id: 1, title: "Regno di Autari e matrimonio con la regina cattolica Teodolinda" },
+        { id: 2, title: "Regno di Agilulfo e avvio dell'integrazione con le popolazioni romane" },
+        { id: 3, title: "Promulgazione dell'Editto di Rotari e abolizione formale della faida" },
+        { id: 4, title: "Abolizione definitiva dell'Arianesimo e conversione ufficiale al Cattolicesimo" },
+        { id: 5, title: "Donazione del borgo fortificato di Sutri al Papa da parte di re Liutprando" },
+        { id: 6, title: "Conquista di Ravenna da parte di re Astolfo ed eliminazione dell'Esarcato" },
+        { id: 7, title: "Assedio di Pavia e vittoria finale di Carlo Magno su re Desiderio" }
+    ];
+
+    const timelineDateItems = [
+        { id: 1, event: "Invasione longobarda guidata da Alboino", correctDate: "568/569 d.C.", options: ["568/569 d.C.", "643 d.C.", "774 d.C."] },
+        { id: 2, event: "Promulgazione dell'Editto di Rotari", correctDate: "643 d.C.", options: ["600 d.C.", "643 d.C.", "728 d.C."] },
+        { id: 3, event: "Cattolicesimo diventa religione ufficiale", correctDate: "653 d.C.", options: ["622 d.C.", "653 d.C.", "751 d.C."] },
+        { id: 4, event: "Donazione del borgo di Sutri al Papa", correctDate: "728 d.C.", options: ["711 d.C.", "728 d.C.", "800 d.C."] },
+        { id: 5, event: "Caduta di Pavia e vittoria di Carlo Magno", correctDate: "774 d.C.", options: ["751 d.C.", "774 d.C.", "843 d.C."] }
+    ];
+
+    const matchingTerms = [
+        { id: "m1", term: "Fara" },
+        { id: "m2", term: "Guidrigildo" },
+        { id: "m3", term: "Mundio" },
+        { id: "m4", term: "Gastaldo" },
+        { id: "m5", term: "Arimanni" }
+    ];
+    const matchingDefs = [
+        { id: "d1", matchId: "m1", text: "Unità sociale, familiare e militare di base della gens longobarda." },
+        { id: "d2", matchId: "m2", text: "Risarcimento in denaro che sostituì la vendetta privata (faida)." },
+        { id: "d3", matchId: "m3", text: "Potestà di tutela giurisdizionale ed economica maschile sulle donne." },
+        { id: "d4", matchId: "m4", text: "Ufficiale nominato dal Re per amministrare il patrimonio fiscale regio." },
+        { id: "d5", matchId: "m5", text: "Guerrieri uomini liberi che costituivano l'assemblea del popolo in armi." }
+    ];
+
+    const clozePool = [
+        {
+            text: `Nel <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="568/569 d.C.">568/569 d.C.</option><option value="496 d.C.">496 d.C.</option><option value="711 d.C.">711 d.C.</option></select>, la gens Langobardorum guidata da <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Alboino">Alboino</option><option value="Rotari">Rotari</option><option value="Liutprando">Liutprando</option></select> entrò in Italia e stabilì la propria capitale a <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Pavia">Pavia</option><option value="Ravenna">Ravenna</option><option value="Roma">Roma</option></select>. L'integrazione con la Chiesa fu promossa dalla regina <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Teodolinda">Teodolinda</option><option value="Brunilde">Brunilde</option><option value="Clotilde">Clotilde</option></select> e nel <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="653 d.C.">653 d.C.</option><option value="774 d.C.">774 d.C.</option><option value="800 d.C.">800 d.C.</option></select> il cattolicesimo fu dichiarato religione ufficiale. La struttura sociale poggiava sulle <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Farae">Farae</option><option value="Contee">Contee</option><option value="Curtes">Curtes</option></select> e nel 643 venne inserito il <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Guidrigildo">Guidrigildo</option><option value="Mundio">Mundio</option><option value="Baratto">Baratto</option></select> nella raccolta di leggi nota come <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Editto di Rotari">Editto di Rotari</option><option value="Capitolare">Capitolare</option><option value="Legge Salica">Legge Salica</option></select>. Nel 728 con la Donazione di <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Sutri">Sutri</option><option value="Poitiers">Poitiers</option><option value="Verdun">Verdun</option></select> nacque il primo nucleo dello Stato della Chiesa, fino al 774 quando <select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Carlo Magno">Carlo Magno</option><option value="Clodoveo">Clodoveo</option><option value="Pipino">Pipino</option></select> sottomesse il re Desiderio.`,
+            answers: { 1: "568/569 d.C.", 2: "Alboino", 3: "Pavia", 4: "Teodolinda", 5: "653 d.C.", 6: "Farae", 7: "Guidrigildo", 8: "Editto di Rotari", 9: "Sutri", 10: "Carlo Magno" }
+        },
+        {
+            text: `I guerrieri liberi del popolo longobardo erano chiamati <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Arimanni">Arimanni</option><option value="Aldii">Aldii</option><option value="Missi">Missi</option></select>, mentre i semiliberi prendevano il nome di <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Aldii">Aldii</option><option value="Gastaldi">Gastaldi</option><option value="Duchi">Duchi</option></select>. Per bilanciare il potere dei duchi territoriali, i sovrani nominavano i propri ufficiali regi detti <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Gastaldi">Gastaldi</option><option value="Comites">Comites</option><option value="Censori">Censori</option></select>. La tutela maschile esercitata sulle donne si chiamava <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Mundio">Mundio</option><option value="Faida">Faida</option><option value="Corvée">Corvée</option></select>. Nel 751 il re <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Astolfo">Astolfo</option><option value="Autari">Autari</option><option value="Agilulfo">Agilulfo</option></select> conquistò la città di <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Ravenna">Ravenna</option><option value="Milano">Milano</option><option value="Venezia">Venezia</option></select>, cacciando i Bizantini. Dopo la caduta del regno al Nord ad opera dei Franchi, i territori meridionali presero il nome di <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Longobardia Minor">Longobardia Minor</option><option value="Romania">Romania</option><option value="Etruria">Etruria</option></select>, guidati dal ducato di <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Benevento">Benevento</option><option value="Torino">Torino</option><option value="Verona">Verona</option></select>. Lo storico medievale <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Paolo Diacono">Paolo Diacono</option><option value="Eginardo">Eginardo</option><option value="Procopio">Procopio</option></select> ha immortalato la storia di questo popolo nella sua celebre opera.`,
+            answers: { 1: "Arimanni", 2: "Aldii", 3: "Gastaldi", 4: "Mundio", 5: "Astolfo", 6: "Ravenna", 7: "Longobardia Minor", 8: "Benevento", 9: "Paolo Diacono" }
         }
+    ];
 
-        // POOL MCQ
-        const mcqPool = [
-            { id: 1, question: "Quando e da dove entrarono in Italia i Longobardi guidati da Alboino?", options: ["Nel 476 d.C. dalla Sicilia", "Nel 568/569 d.C. valicando le Alpi Giulie dalla Pannonia", "Nel 751 d.C. via mare", "Nel 800 d.C. dalla Gallia"], correct: 1, explanation: "Nel 568/569 d.C. Alboino condusse la gens dalla Pannonia all'Italia." },
-            { id: 2, question: "Conseguenza geopolitica dell'invasione longobarda?", options: ["Unificazione immediata", "Cacciata del Papa", "Bipartizione tra Langobardia e Romania bizantina", "Colonia araba"], correct: 2, explanation: "Ruppe l'unità della penisola divisa tra zona longobarda e zona bizantina." },
-            { id: 3, question: "Ruolo della regina Teodolinda?", options: ["Lingua latina", "Di fede cattolica, avviò il dialogo col Papa e la conversione", "Arianesimo forzato", "Flotta navale"], correct: 1, explanation: "Teodolinda favorì il dialogo con Papa Gregorio Magno e la conversione." },
-            { id: 4, question: "Che cos'era la 'Fara'?", options: ["Moneta d'oro", "Gruppo omogeneo di famiglie unite da vincoli di sangue e funzioni militari", "Residenza regia", "Tassa fondiaria"], correct: 1, explanation: "Unità sociale e militare base della struttura germanica." },
-            { id: 5, question: "Differenza tra Duchi e Gastaldi?", options: ["Sacerdoti vs Giudici", "Duchi autonomi e ereditari; Gastaldi ufficiali regi preposti al patrimonio del Re", "Città vs Villaggi", "Nessuna"], correct: 1, explanation: "I Gastaldi controllavano il fisco regio frenando lo strapotere dei duchi." },
-            { id: 6, question: "Innovazione dell'Editto di Rotari (643 d.C.)?", options: ["Pena di morte per tutti", "Nessuna legge scritta", "Sostituì la faida con il guidrigildo (risarcimento monetario)", "Diritto romano puro"], correct: 2, explanation: "Sostituì la violenta faida privata con una compensazione monetaria." },
-            { id: 7, question: "Chi erano gli 'Arimanni'?", options: ["Uomini liberi guerrieri con pieni diritti", "Servi domestici", "Mercanti bizantini", "Artigiani semiliberi"], correct: 0, explanation: "Costituivano il popolo-esercito con diritti nell'assemblea." },
-            { id: 8, question: "Importanza della Donazione di Sutri (728 d.C.)?", options: ["Conquista di Sicilia", "Primo nucleo territoriale del potere temporale del Papato", "Pace con Carlo Magno", "Colonia bizantina"], correct: 1, explanation: "Liutprando donò Sutri al Papa avviando lo Stato della Chiesa." },
-            { id: 9, question: "Cosa accadde ai dominii longobardi dopo la caduta di Pavia nel 774 d.C.?", options: ["Tutti espulsi", "Regno del Nord caduto, ma i ducati del Centro-Sud (Benevento) sopravvissero 3 secoli", "Ceduti a Bisanzio", "Unificati dal Papa"], correct: 1, explanation: "La Longobardia Minore al Sud sopravvisse fino all'arrivo dei Normanni." },
-            { id: 10, question: "Parole italiane d'origine longobarda?", options: ["Senato, console, legione", "Guerra, faida, zuffa, guancia, schiena, panca, roba", "Computer, software", "Sultano, algebra"], correct: 1, explanation: "Lasciarono un'impronta profonda nel lessico guerresco e domestico." }
-        ];
-
-        // POOL V/F
-        const tfPool = [
-            { id: 1, text: "I Longobardi ottennero il controllo totale dell'Italia grazie alla loro potente flotta.", isTrue: false, explanation: "FALSO: Non controllavano i mari e i Bizantini mantennero le coste e isole." },
-            { id: 2, text: "Il titolo 'rex totius Italiae' fu assunto da re Agilulfo per favorire l'integrazione.", isTrue: true, explanation: "VERO: Evidenziava la volontà di governare l'intera popolazione." },
-            { id: 3, text: "Il 'mundio' era la somma monetaria risarcita per l'uccisione di un guerriero.", isTrue: false, explanation: "FALSO: Era la tutela sulle donne. Il risarcimento era il guidrigildo." },
-            { id: 4, text: "Nel 653 d.C. il Cattolicesimo divenne la religione ufficiale della gens.", isTrue: true, explanation: "VERO: Scomparve l'Arianesimo e si completò la fusione culturale." },
-            { id: 5, text: "L'Editto di Rotari fu scritto in greco per omaggiare l'Imperatore di Costantinopoli.", isTrue: false, explanation: "FALSO: Fu redatto in LATINO con termini tecnici germanici." },
-            { id: 6, text: "I Gastaldi erano ufficiali regi posti a guardia del patrimonio della corona.", isTrue: true, explanation: "VERO: Bilanciavano l'autonomia dei duchi." },
-            { id: 7, text: "Nel 774 d.C. scomparve ogni traccia dei ducati longobardi in Italia.", isTrue: false, explanation: "FALSO: La Longobardia Minore al Sud continuò per altri tre secoli." },
-            { id: 8, text: "Termini come 'schiena', 'guancia', 'panca' e 'arraffare' derivano dal longobardo.", isTrue: true, explanation: "VERO: Sono prestiti linguistici entrati nel volgare." }
-        ];
-
-        // POOL GEOGRAFIA STORICA
-        const geoPool = [
-            { id: 1, question: "Da quale regione dell'Europa centrale stanziata sul Danubio proveniate i Longobardi prima di valicare le Alpi Giulie nel 568 d.C.?", options: ["Dalla Pannonia (attuale Ungheria)", "Dalla Spagna", "Dalla Gallia", "Dalla Grecia"], correct: 0, explanation: "I Longobardi lasciarono la Pannonia (Ungheria) nel 568 d.C. spinti dall'avanzata degli Avari." },
-            { id: 2, question: "Quale città fu scelta da Alboino come sede del primo ducato longobardo in Italia appena valicate le Alpi nel 569 d.C.?", options: ["Cividale del Friuli (Forum Iulii)", "Pavia", "Milano", "Verona"], correct: 0, explanation: "Cividale del Friuli fu la prima città occupata e sede del primo ducato affidato a Gisulfo." },
-            { id: 3, question: "Quale città divenne la capitale stabile e sede del Palazzo Reale del Regno Longobardo (Langobardia Maior)?", options: ["Pavia", "Ravenna", "Roma", "Firenze"], correct: 0, explanation: "Pavia fu la capitale istituzionale dal regno di Autari e Agilulfo fino al 774 d.C." },
-            { id: 4, question: "Quali erano i due storici ducati autonomi che costituivano la cosiddetta 'Langobardia Minor' nel Centro-Sud Italia?", options: ["Ducati di Spoleto e di Benevento", "Ducati di Milano e Torino", "Ducati di Firenze e Siena", "Ducati di Verona e Brescia"], correct: 0, explanation: "I ducati di Spoleto (Umbria) e Benevento (Campania) formavano la Langobardia Minor." },
-            { id: 5, question: "Che cos'era il 'Corridoio Bizantino' nella geografia dell'Italia del VII secolo?", options: ["Una striscia di territorio che collegava Roma a Ravenna dividendo i dominii longobardi del Nord e del Sud", "Una strada navale attorno alla Sicilia", "Un canale scavato sul Po", "Una fortezza sulle Alpi"], correct: 0, explanation: "Il corridoio bizantino (attraverso l'Umbria) impediva la continuità territoriale longobarda tra Nord e Sud." }
-        ];
-
-        // DATI CRONOLOGIA PARTE 1 (TITOLI SENZA DATE)
-        const timelineEvents = [
-            { id: 0, title: "Ingresso dei Longobardi in Italia da Alboino attraverso le Alpi Giulie" },
-            { id: 1, title: "Regno di Autari e matrimonio con la regina cattolica Teodolinda" },
-            { id: 2, title: "Regno di Agilulfo e avvio dell'integrazione con le popolazioni romane" },
-            { id: 3, title: "Promulgazione dell'Editto di Rotari e abolizione formale della faida" },
-            { id: 4, title: "Abolizione definitiva dell'Arianesimo e conversione ufficiale al Cattolicesimo" },
-            { id: 5, title: "Donazione del borgo fortificato di Sutri al Papa da parte di re Liutprando" },
-            { id: 6, title: "Conquista di Ravenna da parte di re Astolfo ed eliminazione dell'Esarcato" },
-            { id: 7, title: "Assedio di Pavia e vittoria finale di Carlo Magno su re Desiderio" }
-        ];
-
-        // DATI CRONOLOGIA PARTE 2 (ASSOCIAZIONE EVENTO - DATA)
-        const timelineDateItems = [
-            { id: 1, event: "Invasione longobarda guidata da Alboino", correctDate: "568/569 d.C.", options: ["568/569 d.C.", "643 d.C.", "774 d.C."] },
-            { id: 2, event: "Promulgazione dell'Editto di Rotari", correctDate: "643 d.C.", options: ["600 d.C.", "643 d.C.", "728 d.C."] },
-            { id: 3, event: "Cattolicesimo diventa religione ufficiale", correctDate: "653 d.C.", options: ["622 d.C.", "653 d.C.", "751 d.C."] },
-            { id: 4, event: "Donazione del borgo di Sutri al Papa", correctDate: "728 d.C.", options: ["711 d.C.", "728 d.C.", "800 d.C."] },
-            { id: 5, event: "Caduta di Pavia e vittoria di Carlo Magno", correctDate: "774 d.C.", options: ["751 d.C.", "774 d.C.", "843 d.C."] }
-        ];
-
-        // MATCHING (5 COPPIE EXACT)
-        const matchingTerms = [
-            { id: "m1", term: "Fara" }, 
-            { id: "m2", term: "Guidrigildo" }, 
-            { id: "m3", term: "Mundio" }, 
-            { id: "m4", term: "Gastaldo" },
-            { id: "m5", term: "Arimanni" }
-        ];
-        const matchingDefs = [
-            { id: "d1", matchId: "m1", text: "Unità sociale, familiare e militare di base della gens longobarda." },
-            { id: "d2", matchId: "m2", text: "Risarcimento in denaro che sostituì la vendetta privata (faida)." },
-            { id: "d3", matchId: "m3", text: "Potestà di tutela giurisdizionale ed economica maschile sulle donne." },
-            { id: "d4", matchId: "m4", text: "Ufficiale nominato dal Re per amministrare il patrimonio fiscale regio." },
-            { id: "d5", matchId: "m5", text: "Guerrieri uomini liberi che costituivano l'assemblea del popolo in armi." }
-        ];
-
-        // POOL TESTI CLOZE (VARIABILI A 3 OPZIONI)
-        const clozePool = [
-            {
-                text: `Nel <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="568/569 d.C.">568/569 d.C.</option><option value="496 d.C.">496 d.C.</option><option value="711 d.C.">711 d.C.</option></select>, la gens Langobardorum guidata da <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Alboino">Alboino</option><option value="Rotari">Rotari</option><option value="Liutprando">Liutprando</option></select> entrò in Italia e stabilì la propria capitale a <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Pavia">Pavia</option><option value="Ravenna">Ravenna</option><option value="Roma">Roma</option></select>. L'integrazione con la Chiesa fu promossa dalla regina <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Teodolinda">Teodolinda</option><option value="Brunilde">Brunilde</option><option value="Clotilde">Clotilde</option></select> e nel <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="653 d.C.">653 d.C.</option><option value="774 d.C.">774 d.C.</option><option value="800 d.C.">800 d.C.</option></select> il cattolicesimo fu dichiarato religione ufficiale. La struttura sociale poggiava sulle <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Farae">Farae</option><option value="Contee">Contee</option><option value="Curtes">Curtes</option></select> e nel 643 venne inserito il <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Guidrigildo">Guidrigildo</option><option value="Mundio">Mundio</option><option value="Baratto">Baratto</option></select> nella raccolta di leggi nota come <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Editto di Rotari">Editto di Rotari</option><option value="Capitolare">Capitolare</option><option value="Legge Salica">Legge Salica</option></select>. Nel 728 con la Donazione di <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Sutri">Sutri</option><option value="Poitiers">Poitiers</option><option value="Verdun">Verdun</option></select> nacque il primo nucleo dello Stato della Chiesa, fino al 774 quando <select id="cloze-10" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Carlo Magno">Carlo Magno</option><option value="Clodoveo">Clodoveo</option><option value="Pipino">Pipino</option></select> sottomesse il re Desiderio.`,
-                answers: { 1: "568/569 d.C.", 2: "Alboino", 3: "Pavia", 4: "Teodolinda", 5: "653 d.C.", 6: "Farae", 7: "Guidrigildo", 8: "Editto di Rotari", 9: "Sutri", 10: "Carlo Magno" }
-            },
-            {
-                text: `I guerrieri liberi del popolo longobardo erano chiamati <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Arimanni">Arimanni</option><option value="Aldii">Aldii</option><option value="Missi">Missi</option></select>, mentre i semiliberi prendevano il nome di <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Aldii">Aldii</option><option value="Gastaldi">Gastaldi</option><option value="Duchi">Duchi</option></select>. Per bilanciare il potere dei duchi territoriali, i sovrani nominavano i propri ufficiali regi detti <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Gastaldi">Gastaldi</option><option value="Comites">Comites</option><option value="Censori">Censori</option></select>. La tutela maschile esercitata sulle donne si chiamava <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Mundio">Mundio</option><option value="Faida">Faida</option><option value="Corvée">Corvée</option></select>. Nel 751 il re <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Astolfo">Astolfo</option><option value="Autari">Autari</option><option value="Agilulfo">Agilulfo</option></select> conquistò la città di <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Ravenna">Ravenna</option><option value="Milano">Milano</option><option value="Venezia">Venezia</option></select>, cacciando i Bizantini. Dopo la caduta del regno al Nord ad opera dei Franchi, i territori meridionali presero il nome di <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Longobardia Minor">Longobardia Minor</option><option value="Romania">Romania</option><option value="Etruria">Etruria</option></select>, guidati dal ducato di <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Benevento">Benevento</option><option value="Torino">Torino</option><option value="Verona">Verona</option></select>. Lo storico medievale <select id="cloze-9" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Paolo Diacono">Paolo Diacono</option><option value="Eginardo">Eginardo</option><option value="Procopio">Procopio</option></select> ha immortalato la storia di questo popolo nella sua celebre opera.`,
-                answers: { 1: "Arimanni", 2: "Aldii", 3: "Gastaldi", 4: "Mundio", 5: "Astolfo", 6: "Ravenna", 7: "Longobardia Minor", 8: "Benevento", 9: "Paolo Diacono" }
-            }
-        ];
-
-        function renderMCQ() {
-            state.activeMCQ = shuffle(mcqPool).slice(0, 10);
-            const container = document.getElementById('mcq-container');
-            container.innerHTML = state.activeMCQ.map((q, idx) => `
-                <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
-                    <div class="font-bold text-slate-100 text-sm">${idx + 1}. ${q.question}</div>
-                    <div class="space-y-2">
-                        ${q.options.map((opt, oIdx) => `
-                            <button onclick="selectMCQ(${q.id}, ${oIdx})" id="mcq-btn-${q.id}-${oIdx}" class="mcq-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
-                        `).join('')}
-                    </div>
-                    <div id="mcq-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+    function renderMCQ() {
+        state.activeMCQ = shuffle(mcqPool).slice(0, 10);
+        const container = document.getElementById('mcq-container');
+        container.innerHTML = state.activeMCQ.map((q, idx) => `
+            <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+                <div class="font-bold text-slate-100 text-sm">${idx + 1}. ${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((opt, oIdx) => `<button onclick="selectMCQ(${q.id}, ${oIdx})" id="mcq-btn-${q.id}-${oIdx}" class="mcq-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>`).join('')}
                 </div>
-            `).join('');
-        }
+                <div id="mcq-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
 
-        function selectMCQ(qId, oIdx) {
-            playSound('click');
-            const q = mcqPool.find(item => item.id === qId);
-            state.mcqAnswers[qId] = oIdx;
+    function selectMCQ(qId, oIdx) {
+        playSound('click');
+        const q = mcqPool.find(item => item.id === qId);
+        state.mcqAnswers[qId] = oIdx;
+        document.querySelectorAll(`.mcq-option-${qId}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`mcq-feedback-${qId}`);
+        fb.classList.remove('hidden');
+        if(oIdx === q.correct) { playSound('correct'); fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700"; fb.innerHTML = `<strong>Corretto!</strong> ${q.explanation}`; }
+        else { playSound('error'); fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700"; fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`; }
+        updateGlobalScore();
+    }
 
-            document.querySelectorAll(`.mcq-option-${qId}`).forEach(btn => {
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-            });
-
-            const fb = document.getElementById(`mcq-feedback-${qId}`);
-            fb.classList.remove('hidden');
-            if(oIdx === q.correct) {
-                playSound('correct');
-                fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
-                fb.innerHTML = `<strong>Corretto!</strong> ${q.explanation}`;
-            } else {
-                playSound('error');
-                fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
-                fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`;
-            }
-            updateGlobalScore();
-        }
-
-        function renderTF() {
-            state.activeTF = shuffle(tfPool).slice(0, 8);
-            const container = document.getElementById('tf-container');
-            container.innerHTML = state.activeTF.map((item, idx) => `
-                <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800">
-                    <p class="text-xs text-slate-200">${idx + 1}. ${item.text}</p>
-                    <div class="flex gap-2">
-                        <button onclick="answerTF(${item.id}, true)" id="tf-btn-${item.id}-true" class="tf-option-${item.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button>
-                        <button onclick="answerTF(${item.id}, false)" id="tf-btn-${item.id}-false" class="tf-option-${item.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button>
-                    </div>
-                    <div id="tf-feedback-${item.id}" class="hidden text-xs pt-1"></div>
+    function renderTF() {
+        state.activeTF = shuffle(tfPool).slice(0, 8);
+        const container = document.getElementById('tf-container');
+        container.innerHTML = state.activeTF.map((item, idx) => `
+            <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800">
+                <p class="text-xs text-slate-200">${idx + 1}. ${item.text}</p>
+                <div class="flex gap-2">
+                    <button onclick="answerTF(${item.id}, true)" id="tf-btn-${item.id}-true" class="tf-option-${item.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button>
+                    <button onclick="answerTF(${item.id}, false)" id="tf-btn-${item.id}-false" class="tf-option-${item.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button>
                 </div>
-            `).join('');
-        }
+                <div id="tf-feedback-${item.id}" class="hidden text-xs pt-1"></div>
+            </div>
+        `).join('');
+    }
 
-        function answerTF(id, choice) {
-            playSound('click');
-            const item = tfPool.find(d => d.id === id);
-            state.tfAnswers[id] = choice;
+    function answerTF(id, choice) {
+        playSound('click');
+        const item = tfPool.find(d => d.id === id);
+        state.tfAnswers[id] = choice;
+        document.querySelectorAll(`.tf-option-${id}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`tf-feedback-${id}`);
+        fb.classList.remove('hidden');
+        if(choice === item.isTrue) { playSound('correct'); fb.className = "text-xs text-emerald-300"; fb.innerText = `Esatto! ${item.explanation}`; }
+        else { playSound('error'); fb.className = "text-xs text-rose-300"; fb.innerText = `Sbagliato. ${item.explanation}`; }
+        updateGlobalScore();
+    }
 
-            document.querySelectorAll(`.tf-option-${id}`).forEach(btn => {
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-            });
-
-            const fb = document.getElementById(`tf-feedback-${id}`);
-            fb.classList.remove('hidden');
-            if(choice === item.isTrue) { playSound('correct'); fb.className = "text-xs text-emerald-300"; fb.innerText = `Esatto! ${item.explanation}`; }
-            else { playSound('error'); fb.className = "text-xs text-rose-300"; fb.innerText = `Sbagliato. ${item.explanation}`; }
-            updateGlobalScore();
-        }
-
-        function renderGeo() {
-            state.activeGeo = shuffle(geoPool).slice(0, 5);
-            const container = document.getElementById('geo-container');
-            container.innerHTML = state.activeGeo.map((q, idx) => `
-                <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
-                    <div class="font-bold text-slate-100 text-sm"><i class="fa-solid fa-compass text-teal-400 mr-2"></i>${idx + 1}. ${q.question}</div>
-                    <div class="space-y-2">
-                        ${q.options.map((opt, oIdx) => `
-                            <button onclick="selectGeo(${q.id}, ${oIdx})" id="geo-btn-${q.id}-${oIdx}" class="geo-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>
-                        `).join('')}
-                    </div>
-                    <div id="geo-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+    function renderGeo() {
+        state.activeGeo = shuffle(geoPool).slice(0, 5);
+        const container = document.getElementById('geo-container');
+        container.innerHTML = state.activeGeo.map((q, idx) => `
+            <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+                <div class="font-bold text-slate-100 text-sm"><i class="fa-solid fa-compass text-teal-400 mr-2"></i>${idx + 1}. ${q.question}</div>
+                <div class="space-y-2">
+                    ${q.options.map((opt, oIdx) => `<button onclick="selectGeo(${q.id}, ${oIdx})" id="geo-btn-${q.id}-${oIdx}" class="geo-option-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 transition-all hover:bg-slate-800">${opt}</button>`).join('')}
                 </div>
-            `).join('');
-        }
+                <div id="geo-feedback-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+        `).join('');
+    }
 
-        function selectGeo(qId, oIdx) {
-            playSound('click');
-            const q = geoPool.find(item => item.id === qId);
-            state.geoAnswers[qId] = oIdx;
+    function selectGeo(qId, oIdx) {
+        playSound('click');
+        const q = geoPool.find(item => item.id === qId);
+        state.geoAnswers[qId] = oIdx;
+        document.querySelectorAll(`.geo-option-${qId}`).forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        const fb = document.getElementById(`geo-feedback-${qId}`);
+        fb.classList.remove('hidden');
+        if(oIdx === q.correct) { playSound('correct'); fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700"; fb.innerHTML = `<strong>Esatto!</strong> ${q.explanation}`; }
+        else { playSound('error'); fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700"; fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`; }
+        updateGlobalScore();
+    }
 
-            document.querySelectorAll(`.geo-option-${qId}`).forEach(btn => {
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-            });
-
-            const fb = document.getElementById(`geo-feedback-${qId}`);
-            fb.classList.remove('hidden');
-            if(oIdx === q.correct) {
-                playSound('correct');
-                fb.className = "p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";
-                fb.innerHTML = `<strong>Esatto!</strong> ${q.explanation}`;
-            } else {
-                playSound('error');
-                fb.className = "p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";
-                fb.innerHTML = `<strong>Errato.</strong> ${q.explanation}`;
-            }
-            updateGlobalScore();
-        }
-
-        // RENDER CRONOLOGIA PARTE A (ORDINAMENTO SITO SENZA DATE)
-        function renderTimelineOrder() {
-            const list = document.getElementById('timeline-list');
-            list.innerHTML = state.timelineOrder.map((dataIdx, currentPos) => `
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
-                    <span class="text-purple-300 font-bold">${currentPos + 1}. ${timelineEvents[dataIdx].title}</span>
-                    <div class="flex gap-1">
-                        <button onclick="moveTimeline(${currentPos}, -1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button onclick="moveTimeline(${currentPos}, 1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button>
-                    </div>
+    function renderTimelineOrder() {
+        const list = document.getElementById('timeline-list');
+        list.innerHTML = state.timelineOrder.map((dataIdx, currentPos) => `
+            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                <span class="text-purple-300 font-bold">${currentPos + 1}. ${timelineEvents[dataIdx].title}</span>
+                <div class="flex gap-1">
+                    <button onclick="moveTimeline(${currentPos}, -1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button>
+                    <button onclick="moveTimeline(${currentPos}, 1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button>
                 </div>
-            `).join('');
-        }
+            </div>
+        `).join('');
+    }
 
-        function moveTimeline(pos, dir) {
-            const target = pos + dir;
-            if(target < 0 || target >= timelineEvents.length) return;
-            const temp = state.timelineOrder[pos];
-            state.timelineOrder[pos] = state.timelineOrder[target];
-            state.timelineOrder[target] = temp;
-            renderTimelineOrder();
-        }
+    function moveTimeline(pos, dir) {
+        const target = pos + dir;
+        if(target < 0 || target >= timelineEvents.length) return;
+        const temp = state.timelineOrder[pos];
+        state.timelineOrder[pos] = state.timelineOrder[target];
+        state.timelineOrder[target] = temp;
+        renderTimelineOrder();
+    }
 
-        function checkTimelineOrder() {
-            let correct = 0;
-            state.timelineOrder.forEach((v, i) => { if(v === i) correct++; });
-            const fb = document.getElementById('timeline-order-feedback');
-            document.getElementById('btn-check-timeline-order').disabled = true;
-            document.getElementById('btn-check-timeline-order').classList.add('opacity-50', 'cursor-not-allowed');
+    function checkTimelineOrder() {
+        let correct = 0;
+        state.timelineOrder.forEach((v, i) => { if(v === i) correct++; });
+        const fb = document.getElementById('timeline-order-feedback');
+        document.getElementById('btn-check-timeline-order').disabled = true;
+        document.getElementById('btn-check-timeline-order').classList.add('opacity-50', 'cursor-not-allowed');
+        if(correct === timelineEvents.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Perfetto! Sequenza cronologica esatta al 100%."; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Eventi in posizione corretta: ${correct} su ${timelineEvents.length}.`; }
+        updateGlobalScore();
+    }
 
-            if(correct === timelineEvents.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Perfetto! Sequenza cronologica esatta al 100%."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Eventi in posizione corretta: ${correct} su ${timelineEvents.length}.`; }
-            updateGlobalScore();
-        }
+    function renderTimelineDates() {
+        const container = document.getElementById('timeline-dates-container');
+        container.innerHTML = timelineDateItems.map((item) => `
+            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+                <div class="text-xs font-bold text-slate-200">${item.event}</div>
+                <select id="timeline-date-select-${item.id}" onchange="selectTimelineDate(${item.id}, this.value)" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs">
+                    <option value="">-- Seleziona l'anno --</option>
+                    ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                </select>
+            </div>
+        `).join('');
+    }
 
-        // RENDER CRONOLOGIA PARTE B (ASSOCIAZIONE EVENTO - DATA)
-        function renderTimelineDates() {
-            const container = document.getElementById('timeline-dates-container');
-            container.innerHTML = timelineDateItems.map((item) => `
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
-                    <div class="text-xs font-bold text-slate-200">${item.event}</div>
-                    <select id="timeline-date-select-${item.id}" onchange="selectTimelineDate(${item.id}, this.value)" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs">
-                        <option value="">-- Seleziona l'anno --</option>
-                        ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                    </select>
-                </div>
-            `).join('');
-        }
+    function selectTimelineDate(id, val) { state.timelineDateAnswers[id] = val; }
 
-        function selectTimelineDate(id, val) {
-            state.timelineDateAnswers[id] = val;
-        }
-
-        function checkTimelineDates() {
-            let correct = 0;
-            timelineDateItems.forEach(item => {
-                const sel = document.getElementById(`timeline-date-select-${item.id}`);
-                if(sel) sel.disabled = true;
-                if(state.timelineDateAnswers[item.id] === item.correctDate) correct++;
-            });
-            const fb = document.getElementById('timeline-dates-feedback');
-            document.getElementById('btn-check-timeline-dates').disabled = true;
-            document.getElementById('btn-check-timeline-dates').classList.add('opacity-50', 'cursor-not-allowed');
-
-            if(correct === timelineDateItems.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Eccellente! Tutte le date sono state associate correttamente."; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Date associate correttamente: ${correct} su ${timelineDateItems.length}.`; }
-            updateGlobalScore();
-        }
-
-        // RENDER MATCHING (5 COPPIE)
-        function renderMatching() {
-            const termsContainer = document.getElementById('matching-terms');
-            const defsContainer = document.getElementById('matching-defs');
-            termsContainer.innerHTML = matchingTerms.map(t => `<button onclick="selectTerm('${t.id}')" id="term-btn-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50">${t.term}</button>`).join('');
-            defsContainer.innerHTML = shuffle(matchingDefs).map(d => `<button onclick="selectDef('${d.matchId}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50">${d.text}</button>`).join('');
-        }
-
-        function selectTerm(id) { 
-            state.selectedTermId = id; 
-            playSound('click'); 
-            matchingTerms.forEach(t => {
-                const btn = document.getElementById(`term-btn-${t.id}`);
-                if(btn) btn.className = (t.id === id) ? "w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200";
-            });
-        }
-
-        function selectDef(matchId) {
-            if(!state.selectedTermId) return;
-            const fb = document.getElementById('matching-feedback');
-            if(state.selectedTermId === matchId) { 
-                playSound('correct'); 
-                fb.className = "text-emerald-400 font-bold"; 
-                fb.innerText = "Abbinamento corretto!"; 
-                state.matchingPairs[matchId] = true;
-            } else { 
-                playSound('error'); 
-                fb.className = "text-rose-400 font-bold"; 
-                fb.innerText = "Abbinamento errato. Seleziona un altro termine e riprova!"; 
-            }
-            state.selectedTermId = null;
-            updateGlobalScore();
-        }
-
-        // RENDER CLOZE (TESTO DINAMICO CON 3 OPZIONI)
-        function renderCloze() {
-            state.activeClozeIndex = Math.floor(Math.random() * clozePool.length);
-            const currentCloze = clozePool[state.activeClozeIndex];
-            const container = document.getElementById('cloze-body-container');
-            container.innerHTML = `<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm sm:text-base text-slate-200 border border-slate-800">${currentCloze.text}</div>`;
-            document.getElementById('btn-check-cloze').disabled = false;
-            document.getElementById('btn-check-cloze').classList.remove('opacity-50', 'cursor-not-allowed');
-            document.getElementById('cloze-feedback').innerText = "";
-        }
-
-        function checkCloze() {
-            const currentCloze = clozePool[state.activeClozeIndex];
-            const answers = currentCloze.answers;
-            let correct = 0;
-            const total = Object.keys(answers).length;
-
-            for(let i=1; i<=total; i++) {
-                const el = document.getElementById(`cloze-${i}`);
-                if(el) {
-                    el.disabled = true;
-                    if(el.value === answers[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold"; }
-                    else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold"; }
-                }
-            }
-            document.getElementById('btn-check-cloze').disabled = true;
-            document.getElementById('btn-check-cloze').classList.add('opacity-50', 'cursor-not-allowed');
-
-            state.clozeScore = Math.round((correct / total) * 100);
-            const fb = document.getElementById('cloze-feedback');
-            if(correct === total) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = `Eccellente! ${correct}/${total} lacune completate correttamente.`; }
-            else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/${total}. Le risposte errate sono evidenziate in rosso.`; }
-            updateGlobalScore();
-        }
-
-        function updateGlobalScore() {
-            let mcqCorrect = 0; 
-            state.activeMCQ.forEach(q => { if(state.mcqAnswers[q.id] === q.correct) mcqCorrect++; });
-            
-            let tfCorrect = 0; 
-            state.activeTF.forEach(d => { if(state.tfAnswers[d.id] === d.isTrue) tfCorrect++; });
-
-            let geoCorrect = 0;
-            state.activeGeo.forEach(g => { if(state.geoAnswers[g.id] === g.correct) geoCorrect++; });
-            
-            let timelineOrderCorrect = 0; 
-            state.timelineOrder.forEach((v, i) => { if(v === i) timelineOrderCorrect++; });
-
-            let timelineDatesCorrect = 0;
-            timelineDateItems.forEach(item => { if(state.timelineDateAnswers[item.id] === item.correctDate) timelineDatesCorrect++; });
-
-            let matchingCorrect = Object.keys(state.matchingPairs).length;
-
-            const total = Math.round(
-                (state.activeMCQ.length ? (mcqCorrect / state.activeMCQ.length) * 20 : 0) + 
-                (state.activeTF.length ? (tfCorrect / state.activeTF.length) * 20 : 0) + 
-                (state.activeGeo.length ? (geoCorrect / state.activeGeo.length) * 15 : 0) +
-                (timelineOrderCorrect / 8) * 10 + 
-                (timelineDatesCorrect / 5) * 10 +
-                (matchingCorrect / 5) * 10 +
-                (state.clozeScore / 100) * 15
-            );
-
-            document.getElementById('global-score-text').innerText = `${total} / 100`;
-            return total;
-        }
-
-        function updateReport() {
-            const score = updateGlobalScore();
-            document.getElementById('report-score').innerText = `${score} / 100 XP`;
-            const badgeEl = document.getElementById('report-badge');
-            if(score >= 90) badgeEl.innerText = "Rex totius Italiae (Eccellente)";
-            else if(score >= 75) badgeEl.innerText = "Dux et Judex (Buono)";
-            else if(score >= 55) badgeEl.innerText = "Gastaldo Regio (Sufficiente)";
-            else badgeEl.innerText = "Novizio Guerriero (Insufficiente)";
-        }
-
-        function switchTab(tabId) {
-            playSound('click');
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.remove('hidden');
-            if(tabId === 'tab-report') updateReport();
-        }
-
-        function resetAll() {
-            state.mcqAnswers = {}; state.tfAnswers = {}; state.geoAnswers = {}; 
-            state.timelineOrder = [0,1,2,3,4,5,6,7]; state.timelineDateAnswers = {};
-            state.matchingPairs = {}; state.clozeScore = 0;
-            renderMCQ(); renderTF(); renderGeo(); renderTimelineOrder(); renderTimelineDates(); renderMatching(); renderCloze();
-            updateGlobalScore(); switchTab('tab-studio');
-        }
-
-        window.addEventListener('DOMContentLoaded', () => { 
-            renderMCQ(); renderTF(); renderGeo(); 
-            renderTimelineOrder(); renderTimelineDates(); 
-            renderMatching(); renderCloze(); 
-            updateGlobalScore(); 
+    function checkTimelineDates() {
+        let correct = 0;
+        timelineDateItems.forEach(item => {
+            const sel = document.getElementById(`timeline-date-select-${item.id}`);
+            if(sel) sel.disabled = true;
+            if(state.timelineDateAnswers[item.id] === item.correctDate) correct++;
         });
-    </script>
+        const fb = document.getElementById('timeline-dates-feedback');
+        document.getElementById('btn-check-timeline-dates').disabled = true;
+        document.getElementById('btn-check-timeline-dates').classList.add('opacity-50', 'cursor-not-allowed');
+        if(correct === timelineDateItems.length) { playSound('correct'); fb.className = "text-emerald-400 font-bold mt-2"; fb.innerText = "Eccellente! Tutte le date sono state associate correttamente."; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold mt-2"; fb.innerText = `Date associate correttamente: ${correct} su ${timelineDateItems.length}.`; }
+        updateGlobalScore();
+    }
+
+    function renderMatching() {
+        const termsContainer = document.getElementById('matching-terms');
+        const defsContainer = document.getElementById('matching-defs');
+        termsContainer.innerHTML = matchingTerms.map(t => `<button onclick="selectTerm('${t.id}')" id="term-btn-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50">${t.term}</button>`).join('');
+        defsContainer.innerHTML = shuffle(matchingDefs).map(d => `<button onclick="selectDef('${d.matchId}')" id="def-btn-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50">${d.text}</button>`).join('');
+    }
+
+    function selectTerm(id) {
+        if(state.matchingPairs[id]) return;
+        state.selectedTermId = id;
+        playSound('click');
+        matchingTerms.forEach(t => {
+            const btn = document.getElementById(`term-btn-${t.id}`);
+            if(btn && !state.matchingPairs[t.id]) {
+                btn.className = (t.id === id) ? "w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200";
+            }
+        });
+    }
+
+    function selectDef(matchId) {
+        if(!state.selectedTermId) return;
+        const fb = document.getElementById('matching-feedback');
+        if(state.selectedTermId === matchId) {
+            playSound('correct');
+            fb.className = "text-emerald-400 font-bold";
+            fb.innerText = "Abbinamento corretto!";
+            state.matchingPairs[matchId] = true;
+            const termBtn = document.getElementById(`term-btn-${state.selectedTermId}`);
+            const defBtn = document.getElementById(`def-btn-${matchId}`);
+            const lockedClass = "w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";
+            if(termBtn) { termBtn.disabled = true; termBtn.className = lockedClass; }
+            if(defBtn) { defBtn.disabled = true; defBtn.className = lockedClass; }
+        } else {
+            playSound('error');
+            fb.className = "text-rose-400 font-bold";
+            fb.innerText = "Abbinamento errato. Seleziona un altro termine e riprova!";
+        }
+        state.selectedTermId = null;
+        updateGlobalScore();
+    }
+
+    function renderCloze() {
+        state.activeClozeIndex = Math.floor(Math.random() * clozePool.length);
+        const currentCloze = clozePool[state.activeClozeIndex];
+        const container = document.getElementById('cloze-body-container');
+        container.innerHTML = `<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm sm:text-base text-slate-200 border border-slate-800">${currentCloze.text}</div>`;
+        document.getElementById('btn-check-cloze').disabled = false;
+        document.getElementById('btn-check-cloze').classList.remove('opacity-50', 'cursor-not-allowed');
+        document.getElementById('cloze-feedback').innerText = "";
+    }
+
+    function checkCloze() {
+        const currentCloze = clozePool[state.activeClozeIndex];
+        const answers = currentCloze.answers;
+        let correct = 0;
+        const total = Object.keys(answers).length;
+        for(let i=1; i<=total; i++) {
+            const el = document.getElementById(`cloze-${i}`);
+            if(el) {
+                el.disabled = true;
+                if(el.value === answers[i]) { correct++; el.className = "bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold"; }
+                else { el.className = "bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold"; }
+            }
+        }
+        document.getElementById('btn-check-cloze').disabled = true;
+        document.getElementById('btn-check-cloze').classList.add('opacity-50', 'cursor-not-allowed');
+        state.clozeScore = Math.round((correct / total) * 100);
+        const fb = document.getElementById('cloze-feedback');
+        if(correct === total) { playSound('correct'); fb.className = "text-emerald-400 font-bold"; fb.innerText = `Eccellente! ${correct}/${total} lacune completate correttamente.`; }
+        else { playSound('error'); fb.className = "text-amber-400 font-bold"; fb.innerText = `Punteggio: ${correct}/${total}. Le risposte errate sono evidenziate in rosso.`; }
+        updateGlobalScore();
+    }
+
+    function updateGlobalScore() {
+        let mcqCorrect = 0;
+        state.activeMCQ.forEach(q => { if(state.mcqAnswers[q.id] === q.correct) mcqCorrect++; });
+        let tfCorrect = 0;
+        state.activeTF.forEach(d => { if(state.tfAnswers[d.id] === d.isTrue) tfCorrect++; });
+        let geoCorrect = 0;
+        state.activeGeo.forEach(g => { if(state.geoAnswers[g.id] === g.correct) geoCorrect++; });
+        let timelineOrderCorrect = 0;
+        state.timelineOrder.forEach((v, i) => { if(v === i) timelineOrderCorrect++; });
+        let timelineDatesCorrect = 0;
+        timelineDateItems.forEach(item => { if(state.timelineDateAnswers[item.id] === item.correctDate) timelineDatesCorrect++; });
+        let matchingCorrect = Object.keys(state.matchingPairs).length;
+        const total = Math.round(
+            (state.activeMCQ.length ? (mcqCorrect / state.activeMCQ.length) * 20 : 0) +
+            (state.activeTF.length ? (tfCorrect / state.activeTF.length) * 20 : 0) +
+            (state.activeGeo.length ? (geoCorrect / state.activeGeo.length) * 15 : 0) +
+            (timelineOrderCorrect / 8) * 10 +
+            (timelineDatesCorrect / 5) * 10 +
+            (matchingCorrect / 5) * 10 +
+            (state.clozeScore / 100) * 15
+        );
+        document.getElementById('global-score-text').innerText = `${total} / 100`;
+        return total;
+    }
+
+    function updateReport() {
+        const score = updateGlobalScore();
+        document.getElementById('report-score').innerText = `${score} / 100 XP`;
+        const badgeEl = document.getElementById('report-badge');
+        if(score >= 90) badgeEl.innerText = "Rex totius Italiae (Eccellente)";
+        else if(score >= 75) badgeEl.innerText = "Dux et Judex (Buono)";
+        else if(score >= 55) badgeEl.innerText = "Gastaldo Regio (Sufficiente)";
+        else badgeEl.innerText = "Novizio Guerriero (Insufficiente)";
+    }
+
+    function switchTab(tabId) {
+        playSound('click');
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.remove('hidden');
+        if(tabId === 'tab-report') updateReport();
+    }
+
+    function resetAll() {
+        state.mcqAnswers = {}; state.tfAnswers = {}; state.geoAnswers = {};
+        state.timelineOrder = shuffledTimelineOrder(); state.timelineDateAnswers = {};
+        state.matchingPairs = {}; state.clozeScore = 0;
+        renderMCQ(); renderTF(); renderGeo(); renderTimelineOrder(); renderTimelineDates(); renderMatching(); renderCloze();
+        updateGlobalScore(); switchTab('tab-studio');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        renderMCQ(); renderTF(); renderGeo();
+        renderTimelineOrder(); renderTimelineDates();
+        renderMatching(); renderCloze();
+        updateGlobalScore();
+    });
+</script>
 </body>
 </html>
