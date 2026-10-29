@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guerre di Religione • Modulo 3: Le Paci Impossibili (1590-1610)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: 'class', theme: { extend: { colors: { sky: { 450: '#0ea5e9' } }, fontFamily: { cinzel: ['Cinzel','serif'], sans: ['Plus Jakarta Sans','sans-serif'] } } } }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080d16; color: #f1f5f9; }
+.font-cinzel { font-family: 'Cinzel', serif; }
+.tab-btn.active { background-color: #0284c7; color: #fff; border-color: #38bdf8; box-shadow: 0 4px 20px -2px rgba(2,132,199,0.5); }
+.glass-card { background: linear-gradient(135deg, rgba(17,25,39,0.85), rgba(10,15,26,0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+.badge-glow { box-shadow: 0 0 15px rgba(14,165,233,0.2); }
+@media print { body * { visibility: hidden; } #printable-certificate, #printable-certificate * { visibility: visible; } #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; } }
+</style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-slate-950">
+
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center space-x-2 text-xs sm:text-sm">
+<a href="index.html" class="text-slate-400 hover:text-sky-400 transition-colors flex items-center gap-1.5 font-semibold"><i class="fa-solid fa-house"></i> Home Portale</a>
+<span class="text-slate-600">/</span>
+<a href="storia-moderna.html" class="text-slate-400 hover:text-sky-400 transition-colors font-semibold">Storia Moderna</a>
+<span class="text-slate-600">/</span>
+<span class="text-sky-400 font-bold">Guerre di Religione • Modulo 3</span>
+</div>
+<div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+<div class="relative flex items-center"><i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+<input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-sky-500 w-40 sm:w-48"></div>
+<button onclick="toggleAudio()" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-sky-400"><i class="fa-solid fa-volume-high text-sm"></i></button>
+<div class="flex items-center space-x-3 bg-slate-900 border border-sky-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+<div class="text-right"><span class="text-[10px] uppercase tracking-wider text-sky-400/80 block font-bold">Punti XP</span><span id="global-score-text" class="text-sm font-extrabold text-sky-400">0 / 100</span></div>
+<div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-extrabold text-xs"><i class="fa-solid fa-bolt"></i></div>
+</div>
+</div>
+</div>
+</header>
+
+<nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+<div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+<button onclick="switchTab('tab-studio')" class="tab-btn active px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent"><i class="fa-solid fa-map text-sky-400"></i> 0. Quadro</button>
+<button onclick="switchTab('tab-mcq')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz (10)</button>
+<button onclick="switchTab('tab-tf')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. V/F (8)</button>
+<button onclick="switchTab('tab-timeline')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-timeline text-purple-400"></i> 3. Cronologia</button>
+<button onclick="switchTab('tab-matching')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-diagram-project text-rose-400"></i> 4. Concetti</button>
+<button onclick="switchTab('tab-chi')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-people-arrows text-teal-400"></i> 5. Chi con chi</button>
+<button onclick="switchTab('tab-personaggi')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-user-tag text-amber-400"></i> 6. Personaggi</button>
+<button onclick="switchTab('tab-cloze')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-pen-nib text-amber-400"></i> 7. Sintesi</button>
+<button onclick="switchTab('tab-final')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-brain text-fuchsia-400"></i> 8. Sintesi Finale</button>
+<button onclick="switchTab('tab-report')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-certificate text-yellow-400"></i> Certificato</button>
+</div>
+</nav>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+<section id="tab-studio" class="tab-content space-y-8">
+<div class="glass-card p-6 sm:p-8 rounded-2xl border-sky-500/20">
+<div class="max-w-3xl space-y-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-400 border border-sky-500/30"><i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo 3 di 3 • Storia Moderna</span>
+<h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-sky-400">Le Paci Impossibili (1590-1610)</h2>
+<p class="text-slate-300 text-sm sm:text-base leading-relaxed">Dall'abiura di Enrico IV alla tregua dei 12 anni: come si esce dalle guerre di religione (e perché non si esce davvero). Editto di Nantes, ascesa olandese e inglese, declino spagnolo.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-sky-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl"><i class="fa-solid fa-crown"></i></div><h3 class="font-bold text-slate-100">1. Enrico IV re di Francia</h3><p class="text-xs text-slate-300">Abiura (1593), incoronazione (1594), Pace di Vervins (1598), Editto di Nantes (1598).</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-emerald-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl"><i class="fa-solid fa-scroll"></i></div><h3 class="font-bold text-slate-100">2. Editto di Nantes (1598)</h3><p class="text-xs text-slate-300">Primo esempio europeo di tolleranza legale: libertà di culto limitata agli ugonotti, amnistia, piazzeforti.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-amber-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl"><i class="fa-solid fa-ship"></i></div><h3 class="font-bold text-slate-100">3. Ascesa olandese e inglese</h3><p class="text-xs text-slate-300">VOC (1602), borsa di Amsterdam, polder, enclosures, Royal Exchange (1566), Compagnia britannica delle Indie (1600).</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-purple-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl"><i class="fa-solid fa-gavel"></i></div><h3 class="font-bold text-slate-100">4. Nuovi leader</h3><p class="text-xs text-slate-300">Maurizio di Nassau (militare) e Van Oldenbarnevelt (politica) guidano le Province Unite dopo la morte di Guglielmo.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-red-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center text-xl"><i class="fa-solid fa-skull"></i></div><h3 class="font-bold text-slate-100">5. La ferita aperta</h3><p class="text-xs text-slate-300">Enrico IV assassinato da un fanatico cattolico nel 1610: le tensioni religiose non si erano chiuse.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-teal-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl"><i class="fa-solid fa-balance-scale"></i></div><h3 class="font-bold text-slate-100">6. Declino spagnolo</h3><p class="text-xs text-slate-300">Filippo II muore nel 1598; il regno di Filippo III avvia il declino spagnolo, mentre Inghilterra e Province Unite crescono.</p></div>
+</div>
+<div class="text-center pt-4"><button onclick="switchTab('tab-mcq')" class="bg-sky-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-sky-600">Inizia il Modulo 3 ➔</button></div>
+</section>
+
+<section id="tab-mcq" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo (10 su 25)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-sky-400"></i> Risposte bloccate</span>
+</div>
+<div id="mcq-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-tf" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso (8 su 20)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-sky-400"></i> Risposte bloccate</span>
+</div>
+<div id="tf-container" class="space-y-4"></div>
+</section>
+
+<section id="tab-timeline" class="tab-content hidden space-y-8">
+<div><h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 3: Cronologia 1590-1610</h2></div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span><h3 class="font-bold text-slate-100 text-sm">Parte A: Riordino eventi</h3></div>
+<div id="timeline-list" class="space-y-2.5"></div>
+<button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine</button>
+<div id="timeline-order-feedback" class="text-xs font-semibold"></div>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span><h3 class="font-bold text-slate-100 text-sm">Parte B: Evento - Anno</h3></div>
+<div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+<button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Date</button>
+<div id="timeline-dates-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-matching" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 4: Abbinamento Concetti</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="matching-terms" class="space-y-2.5"></div>
+<div id="matching-defs" class="space-y-2.5"></div>
+</div>
+<div id="matching-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-chi" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400 border-b border-slate-800 pb-2">Esercizio 5: Chi con chi — Persone e istituzioni</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<p class="text-xs text-slate-400">Abbina ciascun personaggio o istituzione al suo ruolo/contesto.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="chi-terms" class="space-y-2.5"></div>
+<div id="chi-defs" class="space-y-2.5"></div>
+</div>
+<div id="chi-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-personaggi" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Riconosci il personaggio (6 su 15)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-amber-400"></i> Risposte bloccate</span>
+</div>
+<div id="personaggi-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-cloze" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-2">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 7: Testo Guidato</h2>
+<button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Cambia</button>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<div id="cloze-body-container"></div>
+<button onclick="checkCloze()" id="btn-check-cloze" class="bg-sky-500 hover:bg-sky-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs"><i class="fa-solid fa-check mr-1.5"></i> Verifica</button>
+<div id="cloze-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-final" class="tab-content hidden space-y-6">
+<div class="border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-fuchsia-400">Esercizio 8: Sintesi Finale (6 domande trasversali)</h2>
+<p class="text-xs sm:text-sm text-slate-400 mt-1">Domande che attraversano tutti e tre i moduli: servono a verificare la comprensione d'insieme dell'intero periodo.</p>
+</div>
+<div id="final-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-report" class="tab-content hidden space-y-6">
+<div id="printable-certificate" class="glass-card p-8 rounded-2xl text-center space-y-6">
+<h2 class="font-cinzel text-2xl font-bold text-sky-400">Valutazione Modulo 3 + Sintesi Finale</h2>
+<p class="text-sm text-slate-300">Studente: <span id="report-student" class="font-bold text-slate-100">Studente</span></p>
+<div class="text-4xl font-black text-sky-400" id="report-score">0 / 100 XP</div>
+<div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
+<div class="flex justify-center gap-4">
+<button onclick="window.print()" class="bg-sky-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato</button>
+<button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia</button>
+</div>
+<p class="text-xs text-slate-500 pt-4">Modulo 3 di 3 • <a href="guerre-religione-1.html" class="text-sky-400 hover:underline">← Torna al Modulo 1</a></p>
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 space-x-4">
+<a href="index.html" class="hover:text-sky-400"><i class="fa-solid fa-house mr-1"></i> Home Portale</a>
+<span>•</span>
+<a href="storia-moderna.html" class="hover:text-sky-400"><i class="fa-solid fa-shield-halved mr-1"></i> Storia Moderna</a>
+</footer>
+
+<script>
+function shuffledTimelineOrder() { let o; do { o = shuffle([0,1,2,3,4,5,6,7]); } while (o.every((v,i)=>v===i)); return o; }
+const state = { studentName:"Studente", audioEnabled:true, mcqAnswers:{}, tfAnswers:{},
+timelineOrder:shuffledTimelineOrder(), timelineDateAnswers:{},
+matchingPairs:{}, matchingSelectedTerm:null, chiPairs:{}, chiSelectedTerm:null,
+personaggiAnswers:{}, finalAnswers:{}, clozeScore:0, activeClozeIndex:0,
+activeMCQ:[], activeTF:[], activePersonaggi:[], activeFinal:[] };
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playSound(t){if(!state.audioEnabled)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);if(t==='click'){o.frequency.setValueAtTime(400,audioCtx.currentTime);g.gain.setValueAtTime(0.05,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.05);}else if(t==='correct'){o.frequency.setValueAtTime(880,audioCtx.currentTime);g.gain.setValueAtTime(0.08,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.2);}else if(t==='error'){o.frequency.setValueAtTime(220,audioCtx.currentTime);g.gain.setValueAtTime(0.08,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.2);}}catch(e){}}
+function toggleAudio(){state.audioEnabled=!state.audioEnabled;}
+function updateStudentName(v){state.studentName=v||"Studente";}
+function shuffle(a){let r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+const mcqPool = [
+{id:1,question:"Cosa fece Enrico IV nel 1593?",options:["Abbandonò il trono","Abiurò il calvinismo","Sposò Elisabetta I","Conquistò la Spagna"],correct:1,explanation:"Abiurò il calvinismo per diventare cattolico ed essere riconosciuto re."},
+{id:2,question:"'Parigi val bene una messa' fu:",options:["Pronunciata da Enrico IV","Attribuita a Enrico IV, mai pronunciata","Pronunciata dal Papa","Una frase di Guisa"],correct:1,explanation:"Massima attribuita ma mai effettivamente pronunciata."},
+{id:3,question:"Quando fu incoronato Enrico IV?",options:["1590","1593","1594","1598"],correct:2,explanation:"Incoronato nel 1594, dopo l'abiura."},
+{id:4,question:"La Pace di Vervins (1598) fu firmata tra:",options:["Francia e Spagna","Francia e Inghilterra","Spagna e Province Unite","Francia e Papato"],correct:0,explanation:"Enrico IV e Filippo II posero fine alle ostilità."},
+{id:5,question:"L'Editto di Nantes (1598) concesse:",options:["Libertà di culto limitata agli ugonotti","La cacciata degli ugonotti","Il ritorno al cattolicesimo obbligatorio","L'indipendenza della Francia"],correct:0,explanation:"Con limitazioni: nei luoghi dove era già praticato fino al 1597."},
+{id:6,question:"Perché l'Editto di Nantes è importante?",options:["Fu il primo esempio europeo di tolleranza per legge","Fu revocato subito","Riconobbe il calvinismo come religione di stato","Fu imposto dal Papa"],correct:0,explanation:"Primo paese europeo a mettere in pratica una vera tolleranza per legge."},
+{id:7,question:"Quando morì Filippo II?",options:["1595","1598","1600","1603"],correct:1,explanation:"Nel 1598, lo stesso anno della Pace di Vervins e dell'Editto di Nantes."},
+{id:8,question:"Chi successe a Filippo II?",options:["Filippo III","Carlo II","Filippo IV","Ferdinando VI"],correct:0,explanation:"Filippo III, figlio, dal 1598."},
+{id:9,question:"Quando morì Elisabetta I?",options:["1600","1603","1605","1609"],correct:1,explanation:"Nel 1603, dopo 45 anni di regno."},
+{id:10,question:"Chi successe a Elisabetta I?",options:["Giacomo VI Stuart (Giacomo I)","Carlo I","Filippo III","Enrico IV"],correct:0,explanation:"Figlio di Maria Stuarda, già re di Scozia come Giacomo VI."},
+{id:11,question:"La Tregua dei 12 anni fu firmata:",options:["1598","1603","1609","1610"],correct:2,explanation:"Nel 1609, tra Spagna e Province Unite."},
+{id:12,question:"Cos'era la VOC?",options:["La Compagnia delle Indie orientali olandese","Una nave da guerra spagnola","Una lega cattolica","Un'università olandese"],correct:0,explanation:"Verenigde Oostindische Compagnie, fondata nel 1602."},
+{id:13,question:"Cosa faceva la VOC?",options:["Commerciava spezie e altre merci con l'Asia","Gestiva l'esercito olandese","Amministrava le colonie spagnole","Coltivava il grano"],correct:0,explanation:"Commercio marittimo, soprattutto di spezie, con quasi monopolio."},
+{id:14,question:"Perché le Province Unite erano così ricche?",options:["Per le miniere d'oro","Per commercio mondiale, finanza e agricoltura innovativa","Per il controllo della Spagna","Per le tasse imposte agli inglesi"],correct:1,explanation:"Commercio, borsa di Amsterdam, VOC, polder."},
+{id:15,question:"Cosa sono i 'polder'?",options:["Terre coltivabili strappate al mare","Mulini a vento","Canali artificiali","Diga difensiva"],correct:0,explanation:"Terre ricavate da zone paludose con dighe e drenaggi."},
+{id:16,question:"Chi era Van Oldenbarnevelt?",options:["Gran Pensionario d'Olanda","Re di Spagna","Governatore spagnolo","Corsaro inglese"],correct:0,explanation:"Guida politica della provincia più ricca delle Province Unite."},
+{id:17,question:"Chi era Maurizio di Nassau?",options:["Figlio di Guglielmo d'Orange, stadholder militare","Re d'Inghilterra","Generale spagnolo","Corsaro"],correct:0,explanation:"Subentrò al padre come guida militare delle Province Unite."},
+{id:18,question:"Cosa sono le enclosures?",options:["Recinzione delle terre comuni, privatizzazione agricola","Nuove città inglesi","Navi da guerra","Trattati commerciali"],correct:0,explanation:"Processo di privatizzazione delle terre comuni in Inghilterra."},
+{id:19,question:"Cosa causò la migrazione verso Londra nel Cinque-Seicento?",options:["La vita in campagna sempre più difficile","La peste nera","Le guerre di religione spagnole","L'invasione francese"],correct:0,explanation:"Enclosures, povertà rurale, concentrazione di opportunità in città."},
+{id:20,question:"Cosa fu fondato a Londra nel 1600?",options:["La Compagnia britannica delle Indie orientali","La Royal Exchange","La Banca d'Inghilterra","La Borsa di Londra"],correct:0,explanation:"La Compagnia britannica delle Indie, inizialmente meno forte di quella olandese."},
+{id:21,question:"Quando fu fondata la borsa di Amsterdam?",options:["1600","1602","1609","1610"],correct:1,explanation:"Nel 1602, insieme alla VOC."},
+{id:22,question:"Perché la Spagna entrò in declino?",options:["Per le eccessive spese militari, dipendenza dall'argento, debole borghesia","Per la sconfitta contro gli ottomani","Per la perdita delle Americhe","Per l'unificazione con il Portogallo"],correct:0,explanation:"Cause economiche e strutturali, già evidenti sotto Filippo II."},
+{id:23,question:"Quando fu ucciso Enrico IV?",options:["1598","1603","1610","1609"],correct:2,explanation:"Nel 1610, da un fanatico cattolico."},
+{id:24,question:"Cos'è la Royal Exchange?",options:["La prima borsa inglese (1566)","Un palazzo reale","Una nave","Una compagnia commerciale"],correct:0,explanation:"Fondata nel 1566 sul modello della borsa di Anversa."},
+{id:25,question:"Quale fu la conseguenza principale dell'Editto di Nantes a lungo termine?",options:["La pace definitiva in Francia","Una struttura legislativa alla tolleranza, ma non fine delle violenze","La revoca immediata","L'unificazione religiosa"],correct:1,explanation:"Diede struttura giuridica alla tolleranza, ma la pace non fu completa."}
+];
+
+const tfPool = [
+{id:1,text:"Enrico IV abiurò il calvinismo nel 1593.",isTrue:true,explanation:"VERO: per essere riconosciuto re di Francia."},
+{id:2,text:"'Parigi val bene una messa' fu effettivamente pronunciata da Enrico IV.",isTrue:false,explanation:"FALSO: massima attribuita ma mai pronunciata."},
+{id:3,text:"La Pace di Vervins fu firmata nel 1598.",isTrue:true,explanation:"VERO: tra Francia e Spagna."},
+{id:4,text:"L'Editto di Nantes fu un esempio di tolleranza per legge.",isTrue:true,explanation:"VERO: primo in Europa."},
+{id:5,text:"L'Editto di Nantes concesse la libertà di culto senza limitazioni.",isTrue:false,explanation:"FALSO: solo nei luoghi dove era già praticato fino al 1597."},
+{id:6,text:"La VOC fu fondata nel 1602.",isTrue:true,explanation:"VERO."},
+{id:7,text:"La VOC era una joint stock company.",isTrue:true,explanation:"VERO: società a capitale collettivo quotata in borsa."},
+{id:8,text:"Le Province Unite erano una monarchia.",isTrue:false,explanation:"FALSO: erano una repubblica con Stati Generali."},
+{id:9,text:"I polder erano terre strappate al mare.",isTrue:true,explanation:"VERO: con dighe e drenaggi."},
+{id:10,text:"Londra nel 1600 era già la città più popolosa d'Europa.",isTrue:false,explanation:"FALSO: la crescita fu graduale; lo divenne nei due secoli successivi."},
+{id:11,text:"La Royal Exchange fu fondata nel 1566.",isTrue:true,explanation:"VERO: sul modello di Anversa."},
+{id:12,text:"La Compagnia britannica delle Indie fu subito più forte di quella olandese.",isTrue:false,explanation:"FALSO: inizialmente arrancò rispetto alla VOC."},
+{id:13,text:"Filippo II morì nel 1598.",isTrue:true,explanation:"VERO."},
+{id:14,text:"Filippo III successe a Filippo II.",isTrue:true,explanation:"VERO: dal 1598."},
+{id:15,text:"Elisabetta I morì dopo 45 anni di regno.",isTrue:true,explanation:"VERO: nel 1603."},
+{id:16,text:"A Elisabetta successe Giacomo VI Stuart.",isTrue:true,explanation:"VERO: figlio di Maria Stuarda."},
+{id:17,text:"Enrico IV fu ucciso da un fanatico cattolico.",isTrue:true,explanation:"VERO: nel 1610."},
+{id:18,text:"La Tregua dei 12 anni fu firmata nel 1609.",isTrue:true,explanation:"VERO: tra Spagna e Province Unite."},
+{id:19,text:"La mortalità in alcune zone della Francia fu bassa durante le guerre di religione.",isTrue:false,explanation:"FALSO: elevatissima in alcune zone."},
+{id:20,text:"La Spagna entrò in declino dopo Filippo II.",isTrue:true,explanation:"VERO: cause strutturali già visibili sotto il suo regno."}
+];
+
+const timelineEvents = [
+{id:0,title:"Abiura di Enrico IV"},
+{id:1,title:"Incoronazione di Enrico IV"},
+{id:2,title:"Pace di Vervins e morte di Filippo II"},
+{id:3,title:"Editto di Nantes"},
+{id:4,title:"Fondazione della Compagnia britannica delle Indie"},
+{id:5,title:"Fondazione della VOC"},
+{id:6,title:"Morte di Elisabetta I"},
+{id:7,title:"Tregua dei 12 anni"}
+];
+const timelineDateItems = [
+{id:1,event:"Abiura di Enrico IV",correctDate:"1593",options:["1593","1594","1598"]},
+{id:2,event:"Editto di Nantes",correctDate:"1598",options:["1593","1598","1600"]},
+{id:3,event:"Fondazione della VOC",correctDate:"1602",options:["1600","1602","1603"]},
+{id:4,event:"Morte di Elisabetta I",correctDate:"1603",options:["1600","1603","1609"]},
+{id:5,event:"Tregua dei 12 anni",correctDate:"1609",options:["1603","1609","1610"]}
+];
+
+const matchingTerms = [
+{id:"m1",term:"Editto di Nantes"},
+{id:"m2",term:"VOC"},
+{id:"m3",term:"Polder"},
+{id:"m4",term:"Enclosures"},
+{id:"m5",term:"Joint stock company"}
+];
+const matchingDefs = [
+{id:"d1",matchId:"m1",text:"Tolleranza legale per gli ugonotti in Francia (1598)."},
+{id:"d2",matchId:"m2",text:"Compagnia delle Indie orientali olandese, fondata nel 1602."},
+{id:"d3",matchId:"m3",text:"Terre coltivabili strappate al mare con dighe e drenaggi."},
+{id:"d4",matchId:"m4",text:"Recinzione/privatizzazione delle terre comuni in Inghilterra."},
+{id:"d5",matchId:"m5",text:"Società a capitale collettivo, quotata in borsa."}
+];
+
+const chiTerms = [
+{id:"c1",term:"Enrico IV"},
+{id:"c2",term:"Van Oldenbarnevelt"},
+{id:"c3",term:"Maurizio di Nassau"},
+{id:"c4",term:"Filippo III"},
+{id:"c5",term:"Giacomo VI Stuart"}
+];
+const chiDefs = [
+{id:"cd1",matchId:"c1",text:"Re di Francia, emanò l'Editto di Nantes nel 1598."},
+{id:"cd2",matchId:"c2",text:"Gran Pensionario d'Olanda, guida politica delle Province Unite."},
+{id:"cd3",matchId:"c3",text:"Figlio di Guglielmo d'Orange, guida militare delle Province Unite."},
+{id:"cd4",matchId:"c4",text:"Successore di Filippo II, avviò il declino spagnolo."},
+{id:"cd5",matchId:"c5",text:"Figlio di Maria Stuarda, successe a Elisabetta I nel 1603."}
+];
+
+const personaggiPool = [
+{id:1,desc:"Re di Francia che emanò l'Editto di Nantes e fu ucciso nel 1610.",options:["Enrico IV","Enrico III","Luigi XIII","Carlo IX"],correct:0,explanation:"Enrico IV di Borbone."},
+{id:2,desc:"Gran Pensionario d'Olanda, guida politica delle Province Unite dopo la morte di Guglielmo.",options:["Van Oldenbarnevelt","Maurizio di Nassau","Barnevelt il Giovane","De Witt"],correct:0,explanation:"Johan van Oldenbarnevelt."},
+{id:3,desc:"Figlio di Guglielmo d'Orange, guida militare delle Province Unite.",options:["Maurizio di Nassau","Federico Enrico","Guglielmo II","Guglielmo III"],correct:0,explanation:"Maurizio di Nassau."},
+{id:4,desc:"Re spagnolo dopo Filippo II (dal 1598).",options:["Filippo III","Carlo II","Filippo IV","Ferdinando VI"],correct:0,explanation:"Filippo III."},
+{id:5,desc:"Figlio di Maria Stuarda, successe a Elisabetta I nel 1603.",options:["Giacomo VI Stuart","Carlo I","Enrico Stuart","Roberto Stuart"],correct:0,explanation:"Giacomo VI di Scozia, poi Giacomo I d'Inghilterra."},
+{id:6,desc:"Regina d'Inghilterra morta nel 1603 dopo 45 anni di regno.",options:["Elisabetta I","Maria Stuarda","Maria I Tudor","Anna Bolena"],correct:0,explanation:"Elisabetta I Tudor."},
+{id:7,desc:"Re di Spagna dal 1556 al 1598, artefice della politica imperiale spagnola.",options:["Filippo II","Filippo III","Carlo V","Ferdinando I"],correct:0,explanation:"Filippo II."},
+{id:8,desc:"Re di Francia assassinato nel 1610 da un fanatico cattolico.",options:["Enrico IV","Enrico III","Luigi XIII","Carlo IX"],correct:0,explanation:"Enrico IV."},
+{id:9,desc:"Corsaro inglese, famoso per aver attaccato Cadice e Lisbona nel 1587.",options:["Francis Drake","Walter Raleigh","John Hawkins","Martin Frobisher"],correct:0,explanation:"Francis Drake."},
+{id:10,desc:"Capo della fazione ugonotta, divenuto re di Francia.",options:["Enrico IV","Enrico di Guisa","Condé","Coligny"],correct:0,explanation:"Enrico IV (già comparso, ripetizione tematica)."},
+{id:11,desc:"Giovane re portoghese morto in battaglia nel 1578, causa dell'Unione iberica.",options:["Sebastiano I","Enrico I","Duarte I","Filippo II"],correct:0,explanation:"Sebastiano I d'Aviz."},
+{id:12,desc:"Regina d'Inghilterra cattolica, sposò Filippo II di Spagna.",options:["Maria I Tudor","Elisabetta I","Maria Stuarda","Anna Bolena"],correct:0,explanation:"Maria I Tudor."},
+{id:13,desc:"Imperatore che abdicò nel 1556, dividendo i suoi domini.",options:["Carlo V","Ferdinando I","Filippo II","Massimiliano II"],correct:0,explanation:"Carlo V d'Asburgo."},
+{id:14,desc:"Reggente di Francia per Carlo IX, artefice della politica di equilibrio.",options:["Caterina de' Medici","Margherita di Valois","Anna d'Austria","Maria di Guisa"],correct:0,explanation:"Caterina de' Medici."},
+{id:15,desc:"Re di Francia morto in torneo nel 1559, marito di Caterina de' Medici.",options:["Enrico II","Francesco I","Francesco II","Enrico III"],correct:0,explanation:"Enrico II di Valois."}
+];
+
+const finalPool = [
+{id:1,question:"Perché la Pace di Augusta non riuscì a garantire una pace duratura?",options:["Non fu firmata dall'imperatore","Non risolse la questione calvinista e riguardava solo il SRI","Fu respinta dal Papa","Fu rotta subito dai principi tedeschi"],correct:1,explanation:"Il calvinismo restò escluso; gli altri stati europei non erano coperti."},
+{id:2,question:"Quale ruolo giocarono le Province Unite nel conflitto europeo?",options:["Furono solo vittime passive","Divennero il motore finanziario e marittimo anti-asburgico","Si allearono con la Spagna","Rimasero neutrali"],correct:1,explanation:"Borsa, VOC, flotta: le Province Unite divennero il centro del commercio mondiale."},
+{id:3,question:"Perché la sconfitta dell'Invincibile Armata (1588) fu decisiva?",options:["Distrusse la flotta spagnola per sempre","Mostrò che la Spagna non poteva più imporre la sua egemonia sui mari","Portò alla cattura di Filippo II","Causò la fine dell'Impero spagnolo"],correct:1,explanation:"Segnò il declino del dominio marittimo spagnolo."},
+{id:4,question:"Come mai la Francia uscì dal conflitto con un editto di tolleranza (Nantes), mentre la Spagna no?",options:["La Francia era più debole militarmente","In Francia il conflitto religioso era anche civile e la monarchia cercava legittimazione","La Spagna era protestante","Il Papa lo impose alla Francia"],correct:1,explanation:"Le guerre civili francesi richiedevano una soluzione politica interna."},
+{id:5,question:"Quale elemento economico accomuna l'ascesa inglese e olandese nel Cinquecento?",options:["La scoperta dell'oro in America","Lo sviluppo di compagnie commerciali e nuovi assetti agricoli","L'abolizione della schiavitù","L'unità religiosa"],correct:1,explanation:"VOC, Compagnia delle Indie, polder, enclosures, borsa."},
+{id:6,question:"Perché il Cinquecento è considerato un secolo di svolta per l'Europa?",options:["Per la scoperta dell'America","Per il passaggio a un'Europa di Stati sovrani, con economie-mondo e nuove forme di tolleranza","Per la fine del feudalesimo","Per l'invenzione della stampa"],correct:1,explanation:"Le guerre di religione trasformano la mappa politica e mentale dell'Europa."}
+];
+
+const clozePool = [
+{text:`Nel <select id="cloze-1" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="1593">1593</option><option value="1594">1594</option><option value="1598">1598</option></select> Enrico IV abiurò il <select id="cloze-2" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="calvinismo">calvinismo</option><option value="luteranesimo">luteranesimo</option><option value="anglicanesimo">anglicanesimo</option></select> per diventare cattolico, pronunciando (forse) la celebre frase 'Parigi val bene una <select id="cloze-3" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="messa">messa</option><option value="guerra">guerra</option><option value="vita">vita</option></select>'. Fu incoronato nel <select id="cloze-4" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="1594">1594</option><option value="1596">1596</option><option value="1598">1598</option></select> e nel <select id="cloze-5" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="1598">1598</option><option value="1600">1600</option><option value="1603">1603</option></select> emanò l'<select id="cloze-6" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="Editto di Nantes">Editto di Nantes</option><option value="Editto di Saint Germain">Editto di Saint Germain</option><option value="Pace di Vervins">Pace di Vervins</option></select>, con cui concedeva libertà di culto agli ugonotti.`,
+answers:{1:"1593",2:"calvinismo",3:"messa",4:"1594",5:"1598",6:"Editto di Nantes"}},
+{text:`Nel <select id="cloze-1" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="1602">1602</option><option value="1603">1603</option><option value="1609">1609</option></select> fu fondata la <select id="cloze-2" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="VOC">VOC</option><option value="Compagnia britannica">Compagnia britannica</option><option value="Royal Exchange">Royal Exchange</option></select>, una <select id="cloze-3" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="joint stock company">joint stock company</option><option value="famiglia nobile">famiglia nobile</option><option value="confraternita">confraternita</option></select> quotata in borsa, che commerciava soprattutto <select id="cloze-4" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="spezie">spezie</option><option value="oro">oro</option><option value="schiavi">schiavi</option></select>. Le Province Unite erano una repubblica in cui il potere era in mano agli Stati Generali, ma era la provincia d'<select id="cloze-5" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="Olanda">Olanda</option><option value="Zelanda">Zelanda</option><option value="Utrecht">Utrecht</option></select> a definire le linee strategiche. A livello agricolo, i <select id="cloze-6" class="bg-slate-800 text-sky-300 rounded px-2 py-1"><option value="">[?]</option><option value="polder">polder</option><option value="enclosures">enclosures</option><option value="mansi">mansi</option></select> olandesi e le enclosures inglesi trasformarono il paesaggio.`,
+answers:{1:"1602",2:"VOC",3:"joint stock company",4:"spezie",5:"Olanda",6:"polder"}}
+];
+
+function renderMCQ(){state.activeMCQ=shuffle(mcqPool).slice(0,10);document.getElementById('mcq-container').innerHTML=state.activeMCQ.map((q,i)=>`<div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800"><div class="font-bold text-slate-100 text-sm">${i+1}. ${q.question}</div><div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectMCQ(${q.id},${oi})" class="mcq-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div><div id="mcq-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div></div>`).join('');}
+function selectMCQ(id,oi){playSound('click');const q=mcqPool.find(x=>x.id===id);state.mcqAnswers[id]=oi;document.querySelectorAll(`.mcq-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`mcq-fb-${id}`);fb.classList.remove('hidden');if(oi===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}updateGlobalScore();}
+
+function renderTF(){state.activeTF=shuffle(tfPool).slice(0,8);document.getElementById('tf-container').innerHTML=state.activeTF.map((q,i)=>`<div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800"><p class="text-xs text-slate-200">${i+1}. ${q.text}</p><div class="flex gap-2"><button onclick="answerTF(${q.id},true)" class="tf-opt-${q.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button><button onclick="answerTF(${q.id},false)" class="tf-opt-${q.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button></div><div id="tf-fb-${q.id}" class="hidden text-xs pt-1"></div></div>`).join('');}
+function answerTF(id,c){playSound('click');const q=tfPool.find(x=>x.id===id);state.tfAnswers[id]=c;document.querySelectorAll(`.tf-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`tf-fb-${id}`);fb.classList.remove('hidden');if(c===q.isTrue){playSound('correct');fb.className="text-xs text-emerald-300";fb.innerText=`Esatto! ${q.explanation}`;}else{playSound('error');fb.className="text-xs text-rose-300";fb.innerText=`Sbagliato. ${q.explanation}`;}updateGlobalScore();}
+
+function renderTimelineOrder(){document.getElementById('timeline-list').innerHTML=state.timelineOrder.map((di,cp)=>`<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs gap-3"><span class="text-purple-300 font-bold"><span class="text-slate-500 mr-1">${cp+1}.</span>${timelineEvents[di].title}</span><div class="flex gap-1 shrink-0"><button onclick="moveTimeline(${cp},-1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button><button onclick="moveTimeline(${cp},1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button></div></div>`).join('');}
+function moveTimeline(p,d){const t=p+d;if(t<0||t>=state.timelineOrder.length)return;[state.timelineOrder[p],state.timelineOrder[t]]=[state.timelineOrder[t],state.timelineOrder[p]];renderTimelineOrder();playSound('click');}
+function checkTimelineOrder(){let c=0;state.timelineOrder.forEach((v,i)=>{if(v===i)c++;});const fb=document.getElementById('timeline-order-feedback');const btn=document.getElementById('btn-check-timeline-order');btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');if(c===timelineEvents.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Perfetto!";}else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Corretti: ${c} su ${timelineEvents.length}.`;}updateGlobalScore();}
+function renderTimelineDates(){document.getElementById('timeline-dates-container').innerHTML=timelineDateItems.map(it=>`<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2"><div class="text-xs font-bold text-slate-200">${it.event}</div><select id="timeline-sel-${it.id}" onchange="state.timelineDateAnswers[${it.id}]=this.value" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs"><option value="">-- Anno --</option>${it.options.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>`).join('');}
+function checkTimelineDates(){let c=0;timelineDateItems.forEach(it=>{const s=document.getElementById(`timeline-sel-${it.id}`);if(s)s.disabled=true;if(state.timelineDateAnswers[it.id]===it.correctDate)c++;});const fb=document.getElementById('timeline-dates-feedback');const btn=document.getElementById('btn-check-timeline-dates');btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');if(c===timelineDateItems.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Tutte le date corrette!";}else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Corrette: ${c} su ${timelineDateItems.length}.`;}updateGlobalScore();}
+
+function renderMatching(){document.getElementById('matching-terms').innerHTML=matchingTerms.map(t=>`<button onclick="selectMatchTerm('${t.id}')" id="mt-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50 transition-all">${t.term}</button>`).join('');document.getElementById('matching-defs').innerHTML=shuffle(matchingDefs).map(d=>`<button onclick="selectMatchDef('${d.matchId}')" id="md-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50 transition-all">${d.text}</button>`).join('');}
+function selectMatchTerm(id){if(state.matchingPairs[id])return;state.matchingSelectedTerm=id;playSound('click');matchingTerms.forEach(t=>{const b=document.getElementById(`mt-${t.id}`);if(b&&!state.matchingPairs[t.id])b.className=(t.id===id)?"w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200":"w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50";});}
+function selectMatchDef(mid){if(!state.matchingSelectedTerm)return;const fb=document.getElementById('matching-feedback');if(state.matchingSelectedTerm===mid){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText="Corretto!";state.matchingPairs[mid]=true;const t=document.getElementById(`mt-${state.matchingSelectedTerm}`);const d=document.getElementById(`md-${mid}`);const l="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";if(t){t.disabled=true;t.className=l;}if(d){d.disabled=true;d.className=l;}}else{playSound('error');fb.className="text-rose-400 font-bold";fb.innerText="Errato.";}state.matchingSelectedTerm=null;updateGlobalScore();}
+
+function renderChiConChi(){document.getElementById('chi-terms').innerHTML=chiTerms.map(t=>`<button onclick="selectChiTerm('${t.id}')" id="ct-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-teal-500/50 transition-all">${t.term}</button>`).join('');document.getElementById('chi-defs').innerHTML=shuffle(chiDefs).map(d=>`<button onclick="selectChiDef('${d.matchId}')" id="cd-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-teal-500/50 transition-all">${d.text}</button>`).join('');}
+function selectChiTerm(id){if(state.chiPairs[id])return;state.chiSelectedTerm=id;playSound('click');chiTerms.forEach(t=>{const b=document.getElementById(`ct-${t.id}`);if(b&&!state.chiPairs[t.id])b.className=(t.id===id)?"w-full text-left p-3 rounded-xl border-2 border-teal-500 bg-teal-950/40 text-xs text-teal-200":"w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-teal-500/50";});}
+function selectChiDef(mid){if(!state.chiSelectedTerm)return;const fb=document.getElementById('chi-feedback');if(state.chiSelectedTerm===mid){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText="Corretto!";state.chiPairs[mid]=true;const t=document.getElementById(`ct-${state.chiSelectedTerm}`);const d=document.getElementById(`cd-${mid}`);const l="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";if(t){t.disabled=true;t.className=l;}if(d){d.disabled=true;d.className=l;}}else{playSound('error');fb.className="text-rose-400 font-bold";fb.innerText="Errato.";}state.chiSelectedTerm=null;updateGlobalScore();}
+
+function renderPersonaggi(){state.activePersonaggi=shuffle(personaggiPool).slice(0,6);document.getElementById('personaggi-container').innerHTML=state.activePersonaggi.map((q,i)=>`<div class="glass-card p-5 rounded-2xl space-y-3 border border-amber-500/30"><div class="text-xs font-bold text-amber-300 uppercase">Personaggio ${i+1}</div><div class="italic text-amber-200 text-sm border-l-2 border-amber-500/50 pl-3">${q.desc}</div><div class="text-xs text-slate-400">Chi è?</div><div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectPersonaggio(${q.id},${oi})" class="per-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div><div id="per-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div></div>`).join('');}
+function selectPersonaggio(id,oi){playSound('click');const q=personaggiPool.find(x=>x.id===id);state.personaggiAnswers[id]=oi;document.querySelectorAll(`.per-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`per-fb-${id}`);fb.classList.remove('hidden');if(oi===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}updateGlobalScore();}
+
+function renderFinal(){state.activeFinal=finalPool;document.getElementById('final-container').innerHTML=state.activeFinal.map((q,i)=>`<div class="glass-card p-5 rounded-2xl space-y-3 border border-fuchsia-500/30"><div class="text-xs font-bold text-fuchsia-300 uppercase">Domanda ${i+1}</div><div class="font-bold text-slate-100 text-sm">${q.question}</div><div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectFinal(${q.id},${oi})" class="fin-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div><div id="fin-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div></div>`).join('');}
+function selectFinal(id,oi){playSound('click');const q=finalPool.find(x=>x.id===id);state.finalAnswers[id]=oi;document.querySelectorAll(`.fin-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`fin-fb-${id}`);fb.classList.remove('hidden');if(oi===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}updateGlobalScore();}
+
+function renderCloze(){state.activeClozeIndex=Math.floor(Math.random()*clozePool.length);const c=clozePool[state.activeClozeIndex];document.getElementById('cloze-body-container').innerHTML=`<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm text-slate-200 border border-slate-800">${c.text}</div>`;const b=document.getElementById('btn-check-cloze');b.disabled=false;b.classList.remove('opacity-50','cursor-not-allowed');document.getElementById('cloze-feedback').innerText="";}
+function checkCloze(){const c=clozePool[state.activeClozeIndex];let k=0;const t=Object.keys(c.answers).length;for(let i=1;i<=t;i++){const el=document.getElementById(`cloze-${i}`);if(el){el.disabled=true;if(el.value===c.answers[i]){k++;el.className="bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold";}else{el.className="bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold";}}}const b=document.getElementById('btn-check-cloze');b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');state.clozeScore=Math.round((k/t)*100);const fb=document.getElementById('cloze-feedback');if(k===t){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText=`Eccellente! ${k}/${t}.`;}else{playSound('error');fb.className="text-amber-400 font-bold";fb.innerText=`Punteggio: ${k}/${t}.`;}updateGlobalScore();}
+
+function updateGlobalScore(){
+    let mcqC=0;state.activeMCQ.forEach(q=>{if(state.mcqAnswers[q.id]===q.correct)mcqC++;});
+    let tfC=0;state.activeTF.forEach(q=>{if(state.tfAnswers[q.id]===q.isTrue)tfC++;});
+    let tlO=0;state.timelineOrder.forEach((v,i)=>{if(v===i)tlO++;});
+    let tlD=0;timelineDateItems.forEach(it=>{if(state.timelineDateAnswers[it.id]===it.correctDate)tlD++;});
+    let mC=Object.keys(state.matchingPairs).length;
+    let cC=Object.keys(state.chiPairs).length;
+    let pC=0;state.activePersonaggi.forEach(q=>{if(state.personaggiAnswers[q.id]===q.correct)pC++;});
+    let fC=0;finalPool.forEach(q=>{if(state.finalAnswers[q.id]===q.correct)fC++;});
+    // Pesi: MCQ 14, VF 10, TL 8, Match 7, Chi 7, Personaggi 14, Cloze 10, Finale 30 = 100
+    const total = Math.round(
+        (state.activeMCQ.length?(mcqC/state.activeMCQ.length)*14:0)+
+        (state.activeTF.length?(tfC/state.activeTF.length)*10:0)+
+        (tlO/8)*4+(tlD/5)*4+
+        (mC/5)*7+(cC/5)*7+
+        (state.activePersonaggi.length?(pC/state.activePersonaggi.length)*14:0)+
+        (state.clozeScore/100)*10+
+        (fC/finalPool.length)*30
+    );
+    document.getElementById('global-score-text').innerText=`${total} / 100`;
+    return total;
+}
+function updateReport(){const s=updateGlobalScore();document.getElementById('report-score').innerText=`${s} / 100 XP`;document.getElementById('report-student').innerText=state.studentName;const b=document.getElementById('report-badge');if(s>=90)b.innerText="Architetto della Pace (Eccellente)";else if(s>=75)b.innerText="Diplomatico di Stato (Buono)";else if(s>=55)b.innerText="Mercante delle Indie (Sufficiente)";else b.innerText="Novizio della Politica (Insufficiente)";}
+function switchTab(id){playSound('click');document.querySelectorAll('.tab-content').forEach(e=>e.classList.add('hidden'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.remove('hidden');if(id==='tab-report')updateReport();}
+function resetAll(){state.mcqAnswers={};state.tfAnswers={};state.timelineOrder=shuffledTimelineOrder();state.timelineDateAnswers={};state.matchingPairs={};state.chiPairs={};state.personaggiAnswers={};state.finalAnswers={};state.clozeScore=0;state.matchingSelectedTerm=null;state.chiSelectedTerm=null;renderMCQ();renderTF();renderTimelineOrder();renderTimelineDates();renderMatching();renderChiConChi();renderPersonaggi();renderFinal();renderCloze();document.getElementById('btn-check-timeline-order').disabled=false;document.getElementById('btn-check-timeline-order').classList.remove('opacity-50','cursor-not-allowed');document.getElementById('btn-check-timeline-dates').disabled=false;document.getElementById('btn-check-timeline-dates').classList.remove('opacity-50','cursor-not-allowed');document.getElementById('timeline-order-feedback').innerText="";document.getElementById('timeline-dates-feedback').innerText="";document.getElementById('matching-feedback').innerText="";document.getElementById('chi-feedback').innerText="";updateGlobalScore();switchTab('tab-studio');}
+window.addEventListener('DOMContentLoaded',()=>{renderMCQ();renderTF();renderTimelineOrder();renderTimelineDates();renderMatching();renderChiConChi();renderPersonaggi();renderFinal();renderCloze();updateGlobalScore();});
+</script>
+</body>
+</html>

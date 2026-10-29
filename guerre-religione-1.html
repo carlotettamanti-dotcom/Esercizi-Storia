@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guerre di Religione • Modulo 1: La Spaccatura (1550-1570)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: 'class', theme: { extend: { colors: { emerald: { 450: '#10b981' } }, fontFamily: { cinzel: ['Cinzel','serif'], sans: ['Plus Jakarta Sans','sans-serif'] } } } }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080d16; color: #f1f5f9; }
+.font-cinzel { font-family: 'Cinzel', serif; }
+.tab-btn.active { background-color: #059669; color: #fff; border-color: #34d399; box-shadow: 0 4px 20px -2px rgba(5,150,105,0.5); }
+.glass-card { background: linear-gradient(135deg, rgba(17,25,39,0.85), rgba(10,15,26,0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+.badge-glow { box-shadow: 0 0 15px rgba(16,185,129,0.2); }
+@media print { body * { visibility: hidden; } #printable-certificate, #printable-certificate * { visibility: visible; } #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; } }
+</style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-slate-950">
+
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center space-x-2 text-xs sm:text-sm">
+<a href="index.html" class="text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-semibold"><i class="fa-solid fa-house"></i> Home Portale</a>
+<span class="text-slate-600">/</span>
+<a href="storia-moderna.html" class="text-slate-400 hover:text-emerald-400 transition-colors font-semibold">Storia Moderna</a>
+<span class="text-slate-600">/</span>
+<span class="text-emerald-400 font-bold">Guerre di Religione • Modulo 1</span>
+</div>
+<div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+<div class="relative flex items-center"><i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+<input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 w-40 sm:w-48"></div>
+<button onclick="toggleAudio()" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-emerald-400"><i class="fa-solid fa-volume-high text-sm"></i></button>
+<div class="flex items-center space-x-3 bg-slate-900 border border-emerald-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+<div class="text-right"><span class="text-[10px] uppercase tracking-wider text-emerald-400/80 block font-bold">Punti XP</span><span id="global-score-text" class="text-sm font-extrabold text-emerald-400">0 / 100</span></div>
+<div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs"><i class="fa-solid fa-bolt"></i></div>
+</div>
+</div>
+</div>
+</header>
+
+<nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+<div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+<button onclick="switchTab('tab-studio')" class="tab-btn active px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent"><i class="fa-solid fa-map text-emerald-400"></i> 0. Quadro</button>
+<button onclick="switchTab('tab-mcq')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz (10)</button>
+<button onclick="switchTab('tab-tf')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. V/F (8)</button>
+<button onclick="switchTab('tab-timeline')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-timeline text-purple-400"></i> 3. Cronologia</button>
+<button onclick="switchTab('tab-matching')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-diagram-project text-rose-400"></i> 4. Concetti</button>
+<button onclick="switchTab('tab-chi')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-people-arrows text-teal-400"></i> 5. Chi con chi</button>
+<button onclick="switchTab('tab-personaggi')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-user-tag text-amber-400"></i> 6. Personaggi</button>
+<button onclick="switchTab('tab-cloze')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-pen-nib text-amber-400"></i> 7. Sintesi</button>
+<button onclick="switchTab('tab-report')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-certificate text-yellow-400"></i> Certificato</button>
+</div>
+</nav>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+<section id="tab-studio" class="tab-content space-y-8">
+<div class="glass-card p-6 sm:p-8 rounded-2xl border-emerald-500/20">
+<div class="max-w-3xl space-y-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"><i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo 1 di 3 • Storia Moderna</span>
+<h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-emerald-400">La Spaccatura (1550-1570)</h2>
+<p class="text-slate-300 text-sm sm:text-base leading-relaxed">Dalla Pace di Augusta alla notte di San Bartolomeo: come la divisione religiosa europea diventa guerra politica. Filippo II, l'Inghilterra di Elisabetta, la Francia dei Valois e la rivolta dei Paesi Bassi.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-emerald-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl"><i class="fa-solid fa-scroll"></i></div><h3 class="font-bold text-slate-100">1. La Pace di Augusta (1555)</h3><p class="text-xs text-slate-300">Chiude le guerre di religione interne al SRI, ma non risolve la questione calvinista e non tocca gli altri stati europei.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-amber-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl"><i class="fa-solid fa-crown"></i></div><h3 class="font-bold text-slate-100">2. Filippo II e la Spagna</h3><p class="text-xs text-slate-300">"El re prudente", regno 1556-1598, capitale a Madrid dal 1561, Escorial. Tre bancarotte (1557, 1575, 1596). Monarchia composita.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-sky-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl"><i class="fa-solid fa-flag"></i></div><h3 class="font-bold text-slate-100">3. Elisabetta I d'Inghilterra</h3><p class="text-xs text-slate-300">Figlia di Enrico VIII e Anna Bolena, sale al trono nel 1558 dopo Maria I Tudor. "Virgin Queen". Rischio permanente: Maria Stuarda.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-purple-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl"><i class="fa-solid fa-users"></i></div><h3 class="font-bold text-slate-100">4. La Francia dei Valois</h3><p class="text-xs text-slate-300">Enrico II muore in torneo (1559), Francesco II e poi Carlo IX (10 anni) sotto la reggenza di Caterina de' Medici, con i Guisa.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-red-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center text-xl"><i class="fa-solid fa-fire"></i></div><h3 class="font-bold text-slate-100">5. Ugonotti e guerre civili</h3><p class="text-xs text-slate-300">Calvinisti francesi. Strage di Vassy (1562) → inizio guerre civili, che proseguiranno fino al 1598.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-teal-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl"><i class="fa-solid fa-water"></i></div><h3 class="font-bold text-slate-100">6. La rivolta dei Paesi Bassi</h3><p class="text-xs text-slate-300">Rivolta dei "pezzenti" (1566), invio del Duca d'Alba (1567), fuga di Guglielmo d'Orange, inizio della Guerra degli Ottant'anni (1568).</p></div>
+</div>
+<div class="text-center pt-4"><button onclick="switchTab('tab-mcq')" class="bg-emerald-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-emerald-600">Inizia il Modulo 1 ➔</button></div>
+</section>
+
+<section id="tab-mcq" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo (10 Quesiti su 25)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate</span>
+</div>
+<div id="mcq-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-tf" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso (8 su 20)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-emerald-400"></i> Risposte bloccate</span>
+</div>
+<div id="tf-container" class="space-y-4"></div>
+</section>
+
+<section id="tab-timeline" class="tab-content hidden space-y-8">
+<div><h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 3: Cronologia 1550-1570</h2></div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span><h3 class="font-bold text-slate-100 text-sm">Parte A: Riordino degli eventi</h3></div>
+<p class="text-xs text-slate-400">Sposta gli eventi per ricostruire l'ordine cronologico.</p>
+<div id="timeline-list" class="space-y-2.5"></div>
+<button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine</button>
+<div id="timeline-order-feedback" class="text-xs font-semibold"></div>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span><h3 class="font-bold text-slate-100 text-sm">Parte B: Evento - Anno</h3></div>
+<div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+<button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Date</button>
+<div id="timeline-dates-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-matching" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 4: Abbinamento Concetti</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<p class="text-xs text-slate-400">Clicca un termine a sinistra e poi la definizione corretta a destra.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="matching-terms" class="space-y-2.5"></div>
+<div id="matching-defs" class="space-y-2.5"></div>
+</div>
+<div id="matching-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-chi" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400 border-b border-slate-800 pb-2">Esercizio 5: Chi con chi — Persone e contesti</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<p class="text-xs text-slate-400">Abbina ciascun personaggio o istituzione al suo ruolo/contesto corretto.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="chi-terms" class="space-y-2.5"></div>
+<div id="chi-defs" class="space-y-2.5"></div>
+</div>
+<div id="chi-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-personaggi" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Riconosci il personaggio (6 su 15)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-amber-400"></i> Risposte bloccate</span>
+</div>
+<div id="personaggi-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-cloze" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-2">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 7: Testo Guidato</h2>
+<button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Cambia Testo</button>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<div id="cloze-body-container"></div>
+<button onclick="checkCloze()" id="btn-check-cloze" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs"><i class="fa-solid fa-check mr-1.5"></i> Verifica Testo</button>
+<div id="cloze-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-report" class="tab-content hidden space-y-6">
+<div id="printable-certificate" class="glass-card p-8 rounded-2xl text-center space-y-6">
+<h2 class="font-cinzel text-2xl font-bold text-emerald-400">Valutazione Modulo 1</h2>
+<p class="text-sm text-slate-300">Studente: <span id="report-student" class="font-bold text-slate-100">Studente</span></p>
+<div class="text-4xl font-black text-emerald-400" id="report-score">0 / 100 XP</div>
+<div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
+<div class="flex justify-center gap-4">
+<button onclick="window.print()" class="bg-emerald-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato</button>
+<button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia</button>
+</div>
+<p class="text-xs text-slate-500 pt-4">Modulo 1 di 3 • Prossimo: <a href="guerre-religione-2.html" class="text-emerald-400 hover:underline">Gli anni di fuoco (1570-1590) →</a></p>
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 space-x-4">
+<a href="index.html" class="hover:text-emerald-400"><i class="fa-solid fa-house mr-1"></i> Home Portale</a>
+<span>•</span>
+<a href="storia-moderna.html" class="hover:text-emerald-400"><i class="fa-solid fa-shield-halved mr-1"></i> Storia Moderna</a>
+</footer>
+
+<script>
+function shuffledTimelineOrder() {
+    let o; do { o = shuffle([0,1,2,3,4,5,6,7]); } while (o.every((v,i)=>v===i)); return o;
+}
+const state = {
+    studentName: "Studente", audioEnabled: true,
+    mcqAnswers: {}, tfAnswers: {},
+    timelineOrder: shuffledTimelineOrder(), timelineDateAnswers: {},
+    matchingPairs: {}, matchingSelectedTerm: null,
+    chiPairs: {}, chiSelectedTerm: null,
+    personaggiAnswers: {},
+    clozeScore: 0, activeClozeIndex: 0,
+    activeMCQ: [], activeTF: [], activePersonaggi: []
+};
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(type) {
+    if (!state.audioEnabled) return;
+    try {
+        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        if (type==='click'){osc.frequency.setValueAtTime(400,audioCtx.currentTime);gain.gain.setValueAtTime(0.05,audioCtx.currentTime);osc.start();osc.stop(audioCtx.currentTime+0.05);}
+        else if(type==='correct'){osc.frequency.setValueAtTime(880,audioCtx.currentTime);gain.gain.setValueAtTime(0.08,audioCtx.currentTime);osc.start();osc.stop(audioCtx.currentTime+0.2);}
+        else if(type==='error'){osc.frequency.setValueAtTime(220,audioCtx.currentTime);gain.gain.setValueAtTime(0.08,audioCtx.currentTime);osc.start();osc.stop(audioCtx.currentTime+0.2);}
+    } catch(e){}
+}
+function toggleAudio() { state.audioEnabled = !state.audioEnabled; }
+function updateStudentName(v) { state.studentName = v || "Studente"; }
+function shuffle(a){let r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+/* ============ MCQ BANK (25) ============ */
+const mcqPool = [
+{id:1,question:"La Pace di Augusta (1555) riconobbe ufficialmente:",options:["Solo cattolici e luterani","Anche i calvinisti","Solo luterani e anglicani","Tutti i protestanti"],correct:0,explanation:"Riconobbe luterani e cattolici ma escluse i calvinisti."},
+{id:2,question:"Quale fu il principale problema irrisolto della Pace di Augusta?",options:["La questione luterana","La questione calvinista","La questione anglicana","La questione ortodossa"],correct:1,explanation:"Il calvinismo non venne riconosciuto."},
+{id:3,question:"Nel 1556 Carlo V abdicò. Come divise i domini?",options:["In un solo blocco al figlio","Spagna a Filippo II, SRI a Ferdinando I","Tutto al fratello Ferdinando","In tre parti ai figli"],correct:1,explanation:"Divisione tra figlio Filippo II (Spagna) e fratello Ferdinando I (SRI)."},
+{id:4,question:"Con la Pace di Cateau-Cambrésis (1559) la Francia:",options:["Ottenne il Ducato di Milano","Rinunciò alle mire sull'Italia","Conquistò la Spagna","Ottenne Napoli"],correct:1,explanation:"Rinunciò alle mire italiane, mantenendo Calais e ottenendo Milano (che poi passerà alla Spagna)."},
+{id:5,question:"Perché la Francia firmò Cateau-Cambrésis?",options:["Per attaccare l'Inghilterra","Per concentrarsi sui problemi interni","Per sostenere Filippo II","Per obbedire al Papa"],correct:1,explanation:"Doveva fronteggiare la diffusione del calvinismo al proprio interno."},
+{id:6,question:"Filippo II era noto come:",options:["El re prudente","El rey católico","Il Re Sole","Il Reuccio"],correct:0,explanation:"'El re prudente', soprannome attribuito a Filippo II."},
+{id:7,question:"Perché Filippo II spostò la capitale a Madrid nel 1561?",options:["Motivi religiosi","Controllo del territorio (centro geometrico)","Pressioni del Papa","Richiesta dell'aristocrazia"],correct:1,explanation:"Madrid era il centro geometrico della penisola, migliore per il controllo."},
+{id:8,question:"L'Escorial era:",options:["Una fortezza militare","Un palazzo residenziale fuori Madrid","Un monastero dentro Madrid","Un'università"],correct:1,explanation:"Palazzo residenziale voluto da Filippo II, fuori dalla vita cittadina."},
+{id:9,question:"Le tre bancarotte spagnole di Filippo II:",options:["1520, 1530, 1540","1557, 1575, 1596","1600, 1610, 1620","1650, 1660, 1670"],correct:1,explanation:"Per le alte spese militari."},
+{id:10,question:"La monarchia spagnola di Filippo II era:",options:["Uno stato unitario accentrato","Una monarchia composita","Una repubblica oligarchica","Una federazione"],correct:1,explanation:"Regni distinti con leggi e privilegi diversi, mai pienamente unificati."},
+{id:11,question:"La differenza principale Castiglia/Aragona era:",options:["Castiglia accentramento, Aragona federalismo","Castiglia protestante, Aragona cattolica","Castiglia povera, Aragona ricca","Nessuna differenza reale"],correct:0,explanation:"Castiglia favoriva l'accentramento a Madrid; Aragona difendeva i privilegi."},
+{id:12,question:"Chi succedette a Enrico II di Francia (1559)?",options:["Enrico III","Carlo IX","Francesco II","Enrico IV"],correct:2,explanation:"Francesco II, marito di Maria Stuarda."},
+{id:13,question:"Chi era Caterina de' Medici?",options:["Regina d'Inghilterra","Reggente per il figlio Carlo IX","Moglie di Filippo II","Sorella di Enrico II"],correct:1,explanation:"Reggente per Carlo IX (di soli 10 anni), insieme ai Guisa."},
+{id:14,question:"Gli ugonotti erano:",options:["I cattolici francesi","I calvinisti francesi","I luterani tedeschi","Gli anglicani inglesi"],correct:1,explanation:"Nome dato ai calvinisti francesi."},
+{id:15,question:"Da quale parola deriva 'ugonotti'?",options:["Eidgenossen (confederati)","Hugues","Ungheresi","Hugo (nome proprio)"],correct:0,explanation:"Probabilmente da Eidgenossen, termine tedesco per 'confederati'."},
+{id:16,question:"Alla morte di Francesco II (1560) Maria Stuarda:",options:["Tornò in Inghilterra","Tornò in Scozia","Si ritirò in convento","Sposò Filippo II"],correct:1,explanation:"Tornò in Scozia per ristabilire la situazione."},
+{id:17,question:"Perché Maria Stuarda fuggì in Inghilterra (1568)?",options:["Per un complotto contro Elisabetta","Dopo che i nobili la imprigionarono","Per sposare un nobile inglese","Per motivi di salute"],correct:1,explanation:"I nobili scozzesi la costrinsero ad abdicare; fuggì per cercare aiuto da Elisabetta."},
+{id:18,question:"Perché Maria I Tudor fu detta 'Bloody Mary'?",options:["Per le sue origini spagnole","Per le uccisioni di anglicani","Per la sua bellezza","Per la sua saggezza"],correct:1,explanation:"Per le persecuzioni contro gli anglicani."},
+{id:19,question:"Elisabetta I era figlia di:",options:["Enrico VIII e Caterina d'Aragona","Enrico VIII e Anna Bolena","Maria Stuarda e Francesco II","Filippo II e Maria I"],correct:1,explanation:"Figlia di Enrico VIII e Anna Bolena."},
+{id:20,question:"Perché Elisabetta I era detta 'Virgin Queen'?",options:["Perché non si sposò mai","Perché era giovanissima","Perché era cattolica","Perché era figlia di un re"],correct:0,explanation:"Non si sposò per mantenere il regno libero da influenze esterne."},
+{id:21,question:"La strage di Vassy (1562) fu:",options:["Un massacro di cattolici","Un massacro di ugonotti","Un trattato di pace","Una battaglia navale"],correct:1,explanation:"I Guisa massacrarono ugonotti a Vassy: è la miccia delle guerre civili."},
+{id:22,question:"La rivolta dei 'pezzenti' (1566) fu:",options:["Una rivolta aristocratica contro le tasse","Una rivolta iconoclasta calvinista","Una rivolta dei contadini","Un movimento indipendentista"],correct:1,explanation:"Rivolta popolare iconoclasta di stampo calvinista nei Paesi Bassi."},
+{id:23,question:"Il Duca d'Alba fu inviato da Filippo II nel 1567 per:",options:["Negoziare con i ribelli","Reprimere violentemente la rivolta","Concedere l'indipendenza","Sostituire Margherita di Parma senza violenza"],correct:1,explanation:"Repressione violenta: arresto e uccisione dei nobili ribelli nel 1568."},
+{id:24,question:"Chi era Guglielmo d'Orange?",options:["Stadholder di Olanda, Zelanda e Utrecht","Re di Spagna","Nobile francese","Vescovo cattolico"],correct:0,explanation:"Stadholder di tre province, guida della rivolta olandese."},
+{id:25,question:"Quando iniziò la Guerra degli Ottant'anni?",options:["1566","1568","1572","1579"],correct:1,explanation:"1568, con l'attacco di Guglielmo d'Orange contro gli spagnoli."}
+];
+
+/* ============ V/F BANK (20) ============ */
+const tfPool = [
+{id:1,text:"La Pace di Augusta del 1555 riconobbe anche il calvinismo.",isTrue:false,explanation:"FALSO: riconobbe solo luteranesimo e cattolicesimo."},
+{id:2,text:"La Pace di Augusta riguardava solo l'interno del SRI, non gli altri stati europei.",isTrue:true,explanation:"VERO: gli altri stati non erano coperti dall'accordo."},
+{id:3,text:"Carlo V abdicò nel 1556.",isTrue:true,explanation:"VERO: abdicò dividendo i domini tra figlio e fratello."},
+{id:4,text:"Filippo II regnò per più di quarant'anni.",isTrue:true,explanation:"VERO: 1556-1598."},
+{id:5,text:"La Spagna di Filippo II aveva una borghesia molto vivace.",isTrue:false,explanation:"FALSO: la borghesia era debole, appesantita dalla tassazione."},
+{id:6,text:"La Spagna dichiarò bancarotta tre volte (1557, 1575, 1596).",isTrue:true,explanation:"VERO: per le alte spese militari."},
+{id:7,text:"Madrid divenne capitale nel 1561.",isTrue:true,explanation:"VERO: scelta come centro geometrico per il controllo del territorio."},
+{id:8,text:"L'Escorial fu costruito dentro Madrid.",isTrue:false,explanation:"FALSO: fuori dalla città, come palazzo residenziale di Filippo II."},
+{id:9,text:"La Pace di Cateau-Cambrésis fu firmata nel 1559.",isTrue:true,explanation:"VERO: tra Francia e Spagna."},
+{id:10,text:"Enrico II di Francia morì in battaglia.",isTrue:false,explanation:"FALSO: morì per una ferita durante un torneo."},
+{id:11,text:"Maria Stuarda tornò in Scozia nel 1560.",isTrue:true,explanation:"VERO: dopo la morte del marito Francesco II e della madre."},
+{id:12,text:"Maria Stuarda era figlia di Maria di Guisa.",isTrue:true,explanation:"VERO: sua madre era Maria di Guisa, importante famiglia francese."},
+{id:13,text:"Elisabetta I era figlia di Enrico VIII e Caterina d'Aragona.",isTrue:false,explanation:"FALSO: era figlia di Anna Bolena, non Caterina d'Aragona."},
+{id:14,text:"Elisabetta I si sposò e ebbe eredi.",isTrue:false,explanation:"FALSO: non si sposò mai, per mantenere il regno libero da influenze esterne."},
+{id:15,text:"La rivolta dei pezzenti del 1566 fu una rivolta iconoclasta calvinista.",isTrue:true,explanation:"VERO: distruzione di immagini sacre e chiese cattoliche."},
+{id:16,text:"Il Duca d'Alba cercò un compromesso con i nobili olandesi.",isTrue:false,explanation:"FALSO: fece arrestare e uccidere i principali nobili ribelli nel 1568."},
+{id:17,text:"Guglielmo d'Orange era stadholder di Olanda, Zelanda e Utrecht.",isTrue:true,explanation:"VERO: era il condottiero militare di quelle tre province."},
+{id:18,text:"La Guerra degli Ottant'anni inizia nel 1568.",isTrue:true,explanation:"VERO: convenzionalmente con l'attacco di Guglielmo d'Orange agli spagnoli."},
+{id:19,text:"La strage di Vassy (1562) fu compiuta dagli ugonotti.",isTrue:false,explanation:"FALSO: fu compiuta dai cattolici guidati dai Guisa contro gli ugonotti."},
+{id:20,text:"Caterina de' Medici era reggente per il figlio Carlo IX.",isTrue:true,explanation:"VERO: Carlo IX aveva solo 10 anni, governava la madre con i Guisa."}
+];
+
+/* ============ TIMELINE ============ */
+const timelineEvents = [
+{id:0,title:"Pace di Augusta"},
+{id:1,title:"Abdicazione di Carlo V e ascesa di Filippo II"},
+{id:2,title:"Morte di Maria I Tudor; Elisabetta I regina d'Inghilterra"},
+{id:3,title:"Pace di Cateau-Cambrésis e morte di Enrico II"},
+{id:4,title:"Strage di Vassy e inizio delle guerre civili francesi"},
+{id:5,title:"Rivolta dei pezzenti nei Paesi Bassi"},
+{id:6,title:"Arrivo del Duca d'Alba e repressione spagnola"},
+{id:7,title:"Fuga di Maria Stuarda in Inghilterra"}
+];
+const timelineDateItems = [
+{id:1,event:"Pace di Augusta",correctDate:"1555",options:["1555","1556","1559"]},
+{id:2,event:"Abdicazione di Carlo V",correctDate:"1556",options:["1555","1556","1560"]},
+{id:3,event:"Pace di Cateau-Cambrésis",correctDate:"1559",options:["1558","1559","1562"]},
+{id:4,event:"Strage di Vassy",correctDate:"1562",options:["1559","1562","1566"]},
+{id:5,event:"Inizio della Guerra degli Ottant'anni",correctDate:"1568",options:["1566","1568","1572"]}
+];
+
+/* ============ MATCHING ============ */
+const matchingTerms = [
+{id:"m1",term:"El re prudente"},
+{id:"m2",term:"Ugonotti"},
+{id:"m3",term:"Pezzenti"},
+{id:"m4",term:"Stadholder"},
+{id:"m5",term:"Monarchia composita"}
+];
+const matchingDefs = [
+{id:"d1",matchId:"m1",text:"Soprannome di Filippo II di Spagna."},
+{id:"d2",matchId:"m2",text:"Calvinisti francesi, minoranza religiosa perseguitata."},
+{id:"d3",matchId:"m3",text:"Ribelli olandesi del 1566, nome dato con disprezzo."},
+{id:"d4",matchId:"m4",text:"Condottiero militare delle province (Olanda, Zelanda, Utrecht)."},
+{id:"d5",matchId:"m5",text:"Sistema di regni con leggi, corti e privilegi distinti."}
+];
+
+/* ============ CHI CON CHI ============ */
+const chiTerms = [
+{id:"c1",term:"Maria I Tudor"},
+{id:"c2",term:"Elisabetta I"},
+{id:"c3",term:"Francesco II"},
+{id:"c4",term:"Duca d'Alba"},
+{id:"c5",term:"Caterina de' Medici"}
+];
+const chiDefs = [
+{id:"cd1",matchId:"c1",text:"Sposò Filippo II di Spagna; regina d'Inghilterra cattolica (1553-1558)."},
+{id:"cd2",matchId:"c2",text:"Figlia di Enrico VIII e Anna Bolena; regina d'Inghilterra dal 1558."},
+{id:"cd3",matchId:"c3",text:"Primo marito di Maria Stuarda; re di Francia nel 1559-60."},
+{id:"cd4",matchId:"c4",text:"Inviato da Filippo II a reprimere i Paesi Bassi nel 1567."},
+{id:"cd5",matchId:"c5",text:"Reggente per i figli Francesco II e Carlo IX; alleata dei Guisa."}
+];
+
+/* ============ RICONOSCI IL PERSONAGGIO (15) ============ */
+const personaggiPool = [
+{id:1,desc:"«El re prudente», re di Spagna per oltre quarant'anni, promotore dell'Escorial.",options:["Filippo II","Carlo V","Enrico II","Ferdinando I"],correct:0,explanation:"Filippo II, re di Spagna dal 1556 al 1598."},
+{id:2,desc:"Regina d'Inghilterra cattolica, sposò Filippo II, perseguitò gli anglicani.",options:["Maria I Tudor","Elisabetta I","Maria Stuarda","Anna Bolena"],correct:0,explanation:"Maria I Tudor, detta 'Bloody Mary'."},
+{id:3,desc:"Regina d'Inghilterra figlia di Anna Bolena, non si sposò mai, guidò la vittoria sull'Armada.",options:["Elisabetta I","Maria Stuarda","Maria I Tudor","Caterina de' Medici"],correct:0,explanation:"Elisabetta I, la 'Virgin Queen'."},
+{id:4,desc:"Fiorentina, reggente di Francia per i figli, anima politica del trono durante le guerre civili.",options:["Caterina de' Medici","Margherita di Valois","Anna d'Austria","Maria Stuarda"],correct:0,explanation:"Caterina de' Medici, reggente per Francesco II e Carlo IX."},
+{id:5,desc:"Nobile olandese, stadholder di Olanda, Zelanda e Utrecht, guida della rivolta antispagnola.",options:["Guglielmo d'Orange","Il Duca d'Alba","Alessandro Farnese","Maurizio di Nassau"],correct:0,explanation:"Guglielmo d'Orange, 'il Taciturno'."},
+{id:6,desc:"Generale spagnolo inviato nei Paesi Bassi nel 1567 per reprimere violentemente la rivolta.",options:["Duca d'Alba","Alessandro Farnese","Duca di Parma","Spinola"],correct:0,explanation:"Fernando Álvarez de Toledo, Duca d'Alba."},
+{id:7,desc:"Re di Francia per un solo anno (1559-60), primo marito di Maria Stuarda.",options:["Francesco II","Carlo IX","Enrico III","Enrico II"],correct:0,explanation:"Francesco II, figlio di Enrico II e Caterina de' Medici."},
+{id:8,desc:"Regina cattolica di Scozia, costretta a fuggire in Inghilterra nel 1568.",options:["Maria Stuarda","Elisabetta I","Maria di Guisa","Margherita Tudor"],correct:0,explanation:"Maria Stuarda, regina di Scozia."},
+{id:9,desc:"Famiglia nobile francese, capofila dei cattolici, artefice della strage di Vassy.",options:["Guisa","Borbone","Valois","Montmorency"],correct:0,explanation:"La famiglia dei Guisa, guidata dal Duca Enrico di Guisa."},
+{id:10,desc:"Ammiraglio francese, capo militare della fazione ugonotta.",options:["Coligny","Condé","Guisa","Borbone"],correct:0,explanation:"Gaspard de Coligny, ammiraglio ugonotto."},
+{id:11,desc:"Sorellastra di Filippo II, governatrice dei Paesi Bassi dal 1559.",options:["Margherita di Parma","Margherita Tudor","Maria di Guisa","Caterina de' Medici"],correct:0,explanation:"Margherita di Parma, sorellastra di Filippo II."},
+{id:12,desc:"Imperatore che abdicò nel 1556 dividendo i suoi domini tra figlio e fratello.",options:["Carlo V","Filippo II","Ferdinando I","Massimiliano II"],correct:0,explanation:"Carlo V d'Asburgo."},
+{id:13,desc:"Re d'Inghilterra, padre di Elisabetta I, fondatore dell'anglicanesimo.",options:["Enrico VIII","Enrico II","Edoardo VI","Giacomo I"],correct:0,explanation:"Enrico VIII Tudor."},
+{id:14,desc:"Re di Francia morto in torneo nel 1559, marito di Caterina de' Medici.",options:["Enrico II","Francesco I","Francesco II","Enrico III"],correct:0,explanation:"Enrico II di Valois."},
+{id:15,desc:"Principe di sangue Borbone, uno dei capi militari della fazione ugonotta.",options:["Condé","Coligny","Guisa","Borbone-Navarra"],correct:0,explanation:"Luigi I di Borbone, principe di Condé."}
+];
+
+/* ============ CLOZE ============ */
+const clozePool = [
+{text:`Nel <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1555">1555</option><option value="1556">1556</option><option value="1559">1559</option></select>, con la Pace di <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Augusta">Augusta</option><option value="Cateau-Cambrésis">Cateau-Cambrésis</option><option value="Vervins">Vervins</option></select>, si chiudevano temporaneamente le guerre di religione nel <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Sacro Romano Impero">Sacro Romano Impero</option><option value="Regno di Francia">Regno di Francia</option><option value="Regno d'Inghilterra">Regno d'Inghilterra</option></select>, ma restava irrisolta la questione dei <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="calvinisti">calvinisti</option><option value="luterani">luterani</option><option value="anglicani">anglicani</option></select>. Nel <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1556">1556</option><option value="1558">1558</option><option value="1560">1560</option></select> l'imperatore <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Carlo V">Carlo V</option><option value="Ferdinando I">Ferdinando I</option><option value="Filippo II">Filippo II</option></select> abdicava: al figlio <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Filippo II">Filippo II</option><option value="Ferdinando I">Ferdinando I</option><option value="Massimiliano">Massimiliano</option></select> andavano Spagna e colonie. Filippo II spostò la capitale a <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Madrid">Madrid</option><option value="Toledo">Toledo</option><option value="Lisbona">Lisbona</option></select> nel 1561.`,
+answers:{1:"1555",2:"Augusta",3:"Sacro Romano Impero",4:"calvinisti",5:"1556",6:"Carlo V",7:"Filippo II",8:"Madrid"}},
+{text:`Il <select id="cloze-1" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="calvinismo">calvinismo</option><option value="luteranesimo">luteranesimo</option><option value="anglicanesimo">anglicanesimo</option></select> penetrò nei <select id="cloze-2" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Paesi Bassi">Paesi Bassi</option><option value="SRI">SRI</option><option value="Portogallo">Portogallo</option></select> a metà Cinquecento. Quando nel <select id="cloze-3" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1566">1566</option><option value="1567">1567</option><option value="1568">1568</option></select> scoppiarono le proteste iconoclaste dei <select id="cloze-4" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="pezzenti">pezzenti</option><option value="ugonotti">ugonotti</option><option value="puritani">puritani</option></select>, Filippo II inviò il <select id="cloze-5" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Duca d'Alba">Duca d'Alba</option><option value="Farnese">Farnese</option><option value="Spinola">Spinola</option></select> a reprimere la rivolta. Il nobile <select id="cloze-6" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Guglielmo d'Orange">Guglielmo d'Orange</option><option value="Maurizio di Nassau">Maurizio di Nassau</option><option value="Van Oldenbarnevelt">Van Oldenbarnevelt</option></select> riuscì a salvarsi e nel <select id="cloze-7" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="1568">1568</option><option value="1572">1572</option><option value="1579">1579</option></select> diede inizio alla <select id="cloze-8" class="bg-slate-800 text-emerald-300 rounded px-2 py-1"><option value="">[?]</option><option value="Guerra degli Ottant'anni">Guerra degli Ottant'anni</option><option value="Guerra dei Trent'anni">Guerra dei Trent'anni</option><option value="Guerra di Fiandra">Guerra di Fiandra</option></select>.`,
+answers:{1:"calvinismo",2:"Paesi Bassi",3:"1566",4:"pezzenti",5:"Duca d'Alba",6:"Guglielmo d'Orange",7:"1568",8:"Guerra degli Ottant'anni"}}
+];
+
+/* ============ RENDER MCQ ============ */
+function renderMCQ() {
+    state.activeMCQ = shuffle(mcqPool).slice(0,10);
+    document.getElementById('mcq-container').innerHTML = state.activeMCQ.map((q,idx)=>`
+        <div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800">
+            <div class="font-bold text-slate-100 text-sm">${idx+1}. ${q.question}</div>
+            <div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectMCQ(${q.id},${oi})" class="mcq-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div>
+            <div id="mcq-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+        </div>`).join('');
+}
+function selectMCQ(qId,oIdx){
+    playSound('click');
+    const q = mcqPool.find(x=>x.id===qId);
+    state.mcqAnswers[qId]=oIdx;
+    document.querySelectorAll(`.mcq-opt-${qId}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});
+    const fb = document.getElementById(`mcq-fb-${qId}`); fb.classList.remove('hidden');
+    if(oIdx===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}
+    else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}
+    updateGlobalScore();
+}
+
+/* ============ RENDER TF ============ */
+function renderTF() {
+    state.activeTF = shuffle(tfPool).slice(0,8);
+    document.getElementById('tf-container').innerHTML = state.activeTF.map((q,idx)=>`
+        <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800">
+            <p class="text-xs text-slate-200">${idx+1}. ${q.text}</p>
+            <div class="flex gap-2">
+                <button onclick="answerTF(${q.id},true)" class="tf-opt-${q.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button>
+                <button onclick="answerTF(${q.id},false)" class="tf-opt-${q.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button>
+            </div>
+            <div id="tf-fb-${q.id}" class="hidden text-xs pt-1"></div>
+        </div>`).join('');
+}
+function answerTF(id,choice){
+    playSound('click');
+    const q = tfPool.find(x=>x.id===id);
+    state.tfAnswers[id]=choice;
+    document.querySelectorAll(`.tf-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});
+    const fb = document.getElementById(`tf-fb-${id}`); fb.classList.remove('hidden');
+    if(choice===q.isTrue){playSound('correct');fb.className="text-xs text-emerald-300";fb.innerText=`Esatto! ${q.explanation}`;}
+    else{playSound('error');fb.className="text-xs text-rose-300";fb.innerText=`Sbagliato. ${q.explanation}`;}
+    updateGlobalScore();
+}
+
+/* ============ TIMELINE ============ */
+function renderTimelineOrder(){
+    document.getElementById('timeline-list').innerHTML = state.timelineOrder.map((di,cp)=>`
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs gap-3">
+            <span class="text-purple-300 font-bold"><span class="text-slate-500 mr-1">${cp+1}.</span>${timelineEvents[di].title}</span>
+            <div class="flex gap-1 shrink-0">
+                <button onclick="moveTimeline(${cp},-1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button>
+                <button onclick="moveTimeline(${cp},1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+        </div>`).join('');
+}
+function moveTimeline(pos,dir){
+    const t = pos+dir; if(t<0||t>=state.timelineOrder.length) return;
+    [state.timelineOrder[pos],state.timelineOrder[t]]=[state.timelineOrder[t],state.timelineOrder[pos]];
+    renderTimelineOrder(); playSound('click');
+}
+function checkTimelineOrder(){
+    let c=0; state.timelineOrder.forEach((v,i)=>{if(v===i)c++;});
+    const fb = document.getElementById('timeline-order-feedback');
+    const btn = document.getElementById('btn-check-timeline-order');
+    btn.disabled=true; btn.classList.add('opacity-50','cursor-not-allowed');
+    if(c===timelineEvents.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Perfetto! Sequenza corretta.";}
+    else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Eventi corretti: ${c} su ${timelineEvents.length}.`;}
+    updateGlobalScore();
+}
+function renderTimelineDates(){
+    document.getElementById('timeline-dates-container').innerHTML = timelineDateItems.map(it=>`
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+            <div class="text-xs font-bold text-slate-200">${it.event}</div>
+            <select id="timeline-sel-${it.id}" onchange="state.timelineDateAnswers[${it.id}]=this.value" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs">
+                <option value="">-- Seleziona anno --</option>
+                ${it.options.map(o=>`<option value="${o}">${o}</option>`).join('')}
+            </select>
+        </div>`).join('');
+}
+function checkTimelineDates(){
+    let c=0; timelineDateItems.forEach(it=>{
+        const s = document.getElementById(`timeline-sel-${it.id}`); if(s) s.disabled=true;
+        if(state.timelineDateAnswers[it.id]===it.correctDate) c++;
+    });
+    const fb = document.getElementById('timeline-dates-feedback');
+    const btn = document.getElementById('btn-check-timeline-dates');
+    btn.disabled=true; btn.classList.add('opacity-50','cursor-not-allowed');
+    if(c===timelineDateItems.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Eccellente! Tutte le date corrette.";}
+    else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Date corrette: ${c} su ${timelineDateItems.length}.`;}
+    updateGlobalScore();
+}
+
+/* ============ MATCHING ============ */
+function renderMatching(){
+    document.getElementById('matching-terms').innerHTML = matchingTerms.map(t=>`<button onclick="selectMatchTerm('${t.id}')" id="mt-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50 transition-all">${t.term}</button>`).join('');
+    document.getElementById('matching-defs').innerHTML = shuffle(matchingDefs).map(d=>`<button onclick="selectMatchDef('${d.matchId}')" id="md-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50 transition-all">${d.text}</button>`).join('');
+}
+function selectMatchTerm(id){
+    if(state.matchingPairs[id]) return;
+    state.matchingSelectedTerm = id; playSound('click');
+    matchingTerms.forEach(t=>{
+        const b = document.getElementById(`mt-${t.id}`);
+        if(b && !state.matchingPairs[t.id]) b.className = (t.id===id) ? "w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50";
+    });
+}
+function selectMatchDef(mid){
+    if(!state.matchingSelectedTerm) return;
+    const fb = document.getElementById('matching-feedback');
+    if(state.matchingSelectedTerm===mid){
+        playSound('correct'); fb.className="text-emerald-400 font-bold"; fb.innerText="Abbinamento corretto!";
+        state.matchingPairs[mid]=true;
+        const t=document.getElementById(`mt-${state.matchingSelectedTerm}`);
+        const d=document.getElementById(`md-${mid}`);
+        const locked="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";
+        if(t){t.disabled=true;t.className=locked;} if(d){d.disabled=true;d.className=locked;}
+    } else { playSound('error'); fb.className="text-rose-400 font-bold"; fb.innerText="Errato. Riprova!"; }
+    state.matchingSelectedTerm=null; updateGlobalScore();
+}
+
+/* ============ CHI CON CHI ============ */
+function renderChiConChi(){
+    document.getElementById('chi-terms').innerHTML = chiTerms.map(t=>`<button onclick="selectChiTerm('${t.id}')" id="ct-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-teal-500/50 transition-all">${t.term}</button>`).join('');
+    document.getElementById('chi-defs').innerHTML = shuffle(chiDefs).map(d=>`<button onclick="selectChiDef('${d.matchId}')" id="cd-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-teal-500/50 transition-all">${d.text}</button>`).join('');
+}
+function selectChiTerm(id){
+    if(state.chiPairs[id]) return;
+    state.chiSelectedTerm = id; playSound('click');
+    chiTerms.forEach(t=>{
+        const b = document.getElementById(`ct-${t.id}`);
+        if(b && !state.chiPairs[t.id]) b.className = (t.id===id) ? "w-full text-left p-3 rounded-xl border-2 border-teal-500 bg-teal-950/40 text-xs text-teal-200" : "w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-teal-500/50";
+    });
+}
+function selectChiDef(mid){
+    if(!state.chiSelectedTerm) return;
+    const fb = document.getElementById('chi-feedback');
+    if(state.chiSelectedTerm===mid){
+        playSound('correct'); fb.className="text-emerald-400 font-bold"; fb.innerText="Abbinamento corretto!";
+        state.chiPairs[mid]=true;
+        const t=document.getElementById(`ct-${state.chiSelectedTerm}`);
+        const d=document.getElementById(`cd-${mid}`);
+        const locked="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";
+        if(t){t.disabled=true;t.className=locked;} if(d){d.disabled=true;d.className=locked;}
+    } else { playSound('error'); fb.className="text-rose-400 font-bold"; fb.innerText="Errato. Riprova!"; }
+    state.chiSelectedTerm=null; updateGlobalScore();
+}
+
+/* ============ PERSONAGGI ============ */
+function renderPersonaggi(){
+    state.activePersonaggi = shuffle(personaggiPool).slice(0,6);
+    document.getElementById('personaggi-container').innerHTML = state.activePersonaggi.map((q,idx)=>`
+        <div class="glass-card p-5 rounded-2xl space-y-3 border border-amber-500/30">
+            <div class="text-xs font-bold text-amber-300 uppercase tracking-wider">Personaggio ${idx+1}</div>
+            <div class="italic text-amber-200 text-sm border-l-2 border-amber-500/50 pl-3">${q.desc}</div>
+            <div class="text-xs text-slate-400">Chi è?</div>
+            <div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectPersonaggio(${q.id},${oi})" class="per-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div>
+            <div id="per-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div>
+        </div>`).join('');
+}
+function selectPersonaggio(qId,oIdx){
+    playSound('click');
+    const q = personaggiPool.find(x=>x.id===qId);
+    state.personaggiAnswers[qId]=oIdx;
+    document.querySelectorAll(`.per-opt-${qId}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});
+    const fb = document.getElementById(`per-fb-${qId}`); fb.classList.remove('hidden');
+    if(oIdx===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}
+    else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}
+    updateGlobalScore();
+}
+
+/* ============ CLOZE ============ */
+function renderCloze(){
+    state.activeClozeIndex = Math.floor(Math.random()*clozePool.length);
+    const cur = clozePool[state.activeClozeIndex];
+    document.getElementById('cloze-body-container').innerHTML = `<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm text-slate-200 border border-slate-800">${cur.text}</div>`;
+    const btn = document.getElementById('btn-check-cloze'); btn.disabled=false; btn.classList.remove('opacity-50','cursor-not-allowed');
+    document.getElementById('cloze-feedback').innerText="";
+}
+function checkCloze(){
+    const cur = clozePool[state.activeClozeIndex];
+    let correct=0; const total=Object.keys(cur.answers).length;
+    for(let i=1;i<=total;i++){
+        const el = document.getElementById(`cloze-${i}`);
+        if(el){el.disabled=true; if(el.value===cur.answers[i]){correct++;el.className="bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold";} else {el.className="bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold";}}
+    }
+    const btn = document.getElementById('btn-check-cloze'); btn.disabled=true; btn.classList.add('opacity-50','cursor-not-allowed');
+    state.clozeScore = Math.round((correct/total)*100);
+    const fb = document.getElementById('cloze-feedback');
+    if(correct===total){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText=`Eccellente! ${correct}/${total}.`;}
+    else{playSound('error');fb.className="text-amber-400 font-bold";fb.innerText=`Punteggio: ${correct}/${total}.`;}
+    updateGlobalScore();
+}
+
+/* ============ SCORE (15+12+10+10+10+20+... ricalcolato) ============ */
+function updateGlobalScore(){
+    let mcqC=0; state.activeMCQ.forEach(q=>{if(state.mcqAnswers[q.id]===q.correct)mcqC++;});
+    let tfC=0; state.activeTF.forEach(q=>{if(state.tfAnswers[q.id]===q.isTrue)tfC++;});
+    let tlO=0; state.timelineOrder.forEach((v,i)=>{if(v===i)tlO++;});
+    let tlD=0; timelineDateItems.forEach(it=>{if(state.timelineDateAnswers[it.id]===it.correctDate)tlD++;});
+    let mC=Object.keys(state.matchingPairs).length;
+    let cC=Object.keys(state.chiPairs).length;
+    let pC=0; state.activePersonaggi.forEach(q=>{if(state.personaggiAnswers[q.id]===q.correct)pC++;});
+    const total = Math.round(
+        (state.activeMCQ.length?(mcqC/state.activeMCQ.length)*20:0)+
+        (state.activeTF.length?(tfC/state.activeTF.length)*15:0)+
+        (tlO/8)*5+(tlD/5)*5+
+        (mC/5)*10+(cC/5)*10+
+        (state.activePersonaggi.length?(pC/state.activePersonaggi.length)*20:0)+
+        (state.clozeScore/100)*15
+    );
+    document.getElementById('global-score-text').innerText = `${total} / 100`;
+    return total;
+}
+function updateReport(){
+    const score = updateGlobalScore();
+    document.getElementById('report-score').innerText = `${score} / 100 XP`;
+    document.getElementById('report-student').innerText = state.studentName;
+    const b = document.getElementById('report-badge');
+    if(score>=90) b.innerText = "Architetto della Spaccatura (Eccellente)";
+    else if(score>=75) b.innerText = "Diplomatico di Corte (Buono)";
+    else if(score>=55) b.innerText = "Cronista delle Guerre (Sufficiente)";
+    else b.innerText = "Novizio della Politica (Insufficiente)";
+}
+function switchTab(id){
+    playSound('click');
+    document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById(id).classList.remove('hidden');
+    if(id==='tab-report') updateReport();
+}
+function resetAll(){
+    state.mcqAnswers={}; state.tfAnswers={}; state.timelineOrder=shuffledTimelineOrder(); state.timelineDateAnswers={};
+    state.matchingPairs={}; state.chiPairs={}; state.personaggiAnswers={}; state.clozeScore=0;
+    state.matchingSelectedTerm=null; state.chiSelectedTerm=null;
+    renderMCQ(); renderTF(); renderTimelineOrder(); renderTimelineDates();
+    renderMatching(); renderChiConChi(); renderPersonaggi(); renderCloze();
+    document.getElementById('btn-check-timeline-order').disabled=false;
+    document.getElementById('btn-check-timeline-order').classList.remove('opacity-50','cursor-not-allowed');
+    document.getElementById('btn-check-timeline-dates').disabled=false;
+    document.getElementById('btn-check-timeline-dates').classList.remove('opacity-50','cursor-not-allowed');
+    document.getElementById('timeline-order-feedback').innerText="";
+    document.getElementById('timeline-dates-feedback').innerText="";
+    document.getElementById('matching-feedback').innerText="";
+    document.getElementById('chi-feedback').innerText="";
+    updateGlobalScore(); switchTab('tab-studio');
+}
+window.addEventListener('DOMContentLoaded',()=>{
+    renderMCQ(); renderTF(); renderTimelineOrder(); renderTimelineDates();
+    renderMatching(); renderChiConChi(); renderPersonaggi(); renderCloze();
+    updateGlobalScore();
+});
+</script>
+</body>
+</html>
