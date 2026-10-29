@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piattaforma Didattica: La Svolta dell'Anno Mille</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: 'class', theme: { extend: { colors: { lime: { 450: '#84cc16' } }, fontFamily: { cinzel: ['Cinzel','serif'], sans: ['Plus Jakarta Sans','sans-serif'] } } } }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080d16; color: #f1f5f9; }
+.font-cinzel { font-family: 'Cinzel', serif; }
+.tab-btn.active { background-color: #65a30d; color: #fff; border-color: #a3e635; box-shadow: 0 4px 20px -2px rgba(101,163,13,0.5); }
+.glass-card { background: linear-gradient(135deg, rgba(17,25,39,0.85), rgba(10,15,26,0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+.badge-glow { box-shadow: 0 0 15px rgba(132,204,22,0.2); }
+@media print { body * { visibility: hidden; } #printable-certificate, #printable-certificate * { visibility: visible; } #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; } }
+</style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-lime-500 selection:text-slate-950">
+
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center space-x-2 text-xs sm:text-sm">
+<a href="index.html" class="text-slate-400 hover:text-lime-400 transition-colors flex items-center gap-1.5 font-semibold"><i class="fa-solid fa-house"></i> Home Portale</a>
+<span class="text-slate-600">/</span>
+<a href="storia-medievale.html" class="text-slate-400 hover:text-lime-400 transition-colors font-semibold">Storia Medievale</a>
+<span class="text-slate-600">/</span>
+<span class="text-lime-400 font-bold">Svolta dell'Anno Mille</span>
+</div>
+<div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+<div class="relative flex items-center"><i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+<input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-lime-500 w-40 sm:w-48"></div>
+<button onclick="toggleAudio()" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-lime-400"><i class="fa-solid fa-volume-high text-sm"></i></button>
+<div class="flex items-center space-x-3 bg-slate-900 border border-lime-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+<div class="text-right"><span class="text-[10px] uppercase tracking-wider text-lime-400/80 block font-bold">Punti XP</span><span id="global-score-text" class="text-sm font-extrabold text-lime-400">0 / 100</span></div>
+<div class="w-8 h-8 rounded-lg bg-lime-500/20 text-lime-400 flex items-center justify-center font-extrabold text-xs"><i class="fa-solid fa-bolt"></i></div>
+</div>
+</div>
+</div>
+</header>
+
+<nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+<div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+<button onclick="switchTab('tab-studio')" class="tab-btn active px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent"><i class="fa-solid fa-map text-lime-400"></i> 0. Quadro</button>
+<button onclick="switchTab('tab-mcq')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz (10)</button>
+<button onclick="switchTab('tab-tf')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. V/F (8)</button>
+<button onclick="switchTab('tab-timeline')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-timeline text-purple-400"></i> 3. Cronologia</button>
+<button onclick="switchTab('tab-matching')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-diagram-project text-rose-400"></i> 4. Concetti</button>
+<button onclick="switchTab('tab-catene')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-arrow-right-arrow-left text-fuchsia-400"></i> 5. Catene</button>
+<button onclick="switchTab('tab-riconosci')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-user-tag text-amber-400"></i> 6. Innovazioni</button>
+<button onclick="switchTab('tab-cloze')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-pen-nib text-amber-400"></i> 7. Sintesi</button>
+<button onclick="switchTab('tab-report')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-certificate text-yellow-400"></i> Certificato</button>
+</div>
+</nav>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+<section id="tab-studio" class="tab-content space-y-8">
+<div class="glass-card p-6 sm:p-8 rounded-2xl border-lime-500/20">
+<div class="max-w-3xl space-y-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-lime-500/10 text-lime-400 border border-lime-500/30"><i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico • Storia Medievale</span>
+<h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-lime-400">La Svolta dell'Anno Mille</h2>
+<p class="text-slate-300 text-sm sm:text-base leading-relaxed">Miglioramento climatico, crescita demografica, rivoluzione agricola, rinascita commerciale e finanziaria, nascita dei comuni, delle università e delle repubbliche marinare.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-lime-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-lime-500/10 text-lime-400 flex items-center justify-center text-xl"><i class="fa-solid fa-temperature-up"></i></div><h3 class="font-bold text-slate-100">1. Clima e popolazione</h3><p class="text-xs text-slate-300">Miglioramento climatico (800-1300), meno invasioni ed epidemie, crescita demografica continua.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-emerald-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl"><i class="fa-solid fa-wheat-awn"></i></div><h3 class="font-bold text-slate-100">2. Rivoluzione agricola</h3><p class="text-xs text-slate-300">Aratro pesante (versoio, coltro, ruote, collare), mulini ad acqua, rotazione triennale, nuove terre a coltura.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-sky-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl"><i class="fa-solid fa-coins"></i></div><h3 class="font-bold text-slate-100">3. Commercio e finanza</h3><p class="text-xs text-slate-300">Tratte commerciali, fiere della Champagne, banche (Venezia 1100-1200), borsa (Bruges), cambiali, partita doppia.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-purple-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl"><i class="fa-solid fa-city"></i></div><h3 class="font-bold text-slate-100">4. Nascita dei comuni</h3><p class="text-xs text-slate-300">Comune aristocratico (X sec.), podestarile (XII sec.), popolare (XIII sec.). Corporazioni e Arti.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-amber-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl"><i class="fa-solid fa-graduation-cap"></i></div><h3 class="font-bold text-slate-100">5. Università</h3><p class="text-xs text-slate-300">Bologna (1088), Parigi, Oxford. Trivio e quadrivio; quaestio e disputatio. "Città del peccato"?</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-teal-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl"><i class="fa-solid fa-ship"></i></div><h3 class="font-bold text-slate-100">6. Repubbliche marinare</h3><p class="text-xs text-slate-300">Pisa, Amalfi, Genova, Venezia. Dopo il 1200 si fanno guerra: Venezia prevale.</p></div>
+</div>
+<div class="text-center pt-4"><button onclick="switchTab('tab-mcq')" class="bg-lime-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-lime-600">Inizia il Modulo ➔</button></div>
+</section>
+
+<section id="tab-mcq" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo (10 su 25)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-lime-400"></i> Risposte bloccate</span>
+</div>
+<div id="mcq-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-tf" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso (8 su 20)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-lime-400"></i> Risposte bloccate</span>
+</div>
+<div id="tf-container" class="space-y-4"></div>
+</section>
+
+<section id="tab-timeline" class="tab-content hidden space-y-8">
+<div><h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 3: Cronologia</h2></div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span><h3 class="font-bold text-slate-100 text-sm">Parte A: Riordino eventi</h3></div>
+<div id="timeline-list" class="space-y-2.5"></div>
+<button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine</button>
+<div id="timeline-order-feedback" class="text-xs font-semibold"></div>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span><h3 class="font-bold text-slate-100 text-sm">Parte B: Evento - Anno</h3></div>
+<div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+<button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Date</button>
+<div id="timeline-dates-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-matching" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 4: Abbinamento Concetti</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="matching-terms" class="space-y-2.5"></div>
+<div id="matching-defs" class="space-y-2.5"></div>
+</div>
+<div id="matching-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-catene" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-fuchsia-400 border-b border-slate-800 pb-2">Esercizio 5: Catene causa-effetto</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<p class="text-xs text-slate-400">Ragiona sulle concatenazioni: abbina ogni causa al suo effetto.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="catene-terms" class="space-y-2.5"></div>
+<div id="catene-defs" class="space-y-2.5"></div>
+</div>
+<div id="catene-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-riconosci" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Riconosci l'innovazione (6 su 15)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-amber-400"></i> Risposte bloccate</span>
+</div>
+<div id="riconosci-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-cloze" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-2">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 7: Testo Guidato</h2>
+<button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Cambia</button>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<div id="cloze-body-container"></div>
+<button onclick="checkCloze()" id="btn-check-cloze" class="bg-lime-500 hover:bg-lime-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs"><i class="fa-solid fa-check mr-1.5"></i> Verifica</button>
+<div id="cloze-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-report" class="tab-content hidden space-y-6">
+<div id="printable-certificate" class="glass-card p-8 rounded-2xl text-center space-y-6">
+<h2 class="font-cinzel text-2xl font-bold text-lime-400">Valutazione Globale</h2>
+<p class="text-sm text-slate-300">Studente: <span id="report-student" class="font-bold text-slate-100">Studente</span></p>
+<div class="text-4xl font-black text-lime-400" id="report-score">0 / 100 XP</div>
+<div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
+<div class="flex justify-center gap-4">
+<button onclick="window.print()" class="bg-lime-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato</button>
+<button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia</button>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 space-x-4">
+<a href="index.html" class="hover:text-lime-400"><i class="fa-solid fa-house mr-1"></i> Home Portale</a>
+<span>•</span>
+<a href="storia-medievale.html" class="hover:text-lime-400"><i class="fa-solid fa-shield-halved mr-1"></i> Storia Medievale</a>
+</footer>
+
+<script>
+function shuffledTimelineOrder() { let o; do { o = shuffle([0,1,2,3,4,5,6,7]); } while (o.every((v,i)=>v===i)); return o; }
+const state = {
+    studentName:"Studente", audioEnabled:true, mcqAnswers:{}, tfAnswers:{},
+    timelineOrder:shuffledTimelineOrder(), timelineDateAnswers:{},
+    matchingPairs:{}, matchingSelectedTerm:null,
+    catenePairs:{}, cateneSelectedTerm:null,
+    riconosciAnswers:{}, clozeScore:0, activeClozeIndex:0,
+    activeMCQ:[], activeTF:[], activeRiconosci:[]
+};
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playSound(t){if(!state.audioEnabled)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);if(t==='click'){o.frequency.setValueAtTime(400,audioCtx.currentTime);g.gain.setValueAtTime(0.05,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.05);}else if(t==='correct'){o.frequency.setValueAtTime(880,audioCtx.currentTime);g.gain.setValueAtTime(0.08,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.2);}else if(t==='error'){o.frequency.setValueAtTime(220,audioCtx.currentTime);g.gain.setValueAtTime(0.08,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.2);}}catch(e){}}
+function toggleAudio(){state.audioEnabled=!state.audioEnabled;}
+function updateStudentName(v){state.studentName=v||"Studente";}
+function shuffle(a){let r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+const mcqPool = [
+{id:1,question:"Cosa si intende per 'svolta dell'anno Mille'?",options:["Insieme di miglioramenti climatici, agricoli, demografici ed economici dall'XI secolo","La fine dell'Impero carolingio","La nascita del feudalesimo","L'inizio delle crociate"],correct:0,explanation:"È l'insieme di trasformazioni che segna il passaggio da Alto a Basso Medioevo."},
+{id:2,question:"Quale fattore favorì la ripresa agricola?",options:["Il miglioramento climatico (800-1300)","La caduta dell'Impero romano","L'invasione dei vichinghi","La peste nera"],correct:0,explanation:"Un clima più caldo corrisponde a rese più elevate dei raccolti."},
+{id:3,question:"Cosa dice la ricerca recente sul miglioramento climatico?",options:["Fu meno estremo di quanto si pensasse","Fu più estremo del previsto","Non ci fu affatto","Riguardò solo l'Asia"],correct:0,explanation:"Le revisioni recenti mostrano una visione più sfumata."},
+{id:4,question:"Quali furono le cause del crollo demografico prima dell'anno Mille?",options:["Invasioni ed epidemie","Guerre nucleari","Rivoluzione industriale","Carestie di grano turco"],correct:0,explanation:"Le continue invasioni e le epidemie mortali."},
+{id:5,question:"Cosa permise l'introduzione del versoio nell'aratro?",options:["Di rovesciare la zolla di terra dopo averla tagliata","Di arare più velocemente","Di usare i buoi","Di coltivare il riso"],correct:0,explanation:"Il versoio rovesciava la zolla dopo il taglio."},
+{id:6,question:"Cosa permise il collare rigido?",options:["Di utilizzare anche i cavalli come animali da tiro","Di arare più in profondità","Di risparmiare il seme","Di coltivare in montagna"],correct:0,explanation:"Il collare rigido distribuiva il peso su tutto il corpo, non strozzando l'animale."},
+{id:7,question:"Quale innovazione agricola fu introdotta dopo l'anno Mille?",options:["La rotazione triennale","La rotazione biennale","L'aratro leggero","Il mulino a sangue"],correct:0,explanation:"La rotazione triennale (grano, maggese, leguminose) si diffuse lentamente."},
+{id:8,question:"Quale percentuale di terreno restava a maggese con la rotazione triennale?",options:["Un terzo","La metà","Due terzi","Nessuna"],correct:0,explanation:"Rispetto alla rotazione biennale, il maggese si riduceva a un terzo."},
+{id:9,question:"Per cosa si usavano i mulini ad acqua?",options:["Per macinare grano, frantumare minerali, follare tessuti e fare carta","Solo per macinare il grano","Solo per sollevare acqua","Solo per la metallurgia"],correct:0,explanation:"I mulini avevano usi molteplici."},
+{id:10,question:"Cos'era il Domesday Book?",options:["Un testo che elencava territori e abitanti per l'Inghilterra","Un trattato di pace","Un registro di banchieri","Una cronaca monastica"],correct:0,explanation:"Il celebre Domesday Book per l'Inghilterra."},
+{id:11,question:"Dove nacquero le banche?",options:["A Venezia nel 1100-1200","A Bruges nel 1300","A Firenze nel 1400","A Parigi nel 1200"],correct:0,explanation:"A Venezia nel 1100-1200 iniziarono a formarsi gruppi dediti a tale attività."},
+{id:12,question:"Dove nacque la borsa valori?",options:["A Bruges, dal palazzo dei Van der Beurse","A Venezia","A Londra","A Parigi"],correct:0,explanation:"A Bruges, nel palazzo della famiglia Van der Beurse (tre borse nello stemma)."},
+{id:13,question:"Cosa permetteva la partita doppia?",options:["Di tenere conto di entrate e uscite con parità di bilancio","Di spostare denaro in modo sicuro","Di pagare le tasse","Di registrare i contratti di matrimonio"],correct:0,explanation:"La partita doppia consente di avere certezza della parità di bilancio."},
+{id:14,question:"Cosa permettevano le cambiali?",options:["Di spostare grandi quantità di denaro in modo sicuro","Di pagare le tasse","Di registrare i raccolti","Di prenotare un feudo"],correct:0,explanation:"Le cambiali consentivano di spostare denaro senza trasportarlo fisicamente."},
+{id:15,question:"Cosa caratterizza il comune aristocratico?",options:["Il dominio delle famiglie più ricche e potenti","Il podestà straniero","Le corporazioni borghesi","Il vescovo-conte"],correct:0,explanation:"Il comune aristocratico (X secolo) era dominato dalle famiglie più potenti."},
+{id:16,question:"Cosa caratterizza il comune podestarile?",options:["La presenza di un solo magistrato, spesso straniero","Il dominio delle corporazioni","L'assenza di magistrati","Il dominio dei vescovi"],correct:0,explanation:"Il comune podestarile (XII secolo) era retto da un podestà, spesso straniero."},
+{id:17,question:"Cosa caratterizza il comune popolare?",options:["Il dominio dei ceti borghesi associati in corporazioni","Il podestà straniero","Le famiglie aristocratiche","I feudatari"],correct:0,explanation:"Il comune popolare (XIII secolo) era dominato dai ceti urbani borghesi."},
+{id:18,question:"Come si chiamavano le corporazioni a Firenze?",options:["Arti","Gilde","Università","Confraternite"],correct:0,explanation:"A Firenze le corporazioni erano chiamate Arti (maggiori e minori)."},
+{id:19,question:"Quale fu la prima università?",options:["Bologna (1088)","Parigi","Oxford","Padova"],correct:0,explanation:"La prima università fu Bologna (data tradizionale 1088)."},
+{id:20,question:"Come si articolava l'insegnamento universitario?",options:["Per quaestio e disputatio","Per lezioni frontali e esami scritti","Per apprendistato","Per corrispondenza"],correct:0,explanation:"Quaestio (questione di riflessione) e disputatio (discussione)."},
+{id:21,question:"Quali erano le arti del trivio?",options:["Grammatica, retorica, dialettica","Aritmetica, geometria, musica, astronomia","Medicina, diritto, teologia","Fisica, chimica, biologia"],correct:0,explanation:"Il trivio: grammatica, retorica, dialettica. Il quadrivio: aritmetica, geometria, musica, astronomia."},
+{id:22,question:"Quali furono le quattro repubbliche marinare che emersero?",options:["Pisa, Amalfi, Genova, Venezia","Genova, Venezia, Napoli, Palermo","Pisa, Livorno, Genova, Venezia","Amalfi, Salerno, Napoli, Gaeta"],correct:0,explanation:"Pisa, Amalfi, Genova, Venezia."},
+{id:23,question:"Quale repubblica marinara prevalse dopo le guerre del 1200?",options:["Venezia","Genova","Pisa","Amalfi"],correct:0,explanation:"Dopo il 1200 le città marinare si fanno guerra: ad averla vinta è Venezia."},
+{id:24,question:"Cosa denunciava Jacques de Vitry riguardo a Parigi?",options:["La vita libertina degli studenti","La corruzione dei professori","La mancanza di cibo","La presenza di eretici"],correct:0,explanation:"Jacques de Vitry descriveva Parigi come una 'capra con la scabbia' per la vita dissoluta degli studenti."},
+{id:25,question:"Perché molti contadini migravano verso le città?",options:["Per cercare maggiore libertà e migliori possibilità economiche","Per diventare cavalieri","Per fuggire dai vichinghi","Per andare in pellegrinaggio"],correct:0,explanation:"In città c'era maggiore libertà e migliori possibilità economiche."}
+];
+
+const tfPool = [
+{id:1,text:"Il miglioramento climatico medievale fu estremo, come si pensava un tempo.",isTrue:false,explanation:"FALSO: le revisioni recenti mostrano una visione più sfumata."},
+{id:2,text:"Con la rotazione triennale, l'area produttiva è due terzi del terreno coltivabile.",isTrue:true,explanation:"VERO: un terzo resta a maggese, non la metà."},
+{id:3,text:"La rotazione triennale si diffuse ovunque con la stessa velocità.",isTrue:false,explanation:"FALSO: la diffusione fu lenta e graduale; in est Europa arrivò solo secoli dopo."},
+{id:4,text:"L'aratro pesante usava anche i cavalli come animali da tiro.",isTrue:true,explanation:"VERO: grazie al collare rigido."},
+{id:5,text:"I mulini ad acqua servivano solo per macinare il grano.",isTrue:false,explanation:"FALSO: anche per frantumare minerali, follare tessuti e produrre carta."},
+{id:6,text:"Il Domesday Book elencava territori e abitanti per l'Inghilterra.",isTrue:true,explanation:"VERO: è una fonte fondamentale per la demografia medievale."},
+{id:7,text:"Le banche nacquero a Venezia nel 1100-1200.",isTrue:true,explanation:"VERO."},
+{id:8,text:"La borsa valori nacque a Bruges.",isTrue:true,explanation:"VERO: dal palazzo dei Van der Beurse."},
+{id:9,text:"Le cambiali servivano a spostare denaro in modo sicuro.",isTrue:true,explanation:"VERO."},
+{id:10,text:"La partita doppia permette di verificare la parità di bilancio.",isTrue:true,explanation:"VERO."},
+{id:11,text:"I comuni si svilupparono solo in Italia.",isTrue:false,explanation:"FALSO: anche in altre aree nord-europee."},
+{id:12,text:"Nel comune podestarile il podestà era spesso straniero.",isTrue:true,explanation:"VERO."},
+{id:13,text:"Le corporazioni controllavano tutte le fasi della lavorazione.",isTrue:true,explanation:"VERO: per garantire la qualità del prodotto."},
+{id:14,text:"Le università nacquero solo per proteggere gli studenti.",isTrue:false,explanation:"FALSO: nascevano anche per proteggere i professori (come a Parigi)."},
+{id:15,text:"Bologna è considerata la prima università.",isTrue:true,explanation:"VERO: data tradizionale 1088."},
+{id:16,text:"Si poteva entrare all'università a 14 anni.",isTrue:true,explanation:"VERO: dopo i primi anni di arti liberali."},
+{id:17,text:"Le repubbliche marinare erano quattro: Pisa, Amalfi, Genova e Venezia.",isTrue:true,explanation:"VERO."},
+{id:18,text:"Dopo il 1200 Genova prevalse su Venezia.",isTrue:false,explanation:"FALSO: fu Venezia a prevalere."},
+{id:19,text:"La crescita economica dopo l'anno Mille fu uniforme in tutta Europa.",isTrue:false,explanation:"FALSO: fu un percorso lento, graduale e differenziato tra aree."},
+{id:20,text:"Le città universitarie erano descritte negativamente da genitori e sacerdoti.",isTrue:true,explanation:"VERO: Jacques de Vitry e le lettere dei padri lo testimoniano."}
+];
+
+const timelineEvents = [
+{id:0,title:"Svolta dell'anno Mille: ripresa economica, agricola e demografica"},
+{id:1,title:"Nascita del comune aristocratico"},
+{id:2,title:"Fondazione dell'Università di Bologna"},
+{id:3,title:"Nascita delle prime banche a Venezia"},
+{id:4,title:"Nascita della borsa valori a Bruges"},
+{id:5,title:"Nascita del comune podestarile"},
+{id:6,title:"Nascita del comune popolare"},
+{id:7,title:"Affermazione di Venezia sulle altre repubbliche marinare"}
+];
+const timelineDateItems = [
+{id:1,event:"Fondazione Università di Bologna",correctDate:"1088",options:["1088","1100","1200"]},
+{id:2,event:"Nascita banche a Venezia",correctDate:"1100-1200",options:["1000-1050","1100-1200","1300-1400"]},
+{id:3,event:"Borsa valori a Bruges",correctDate:"XIII secolo",options:["XI secolo","XII secolo","XIII secolo"]},
+{id:4,event:"Comune podestarile",correctDate:"XII secolo",options:["X secolo","XII secolo","XIII secolo"]},
+{id:5,event:"Comune popolare",correctDate:"XIII secolo",options:["XI secolo","XII secolo","XIII secolo"]}
+];
+
+const matchingTerms = [
+{id:"m1",term:"Aratro pesante"},
+{id:"m2",term:"Rotazione triennale"},
+{id:"m3",term:"Mulino ad acqua"},
+{id:"m4",term:"Banca"},
+{id:"m5",term:"Borsa"}
+];
+const matchingDefs = [
+{id:"d1",matchId:"m1",text:"Strumento agricolo con versoio, coltro, ruote e collare rigido."},
+{id:"d2",matchId:"m2",text:"Sistema che divide il campo in tre parti, con un terzo a maggese."},
+{id:"d3",matchId:"m3",text:"Macchina che sfrutta la forza dei corsi d'acqua per macinare, follare, produrre carta."},
+{id:"d4",matchId:"m4",text:"Istituzione nata a Venezia nel 1100-1200 per gestire il denaro."},
+{id:"d5",matchId:"m5",text:"Luogo nato a Bruges dove si investe in aziende comprando azioni."}
+];
+
+const catenePairs = [
+{id:"c1",cause:"Miglioramento climatico (800-1300)",effect:"Raccolti più abbondanti e migliore nutrizione"},
+{id:"c2",cause:"Raccolti più abbondanti",effect:"Crescita demografica della popolazione europea"},
+{id:"c3",cause:"Crescita demografica",effect:"Necessità di nuove terre e innovazioni agricole"},
+{id:"c4",cause:"Surplus agricolo",effect:"Reinvestimento in imprese commerciali e nascita di mercati"},
+{id:"c5",cause:"Commercio esteso e nuovi mercati",effect:"Nascita di banche, borsa, cambiali e partita doppia"}
+];
+
+const riconosciPool = [
+{id:1,desc:"Strumento agricolo con versoio, coltro, ruote e collare rigido, che permette di arare più in profondità.",options:["Aratro pesante","Aratro leggero","Vomero","Erpice"],correct:0,explanation:"L'aratro pesante."},
+{id:2,desc:"Sistema agricolo che divide il campo in tre parti: grano, maggese, leguminose.",options:["Rotazione triennale","Rotazione biennale","Coltivazione del taglia e brucia","Monocoltura"],correct:0,explanation:"La rotazione triennale."},
+{id:3,desc:"Macchina che sfrutta la forza dell'acqua per macinare, follare, frantumare minerali.",options:["Mulino ad acqua","Mulino a sangue","Mulino a vento","Gualchiera"],correct:0,explanation:"Il mulino ad acqua."},
+{id:4,desc:"Istituzione che gestisce il denaro e nasce a Venezia nel 1100-1200.",options:["Banca","Borsa","Monte dei Paschi","Cambiale"],correct:0,explanation:"La banca."},
+{id:5,desc:"Luogo nato a Bruges dove si investe in aziende comprando azioni.",options:["Borsa","Banca","Fiera","Mercato"],correct:0,explanation:"La borsa."},
+{id:6,desc:"Strumento che consente di spostare grandi quantità di denaro in modo sicuro.",options:["Cambiale","Partita doppia","Assegno","Lettera di cambio"],correct:0,explanation:"La cambiale."},
+{id:7,desc:"Tecnica contabile che tiene conto di entrate e uscite, verificando la parità di bilancio.",options:["Partita doppia","Partita semplice","Bilancio","Registro"],correct:0,explanation:"La partita doppia."},
+{id:8,desc:"Entità cittadina autonoma che si sviluppa nel Basso Medioevo, retta da magistrati.",options:["Comune","Feudo","Signoria","Repubblica marinara"],correct:0,explanation:"Il comune."},
+{id:9,desc:"Associazione di artigiani che controlla la qualità, impedisce la concorrenza sleale e cura la formazione.",options:["Corporazione","Università","Confraternita","Gilda"],correct:0,explanation:"La corporazione (o Arte a Firenze)."},
+{id:10,desc:"Istituzione nata come protezione per studenti o professori, con insegnamento per quaestio e disputatio.",options:["Università","Comune","Scuola monastica","Accademia"],correct:0,explanation:"L'università."},
+{id:11,desc:"Città marinara che emerse dopo il 1200, prevalendo sulle altre.",options:["Venezia","Genova","Pisa","Amalfi"],correct:0,explanation:"Venezia."},
+{id:12,desc:"Il libro che elencava territori e abitanti per l'Inghilterra medievale.",options:["Domesday Book","Libro dei Conti","Registro dei Feudi","Cronaca di Westminster"],correct:0,explanation:"Il Domesday Book."},
+{id:13,desc:"L'istituzione nata a Bruges dal palazzo della famiglia Van der Beurse.",options:["Borsa","Banca","Monte dei Paschi","Fiera"],correct:0,explanation:"La borsa."},
+{id:14,desc:"Sistema che portò alla rinascita delle città dopo il Mille, con nuovi mercati e opportunità.",options:["Urbanizzazione","Feudalizzazione","Incastellamento","Nomadismo"],correct:0,explanation:"L'urbanizzazione."},
+{id:15,desc:"La pratica di dividere il campo in due parti: una coltivata, una a maggese.",options:["Rotazione biennale","Rotazione triennale","Coltivazione del taglia e brucia","Monocoltura"],correct:0,explanation:"La rotazione biennale."}
+];
+
+const clozePool = [
+{text:`La svolta dell'anno Mille fu favorita dal <select id="cloze-1" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="miglioramento climatico">miglioramento climatico</option><option value="peggioramento climatico">peggioramento climatico</option><option value="crollo demografico">crollo demografico</option></select> e dalla fine di <select id="cloze-2" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="invasioni ed epidemie">invasioni ed epidemie</option><option value="guerre civili">guerre civili</option><option value="carestie">carestie</option></select>. La popolazione crebbe e nacquero innovazioni come l'<select id="cloze-3" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="aratro pesante">aratro pesante</option><option value="aratro leggero">aratro leggero</option><option value="mulino a sangue">mulino a sangue</option></select>, il <select id="cloze-4" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="mulino ad acqua">mulino ad acqua</option><option value="mulino a vento">mulino a vento</option><option value="aratro leggero">aratro leggero</option></select> e la <select id="cloze-5" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="rotazione triennale">rotazione triennale</option><option value="rotazione biennale">rotazione biennale</option><option value="monocoltura">monocoltura</option></select>.`,
+answers:{1:"miglioramento climatico",2:"invasioni ed epidemie",3:"aratro pesante",4:"mulino ad acqua",5:"rotazione triennale"}},
+{text:`La nuova ricchezza dopo il Mille portò alla nascita delle <select id="cloze-1" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="banche">banche</option><option value="fiere">fiere</option><option value="università">università</option></select> a Venezia e della <select id="cloze-2" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="borsa">borsa</option><option value="banca">banca</option><option value="moneta">moneta</option></select> a Bruges. Si diffusero strumenti come le <select id="cloze-3" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="cambiali">cambiali</option><option value="lettere">lettere</option><option value="obbligazioni">obbligazioni</option></select> e la <select id="cloze-4" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="partita doppia">partita doppia</option><option value="partita semplice">partita semplice</option><option value="contabilità">contabilità</option></select>. Nacquero i <select id="cloze-5" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="comuni">comuni</option><option value="feudi">feudi</option><option value="castelli">castelli</option></select> e le <select id="cloze-6" class="bg-slate-800 text-lime-300 rounded px-2 py-1"><option value="">[?]</option><option value="università">università</option><option value="scuole">scuole</option><option value="accademie">accademie</option></select>, a partire da Bologna.`,
+answers:{1:"banche",2:"borsa",3:"cambiali",4:"partita doppia",5:"comuni",6:"università"}}
+];
+
+function renderMCQ(){state.activeMCQ=shuffle(mcqPool).slice(0,10);document.getElementById('mcq-container').innerHTML=state.activeMCQ.map((q,i)=>`<div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800"><div class="font-bold text-slate-100 text-sm">${i+1}. ${q.question}</div><div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectMCQ(${q.id},${oi})" class="mcq-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div><div id="mcq-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div></div>`).join('');}
+function selectMCQ(id,oi){playSound('click');const q=mcqPool.find(x=>x.id===id);state.mcqAnswers[id]=oi;document.querySelectorAll(`.mcq-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`mcq-fb-${id}`);fb.classList.remove('hidden');if(oi===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}updateGlobalScore();}
+
+function renderTF(){state.activeTF=shuffle(tfPool).slice(0,8);document.getElementById('tf-container').innerHTML=state.activeTF.map((q,i)=>`<div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800"><p class="text-xs text-slate-200">${i+1}. ${q.text}</p><div class="flex gap-2"><button onclick="answerTF(${q.id},true)" class="tf-opt-${q.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button><button onclick="answerTF(${q.id},false)" class="tf-opt-${q.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button></div><div id="tf-fb-${q.id}" class="hidden text-xs pt-1"></div></div>`).join('');}
+function answerTF(id,c){playSound('click');const q=tfPool.find(x=>x.id===id);state.tfAnswers[id]=c;document.querySelectorAll(`.tf-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`tf-fb-${id}`);fb.classList.remove('hidden');if(c===q.isTrue){playSound('correct');fb.className="text-xs text-emerald-300";fb.innerText=`Esatto! ${q.explanation}`;}else{playSound('error');fb.className="text-xs text-rose-300";fb.innerText=`Sbagliato. ${q.explanation}`;}updateGlobalScore();}
+
+function renderTimelineOrder(){document.getElementById('timeline-list').innerHTML=state.timelineOrder.map((di,cp)=>`<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs gap-3"><span class="text-purple-300 font-bold"><span class="text-slate-500 mr-1">${cp+1}.</span>${timelineEvents[di].title}</span><div class="flex gap-1 shrink-0"><button onclick="moveTimeline(${cp},-1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button><button onclick="moveTimeline(${cp},1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button></div></div>`).join('');}
+function moveTimeline(p,d){const t=p+d;if(t<0||t>=state.timelineOrder.length)return;[state.timelineOrder[p],state.timelineOrder[t]]=[state.timelineOrder[t],state.timelineOrder[p]];renderTimelineOrder();playSound('click');}
+function checkTimelineOrder(){let c=0;state.timelineOrder.forEach((v,i)=>{if(v===i)c++;});const fb=document.getElementById('timeline-order-feedback');const btn=document.getElementById('btn-check-timeline-order');btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');if(c===timelineEvents.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Perfetto!";}else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Corretti: ${c} su ${timelineEvents.length}.`;}updateGlobalScore();}
+function renderTimelineDates(){document.getElementById('timeline-dates-container').innerHTML=timelineDateItems.map(it=>`<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2"><div class="text-xs font-bold text-slate-200">${it.event}</div><select id="timeline-sel-${it.id}" onchange="state.timelineDateAnswers[${it.id}]=this.value" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs"><option value="">-- Periodo --</option>${it.options.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>`).join('');}
+function checkTimelineDates(){let c=0;timelineDateItems.forEach(it=>{const s=document.getElementById(`timeline-sel-${it.id}`);if(s)s.disabled=true;if(state.timelineDateAnswers[it.id]===it.correctDate)c++;});const fb=document.getElementById('timeline-dates-feedback');const btn=document.getElementById('btn-check-timeline-dates');btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');if(c===timelineDateItems.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Tutte corrette!";}else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Corrette: ${c} su ${timelineDateItems.length}.`;}updateGlobalScore();}
+
+function renderMatching(){document.getElementById('matching-terms').innerHTML=matchingTerms.map(t=>`<button onclick="selectMatchTerm('${t.id}')" id="mt-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50 transition-all">${t.term}</button>`).join('');document.getElementById('matching-defs').innerHTML=shuffle(matchingDefs).map(d=>`<button onclick="selectMatchDef('${d.matchId}')" id="md-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50 transition-all">${d.text}</button>`).join('');}
+function selectMatchTerm(id){if(state.matchingPairs[id])return;state.matchingSelectedTerm=id;playSound('click');matchingTerms.forEach(t=>{const b=document.getElementById(`mt-${t.id}`);if(b&&!state.matchingPairs[t.id])b.className=(t.id===id)?"w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200":"w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50";});}
+function selectMatchDef(mid){if(!state.matchingSelectedTerm)return;const fb=document.getElementById('matching-feedback');if(state.matchingSelectedTerm===mid){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText="Corretto!";state.matchingPairs[mid]=true;const t=document.getElementById(`mt-${state.matchingSelectedTerm}`);const d=document.getElementById(`md-${mid}`);const l="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";if(t){t.disabled=true;t.className=l;}if(d){d.disabled=true;d.className=l;}}else{playSound('error');fb.className="text-rose-400 font-bold";fb.innerText="Errato.";}state.matchingSelectedTerm=null;updateGlobalScore();}
+
+function renderCatene(){document.getElementById('catene-terms').innerHTML=catenePairs.map(c=>`<button onclick="selectCatenaTerm('${c.id}')" id="ct-${c.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-fuchsia-500/50 transition-all">${c.cause}</button>`).join('');document.getElementById('catene-defs').innerHTML=shuffle(catenePairs).map(c=>`<button onclick="selectCatenaDef('${c.id}')" id="cd-${c.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-fuchsia-500/50 transition-all">${c.effect}</button>`).join('');}
+function selectCatenaTerm(id){if(state.catenePairs[id])return;state.cateneSelectedTerm=id;playSound('click');catenePairs.forEach(c=>{const b=document.getElementById(`ct-${c.id}`);if(b&&!state.catenePairs[c.id])b.className=(c.id===id)?"w-full text-left p-3 rounded-xl border-2 border-fuchsia-500 bg-fuchsia-950/40 text-xs text-fuchsia-200":"w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-fuchsia-500/50";});}
+function selectCatenaDef(mid){if(!state.cateneSelectedTerm)return;const fb=document.getElementById('catene-feedback');if(state.cateneSelectedTerm===mid){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText="Catena corretta!";state.catenePairs[mid]=true;const t=document.getElementById(`ct-${state.cateneSelectedTerm}`);const d=document.getElementById(`cd-${mid}`);const l="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";if(t){t.disabled=true;t.className=l;}if(d){d.disabled=true;d.className=l;}}else{playSound('error');fb.className="text-rose-400 font-bold";fb.innerText="Errato.";}state.cateneSelectedTerm=null;updateGlobalScore();}
+
+function renderRiconosci(){state.activeRiconosci=shuffle(riconosciPool).slice(0,6);document.getElementById('riconosci-container').innerHTML=state.activeRiconosci.map((q,i)=>`<div class="glass-card p-5 rounded-2xl space-y-3 border border-amber-500/30"><div class="text-xs font-bold text-amber-300 uppercase">Innovazione ${i+1}</div><div class="italic text-amber-200 text-sm border-l-2 border-amber-500/50 pl-3">${q.desc}</div><div class="text-xs text-slate-400">Di cosa si tratta?</div><div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectRiconosci(${q.id},${oi})" class="ric-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div><div id="ric-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div></div>`).join('');}
+function selectRiconosci(id,oi){playSound('click');const q=riconosciPool.find(x=>x.id===id);state.riconosciAnswers[id]=oi;document.querySelectorAll(`.ric-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`ric-fb-${id}`);fb.classList.remove('hidden');if(oi===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}updateGlobalScore();}
+
+function renderCloze(){state.activeClozeIndex=Math.floor(Math.random()*clozePool.length);const c=clozePool[state.activeClozeIndex];document.getElementById('cloze-body-container').innerHTML=`<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm text-slate-200 border border-slate-800">${c.text}</div>`;const b=document.getElementById('btn-check-cloze');b.disabled=false;b.classList.remove('opacity-50','cursor-not-allowed');document.getElementById('cloze-feedback').innerText="";}
+function checkCloze(){const c=clozePool[state.activeClozeIndex];let k=0;const t=Object.keys(c.answers).length;for(let i=1;i<=t;i++){const el=document.getElementById(`cloze-${i}`);if(el){el.disabled=true;if(el.value===c.answers[i]){k++;el.className="bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold";}else{el.className="bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold";}}}const b=document.getElementById('btn-check-cloze');b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');state.clozeScore=Math.round((k/t)*100);const fb=document.getElementById('cloze-feedback');if(k===t){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText=`Eccellente! ${k}/${t}.`;}else{playSound('error');fb.className="text-amber-400 font-bold";fb.innerText=`Punteggio: ${k}/${t}.`;}updateGlobalScore();}
+
+function updateGlobalScore(){
+    let mcqC=0;state.activeMCQ.forEach(q=>{if(state.mcqAnswers[q.id]===q.correct)mcqC++;});
+    let tfC=0;state.activeTF.forEach(q=>{if(state.tfAnswers[q.id]===q.isTrue)tfC++;});
+    let tlO=0;state.timelineOrder.forEach((v,i)=>{if(v===i)tlO++;});
+    let tlD=0;timelineDateItems.forEach(it=>{if(state.timelineDateAnswers[it.id]===it.correctDate)tlD++;});
+    let mC=Object.keys(state.matchingPairs).length;
+    let cC=Object.keys(state.catenePairs).length;
+    let rC=0;state.activeRiconosci.forEach(q=>{if(state.riconosciAnswers[q.id]===q.correct)rC++;});
+    const total=Math.round(
+        (state.activeMCQ.length?(mcqC/state.activeMCQ.length)*20:0)+
+        (state.activeTF.length?(tfC/state.activeTF.length)*15:0)+
+        (tlO/8)*5+(tlD/5)*5+
+        (mC/5)*10+(cC/5)*15+
+        (state.activeRiconosci.length?(rC/state.activeRiconosci.length)*15:0)+
+        (state.clozeScore/100)*15
+    );
+    document.getElementById('global-score-text').innerText=`${total} / 100`;
+    return total;
+}
+function updateReport(){const s=updateGlobalScore();document.getElementById('report-score').innerText=`${s} / 100 XP`;document.getElementById('report-student').innerText=state.studentName;const b=document.getElementById('report-badge');if(s>=90)b.innerText="Signore della Rinascita (Eccellente)";else if(s>=75)b.innerText="Mercante delle Fiandre (Buono)";else if(s>=55)b.innerText="Apprendista Artigiano (Sufficiente)";else b.innerText="Novizio del Comune (Insufficiente)";}
+function switchTab(id){playSound('click');document.querySelectorAll('.tab-content').forEach(e=>e.classList.add('hidden'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.remove('hidden');if(id==='tab-report')updateReport();}
+function resetAll(){state.mcqAnswers={};state.tfAnswers={};state.timelineOrder=shuffledTimelineOrder();state.timelineDateAnswers={};state.matchingPairs={};state.catenePairs={};state.riconosciAnswers={};state.clozeScore=0;state.matchingSelectedTerm=null;state.cateneSelectedTerm=null;renderMCQ();renderTF();renderTimelineOrder();renderTimelineDates();renderMatching();renderCatene();renderRiconosci();renderCloze();document.getElementById('btn-check-timeline-order').disabled=false;document.getElementById('btn-check-timeline-order').classList.remove('opacity-50','cursor-not-allowed');document.getElementById('btn-check-timeline-dates').disabled=false;document.getElementById('btn-check-timeline-dates').classList.remove('opacity-50','cursor-not-allowed');document.getElementById('timeline-order-feedback').innerText="";document.getElementById('timeline-dates-feedback').innerText="";document.getElementById('matching-feedback').innerText="";document.getElementById('catene-feedback').innerText="";updateGlobalScore();switchTab('tab-studio');}
+window.addEventListener('DOMContentLoaded',()=>{renderMCQ();renderTF();renderTimelineOrder();renderTimelineDates();renderMatching();renderCatene();renderRiconosci();renderCloze();updateGlobalScore();});
+</script>
+</body>
+</html>

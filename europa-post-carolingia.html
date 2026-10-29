@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piattaforma Didattica: L'Europa Post-Carolingia</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: 'class', theme: { extend: { colors: { amber: { 450: '#f59e0b' } }, fontFamily: { cinzel: ['Cinzel','serif'], sans: ['Plus Jakarta Sans','sans-serif'] } } } }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080d16; color: #f1f5f9; }
+.font-cinzel { font-family: 'Cinzel', serif; }
+.tab-btn.active { background-color: #d97706; color: #fff; border-color: #fbbf24; box-shadow: 0 4px 20px -2px rgba(217,119,6,0.5); }
+.glass-card { background: linear-gradient(135deg, rgba(17,25,39,0.85), rgba(10,15,26,0.95)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+.badge-glow { box-shadow: 0 0 15px rgba(245,158,11,0.2); }
+@media print { body * { visibility: hidden; } #printable-certificate, #printable-certificate * { visibility: visible; } #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; } }
+</style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-950">
+
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-3">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center space-x-2 text-xs sm:text-sm">
+<a href="index.html" class="text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1.5 font-semibold"><i class="fa-solid fa-house"></i> Home Portale</a>
+<span class="text-slate-600">/</span>
+<a href="storia-medievale.html" class="text-slate-400 hover:text-amber-400 transition-colors font-semibold">Storia Medievale</a>
+<span class="text-slate-600">/</span>
+<span class="text-amber-400 font-bold">Europa Post-Carolingia</span>
+</div>
+<div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full md:w-auto">
+<div class="relative flex items-center"><i class="fa-solid fa-user-graduate absolute left-3 text-slate-400 text-xs"></i>
+<input type="text" id="student-name-input" placeholder="Inserisci il tuo nome" value="Studente" oninput="updateStudentName(this.value)" class="bg-slate-900 border border-slate-700/80 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500 w-40 sm:w-48"></div>
+<button onclick="toggleAudio()" class="p-2 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-amber-400"><i class="fa-solid fa-volume-high text-sm"></i></button>
+<div class="flex items-center space-x-3 bg-slate-900 border border-amber-500/30 px-3.5 py-1.5 rounded-lg badge-glow">
+<div class="text-right"><span class="text-[10px] uppercase tracking-wider text-amber-400/80 block font-bold">Punti XP</span><span id="global-score-text" class="text-sm font-extrabold text-amber-400">0 / 100</span></div>
+<div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-extrabold text-xs"><i class="fa-solid fa-bolt"></i></div>
+</div>
+</div>
+</div>
+</header>
+
+<nav class="bg-slate-950 border-b border-slate-800/80 sticky top-[69px] z-40 overflow-x-auto shadow-2xl">
+<div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 min-w-max">
+<button onclick="switchTab('tab-studio')" class="tab-btn active px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent"><i class="fa-solid fa-map text-amber-400"></i> 0. Quadro</button>
+<button onclick="switchTab('tab-mcq')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-list-check text-sky-400"></i> 1. Quiz (10)</button>
+<button onclick="switchTab('tab-tf')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-scale-balanced text-emerald-400"></i> 2. V/F (8)</button>
+<button onclick="switchTab('tab-timeline')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-timeline text-purple-400"></i> 3. Cronologia</button>
+<button onclick="switchTab('tab-matching')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-diagram-project text-rose-400"></i> 4. Concetti</button>
+<button onclick="switchTab('tab-chi')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-people-arrows text-teal-400"></i> 5. Invasioni</button>
+<button onclick="switchTab('tab-riconosci')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-user-tag text-amber-400"></i> 6. Istituzioni</button>
+<button onclick="switchTab('tab-cloze')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-pen-nib text-amber-400"></i> 7. Sintesi</button>
+<button onclick="switchTab('tab-report')" class="tab-btn px-3 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5 border border-transparent text-slate-300 hover:bg-slate-900"><i class="fa-solid fa-certificate text-yellow-400"></i> Certificato</button>
+</div>
+</nav>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+<section id="tab-studio" class="tab-content space-y-8">
+<div class="glass-card p-6 sm:p-8 rounded-2xl border-amber-500/20">
+<div class="max-w-3xl space-y-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30"><i class="fa-solid fa-book-bookmark mr-1.5"></i> Modulo Didattico • Storia Medievale</span>
+<h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-amber-400">L'Europa Post-Carolingia: Frammentazione, Feudalesimo, Invasioni</h2>
+<p class="text-slate-300 text-sm sm:text-base leading-relaxed">Dal Trattato di Verdun (843) alla nascita dei poteri locali: feudalesimo, servitù della gleba, economia curtense, invasioni di saraceni, ungari e vichinghi, incastellamento e cavalieri.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-amber-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl"><i class="fa-solid fa-scissors"></i></div><h3 class="font-bold text-slate-100">1. Frammentazione post-Verdun</h3><p class="text-xs text-slate-300">Trattato di Verdun (843): Regno franco a Carlo il Calvo, Lotaringia a Lotario, Germania a Ludovico. I vassalli guadagnano potere.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-sky-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl"><i class="fa-solid fa-handshake"></i></div><h3 class="font-bold text-slate-100">2. Feudalesimo</h3><p class="text-xs text-slate-300">Rapporto signore-vassallo: beneficium (feudo), commendatio (giuramento), honor (carica). Termine da "fehu" (beni mobili).</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-emerald-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl"><i class="fa-solid fa-wheat-awn"></i></div><h3 class="font-bold text-slate-100">3. Servitù della gleba e curtis</h3><p class="text-xs text-slate-300">Servi legati alla terra (non al padrone), con alcuni diritti. Curtis: pars dominica + pars massaricia, corvées e decima.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-red-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center text-xl"><i class="fa-solid fa-horse-head"></i></div><h3 class="font-bold text-slate-100">4. Invasioni (IX-X sec.)</h3><p class="text-xs text-slate-300">Saraceni dal Mediterraneo (Sicilia), ungari da est (archi e cavalli), vichinghi da nord (Lindisfarne 793, Parigi 885).</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-purple-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl"><i class="fa-solid fa-chess-rook"></i></div><h3 class="font-bold text-slate-100">5. Incastellamento</h3><p class="text-xs text-slate-300">Da castelli in legno a pietra (metà IX sec.). Torri quadrate → tonde dopo il 1400 (artiglierie). Castelli Disney = neomedievalismo.</p></div>
+<div class="glass-card p-6 rounded-2xl space-y-3 hover:border-teal-500/40 transition-all"><div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl"><i class="fa-solid fa-shield-halved"></i></div><h3 class="font-bold text-slate-100">6. Cavalieri e Templari</h3><p class="text-xs text-slate-300">Cavalieri da servitori a nobiltà; tornei nati come scontri veri. Templari (1129): monaci-guerrieri, poi banchieri dei re.</p></div>
+</div>
+<div class="text-center pt-4"><button onclick="switchTab('tab-mcq')" class="bg-amber-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-xl hover:bg-amber-600">Inizia il Modulo ➔</button></div>
+</section>
+
+<section id="tab-mcq" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-sky-400">Esercizio 1: Quiz Multiplo (10 su 25)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-amber-400"></i> Risposte bloccate</span>
+</div>
+<div id="mcq-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-tf" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-emerald-400">Esercizio 2: Vero o Falso (8 su 20)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-amber-400"></i> Risposte bloccate</span>
+</div>
+<div id="tf-container" class="space-y-4"></div>
+</section>
+
+<section id="tab-timeline" class="tab-content hidden space-y-8">
+<div><h2 class="font-cinzel text-xl sm:text-2xl font-bold text-purple-400 border-b border-slate-800 pb-2">Esercizio 3: Cronologia</h2></div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">A</span><h3 class="font-bold text-slate-100 text-sm">Parte A: Riordino eventi</h3></div>
+<div id="timeline-list" class="space-y-2.5"></div>
+<button onclick="checkTimelineOrder()" id="btn-check-timeline-order" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-arrow-down-short-wide mr-1.5"></i> Verifica Ordine</button>
+<div id="timeline-order-feedback" class="text-xs font-semibold"></div>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-4 border border-purple-500/30">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">B</span><h3 class="font-bold text-slate-100 text-sm">Parte B: Evento - Anno</h3></div>
+<div id="timeline-dates-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+<button onclick="checkTimelineDates()" id="btn-check-timeline-dates" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-xl text-xs"><i class="fa-solid fa-calendar-check mr-1.5"></i> Verifica Date</button>
+<div id="timeline-dates-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-matching" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-rose-400 border-b border-slate-800 pb-2">Esercizio 4: Abbinamento Concetti</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="matching-terms" class="space-y-2.5"></div>
+<div id="matching-defs" class="space-y-2.5"></div>
+</div>
+<div id="matching-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-chi" class="tab-content hidden space-y-6">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-teal-400 border-b border-slate-800 pb-2">Esercizio 5: Invasioni — Chi va dove</h2>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<p class="text-xs text-slate-400">Abbina ciascun popolo invasore alla sua area di destinazione.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div id="chi-terms" class="space-y-2.5"></div>
+<div id="chi-defs" class="space-y-2.5"></div>
+</div>
+<div id="chi-feedback" class="text-xs font-semibold pt-2"></div>
+</div>
+</section>
+
+<section id="tab-riconosci" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 6: Riconosci l'istituzione (6 su 15)</h2>
+<span class="text-xs text-slate-400 italic"><i class="fa-solid fa-lock mr-1 text-amber-400"></i> Risposte bloccate</span>
+</div>
+<div id="riconosci-container" class="space-y-6"></div>
+</section>
+
+<section id="tab-cloze" class="tab-content hidden space-y-6">
+<div class="flex justify-between items-center border-b border-slate-800 pb-2">
+<h2 class="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">Esercizio 7: Testo Guidato</h2>
+<button onclick="renderCloze()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Cambia</button>
+</div>
+<div class="glass-card p-6 rounded-2xl space-y-6">
+<div id="cloze-body-container"></div>
+<button onclick="checkCloze()" id="btn-check-cloze" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs"><i class="fa-solid fa-check mr-1.5"></i> Verifica</button>
+<div id="cloze-feedback" class="text-xs font-semibold"></div>
+</div>
+</section>
+
+<section id="tab-report" class="tab-content hidden space-y-6">
+<div id="printable-certificate" class="glass-card p-8 rounded-2xl text-center space-y-6">
+<h2 class="font-cinzel text-2xl font-bold text-amber-400">Valutazione Globale</h2>
+<p class="text-sm text-slate-300">Studente: <span id="report-student" class="font-bold text-slate-100">Studente</span></p>
+<div class="text-4xl font-black text-amber-400" id="report-score">0 / 100 XP</div>
+<div id="report-badge" class="font-cinzel text-xl font-bold text-slate-200">In elaborazione...</div>
+<div class="flex justify-center gap-4">
+<button onclick="window.print()" class="bg-amber-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print"></i> Stampa Certificato</button>
+<button onclick="resetAll()" class="bg-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl border border-slate-700">Ricomincia</button>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 space-x-4">
+<a href="index.html" class="hover:text-amber-400"><i class="fa-solid fa-house mr-1"></i> Home Portale</a>
+<span>•</span>
+<a href="storia-medievale.html" class="hover:text-amber-400"><i class="fa-solid fa-shield-halved mr-1"></i> Storia Medievale</a>
+</footer>
+
+<script>
+function shuffledTimelineOrder() { let o; do { o = shuffle([0,1,2,3,4,5,6,7]); } while (o.every((v,i)=>v===i)); return o; }
+const state = {
+    studentName:"Studente", audioEnabled:true, mcqAnswers:{}, tfAnswers:{},
+    timelineOrder:shuffledTimelineOrder(), timelineDateAnswers:{},
+    matchingPairs:{}, matchingSelectedTerm:null,
+    chiPairs:{}, chiSelectedTerm:null,
+    riconosciAnswers:{}, clozeScore:0, activeClozeIndex:0,
+    activeMCQ:[], activeTF:[], activeRiconosci:[]
+};
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playSound(t){if(!state.audioEnabled)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);if(t==='click'){o.frequency.setValueAtTime(400,audioCtx.currentTime);g.gain.setValueAtTime(0.05,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.05);}else if(t==='correct'){o.frequency.setValueAtTime(880,audioCtx.currentTime);g.gain.setValueAtTime(0.08,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.2);}else if(t==='error'){o.frequency.setValueAtTime(220,audioCtx.currentTime);g.gain.setValueAtTime(0.08,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.2);}}catch(e){}}
+function toggleAudio(){state.audioEnabled=!state.audioEnabled;}
+function updateStudentName(v){state.studentName=v||"Studente";}
+function shuffle(a){let r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+const mcqPool = [
+{id:1,question:"Cosa stabilì il Trattato di Verdun (843)?",options:["La divisione dell'Impero carolingio in tre regni","La fine del feudalesimo","L'incoronazione di Carlo Magno","La nascita del Sacro Romano Impero"],correct:0,explanation:"Divise l'impero tra i tre figli di Ludovico il Pio."},
+{id:2,question:"Chi ricevette il Regno franco occidentale a Verdun?",options:["Carlo il Calvo","Lotario","Ludovico il Germanico","Carlo Magno"],correct:0,explanation:"A Carlo il Calvo andò il Regno franco occidentale."},
+{id:3,question:"Da quale parola deriva etimologicamente 'feudalesimo'?",options:["Da 'fehu' (beni mobili, bestiame)","Da 'fides' (fede)","Da 'feodum' (latino classico)","Da 'forum' (piazza)"],correct:0,explanation:"Dal germanico 'fehu', che indicava beni mobili e possesso di bestiame."},
+{id:4,question:"Chi era il vassallo?",options:["Colui che prestava fedeltà al signore","Il signore che concedeva terre","Il re supremo","Il servo della gleba"],correct:0,explanation:"Il vassallo (vassus) era legato al signore (dominus) da un rapporto di fedeltà."},
+{id:5,question:"Cosa riceveva il vassallo in cambio della fedeltà?",options:["Un beneficium (feudo)","Un titolo nobiliare ereditario","La libertà personale","Un cavallo da guerra"],correct:0,explanation:"Il beneficium era il privilegio concesso, spesso un territorio."},
+{id:6,question:"Cosa era la commendatio?",options:["L'atto formale di sottomissione al signore","La cerimonia di investitura del re","Il pagamento delle tasse","La cerimonia religiosa domenicale"],correct:0,explanation:"Era l'atto formale con cui il vassallo si raccomandava al signore."},
+{id:7,question:"Cosa era l'honor nel sistema feudale?",options:["La carica affidata (conte, marchese, duca)","Un'onorificenza religiosa","Una tassa sul feudo","Un tipo di armatura"],correct:0,explanation:"L'honor era la carica pubblica che veniva affidata al vassallo."},
+{id:8,question:"Da quale parola deriva 'vassallo'?",options:["Dal celtico 'gwas' (ragazzo, servitore)","Dal latino 'vassus' (contadino)","Dal germanico 'waran' (difendere)","Dal greco 'basileus' (re)"],correct:0,explanation:"Dal celtico 'gwas', che indicava un ragazzo o servitore."},
+{id:9,question:"I valvasori (vassalli dei vassalli) esistevano davvero nel Medioevo?",options:["Sì, erano una categoria giuridica precisa","No, sono un'invenzione della storiografia successiva","Sì, ma solo in Germania","No, erano schiavi"],correct:1,explanation:"Il termine è stato inventato dalla storiografia successiva; non c'è una chiara ripartizione nelle fonti."},
+{id:10,question:"Dove attecchì maggiormente il feudalesimo?",options:["In Francia, Italia e sud della Germania","Nel nord della Germania e nei Paesi Bassi","In Scandinavia","In Inghilterra e Irlanda"],correct:0,explanation:"Non fu un fenomeno uniforme: attecchì in Francia, Italia e sud della Germania."},
+{id:11,question:"Cosa era la servitù della gleba?",options:["Una forma di dominio legata alla terra","Una schiavitù identica a quella romana","Un titolo nobiliare minore","Un contratto di lavoro libero"],correct:0,explanation:"I servi erano legati alla gleba (terra), non al padrone, e avevano alcuni diritti."},
+{id:12,question:"Quale diritto avevano i servi della gleba?",options:["Non potevano essere venduti","Potevano possedere armi","Potevano diventare cavalieri","Potevano eleggere il signore"],correct:0,explanation:"Non potevano essere venduti e avevano altri diritti (matrimonio, difesa in tribunale)."},
+{id:13,question:"Cosa erano le corvées?",options:["Giornate di lavoro gratuito per il signore","Tasse in denaro","Decime alla Chiesa","Servizio militare obbligatorio"],correct:0,explanation:"Le corvées erano prestazioni di lavoro gratuite sul dominicum."},
+{id:14,question:"Cos'era la curtis?",options:["Un insieme di edifici per controllare la produzione","Il castello del signore","La piazza del mercato","Il tribunale feudale"],correct:0,explanation:"La curtis era il centro economico del feudo."},
+{id:15,question:"Differenza tra pars dominica e pars massaricia?",options:["La prima è del signore, la seconda dei servi","La prima è della Chiesa, la seconda del re","La prima è coltivata, la seconda è pascolo","La prima è in pianura, la seconda in collina"],correct:0,explanation:"Pars dominica: gestione diretta del signore. Pars massaricia: affidata ai servi."},
+{id:16,question:"Chi erano i saraceni?",options:["Popolazioni arabo-berbere del Nord Africa","Popolazioni ungare","Popolazioni vichinghe","Popolazioni slave"],correct:0,explanation:"Dal Nord Africa partirono spedizioni verso Italia, sud Francia e Spagna."},
+{id:17,question:"Cosa conquistarono i saraceni tra IX e XI secolo?",options:["L'intera Sicilia","La Sardegna","La Corsica","Tutta l'Italia meridionale"],correct:0,explanation:"Conquistarono l'intera Sicilia tra IX e XI secolo."},
+{id:18,question:"Da dove venivano gli ungari?",options:["Dall'Europa orientale (origine mongolica)","Dalla Scandinavia","Dal Nord Africa","Dalla penisola iberica"],correct:0,explanation:"Popolo di origine mongolica, arrivò in Europa tra IX e X secolo."},
+{id:19,question:"Cosa avvenne nella battaglia di Lechfeld (955)?",options:["Ottone I sconfisse gli ungari","I saraceni conquistarono Roma","I vichinghi assediarono Parigi","Carlo Magno fu incoronato"],correct:0,explanation:"Ottone I inflisse agli ungari la peggiore sconfitta della loro storia."},
+{id:20,question:"Da dove prendono nome i vichinghi?",options:["Da 'vik' (baia, fiordo)","Da 'vikingr' (guerriero)","Da 'vinland' (terra del vino)","Dal nome di un loro re"],correct:0,explanation:"Probabilmente da 'vik', che significa baia o fiordo."},
+{id:21,question:"Qual è il primo attacco vichingo documentato?",options:["Lindisfarne (793)","Parigi (885)","Hastings (1066)","York (866)"],correct:0,explanation:"L'attacco al monastero di Lindisfarne nel 793."},
+{id:22,question:"Dove si diressero i vichinghi norvegesi?",options:["Verso Inghilterra e America","Verso la Normandia","Verso la Rus di Kiev","Verso il Mediterraneo"],correct:0,explanation:"I norvegesi andarono verso Inghilterra e America, i danesi in Normandia, gli svedesi a est."},
+{id:23,question:"Cos'era l'incastellamento?",options:["La costruzione di castelli per protezione","La fortificazione delle città","L'assedio dei castelli","La demolizione dei castelli"],correct:0,explanation:"Fenomeno tipico dall'850 in avanti, inizialmente con strutture in legno."},
+{id:24,question:"Perché dopo il 1400 le torri dei castelli diventano tonde?",options:["Per deviare meglio i colpi d'artiglieria","Per motivi estetici","Per ospitare più soldati","Per resistere ai terremoti"],correct:0,explanation:"La forma tonda devia meglio i colpi delle armi da fuoco."},
+{id:25,question:"Cosa facevano i Templari alla fine della loro storia?",options:["I banchieri dei regnanti europei","I contadini","I mercanti di spezie","I pirati"],correct:0,explanation:"Con la fine delle crociate si trasformarono in banchieri dei re."}
+];
+
+const tfPool = [
+{id:1,text:"Il feudalesimo fu un fenomeno uniforme in tutta Europa.",isTrue:false,explanation:"FALSO: non si sviluppò in modo stabile nel nord della Germania e nei Paesi Bassi."},
+{id:2,text:"I valvasori sono un'invenzione della storiografia successiva.",isTrue:true,explanation:"VERO: non c'è una chiara ripartizione nelle fonti."},
+{id:3,text:"Il feudalesimo nacque inizialmente come consuetudine spontanea.",isTrue:true,explanation:"VERO: solo dopo fu riconosciuto da leggi e formule."},
+{id:4,text:"I servi della gleba potevano essere venduti dal signore.",isTrue:false,explanation:"FALSO: non potevano essere venduti, erano legati alla terra."},
+{id:5,text:"Dal 1231 i servi della gleba potevano difendersi in tribunale.",isTrue:true,explanation:"VERO: è uno dei diritti riconosciuti."},
+{id:6,text:"La decima era la tassa che andava alla Chiesa.",isTrue:true,explanation:"VERO: la decima era la tassa ecclesiastica."},
+{id:7,text:"I saraceni conquistarono l'intera Sicilia tra IX e XI secolo.",isTrue:true,explanation:"VERO."},
+{id:8,text:"Gli ungari usavano archi con grande abilità.",isTrue:true,explanation:"VERO: la loro tattica si basava su rapide incursioni a cavallo."},
+{id:9,text:"I vichinghi indossavano elmi con due corna.",isTrue:false,explanation:"FALSO: è un mito moderno; non indossavano elmi cornuti."},
+{id:10,text:"Lindisfarne fu attaccata dai vichinghi nel 793.",isTrue:true,explanation:"VERO: primo attacco documentato."},
+{id:11,text:"I vichinghi norvegesi si diressero in Normandia.",isTrue:false,explanation:"FALSO: in Normandia andarono i danesi."},
+{id:12,text:"I vichinghi svedesi si diressero verso est, dando origine alla Rus di Kiev.",isTrue:true,explanation:"VERO."},
+{id:13,text:"I castelli medievali erano simili a quelli dei cartoni Disney.",isTrue:false,explanation:"FALSO: il neomedievalismo è un fenomeno ottocentesco."},
+{id:14,text:"Il castello di Neuschwanstein fu costruito nel Medioevo.",isTrue:false,explanation:"FALSO: fu ultimato nel 1886, è neomedievale."},
+{id:15,text:"Le torri tonde resistevano meglio alle artiglierie di quelle quadrate.",isTrue:true,explanation:"VERO: deviano meglio i colpi."},
+{id:16,text:"La peste del 1348 forse si diffuse anche grazie ad armi batteriologiche.",isTrue:true,explanation:"VERO: si lanciavano corpi infetti con le catapulte."},
+{id:17,text:"I cavalieri erano sempre nobili e cortesi.",isTrue:false,explanation:"FALSO: spesso erano violenti e prevaricatori."},
+{id:18,text:"I tornei nacquero come sport pacifici.",isTrue:false,explanation:"FALSO: nacquero come veri scontri per derubare l'avversario."},
+{id:19,text:"I Templari giuravano fedeltà al re di Francia.",isTrue:false,explanation:"FALSO: giuravano fedeltà al Papa."},
+{id:20,text:"I Templari divennero banchieri dei regnanti europei.",isTrue:true,explanation:"VERO: con la fine delle crociate abbandonarono le attività militari."}
+];
+
+const timelineEvents = [
+{id:0,title:"Incursione vichinga al monastero di Lindisfarne"},
+{id:1,title:"Trattato di Verdun e divisione dell'Impero carolingio"},
+{id:2,title:"Assedio vichingo di Parigi lungo la Senna"},
+{id:3,title:"Battaglia di Lechfeld: Ottone I sconfigge gli ungari"},
+{id:4,title:"Ugo Capeto re di Francia, inizio della dinastia capetingia"},
+{id:5,title:"Riconoscimento ufficiale dell'ordine dei Templari"},
+{id:6,title:"I servi della gleba possono difendersi in tribunale"},
+{id:7,title:"Diffusione delle prime armi da fuoco in Europa"}
+];
+const timelineDateItems = [
+{id:1,event:"Lindisfarne",correctDate:"793",options:["793","843","885"]},
+{id:2,event:"Trattato di Verdun",correctDate:"843",options:["843","885","955"]},
+{id:3,event:"Assedio vichingo di Parigi",correctDate:"885",options:["843","885","955"]},
+{id:4,event:"Battaglia di Lechfeld",correctDate:"955",options:["885","955","987"]},
+{id:5,event:"Ugo Capeto re di Francia",correctDate:"987",options:["955","987","1129"]}
+];
+
+const matchingTerms = [
+{id:"m1",term:"Vassallo"},
+{id:"m2",term:"Beneficium"},
+{id:"m3",term:"Commendatio"},
+{id:"m4",term:"Curtis"},
+{id:"m5",term:"Corvée"}
+];
+const matchingDefs = [
+{id:"d1",matchId:"m1",text:"Colui che prestava fedeltà al signore in cambio di un beneficio."},
+{id:"d2",matchId:"m2",text:"Il privilegio concesso dal signore, spesso un territorio."},
+{id:"d3",matchId:"m3",text:"L'atto formale di sottomissione con ritualità e formule."},
+{id:"d4",matchId:"m4",text:"Il centro economico del feudo, con pars dominica e massaricia."},
+{id:"d5",matchId:"m5",text:"Giornate di lavoro gratuito prestate dai servi al signore."}
+];
+
+const chiTerms = [
+{id:"c1",term:"Saraceni"},
+{id:"c2",term:"Ungari"},
+{id:"c3",term:"Vichinghi norvegesi"},
+{id:"c4",term:"Vichinghi danesi"},
+{id:"c5",term:"Vichinghi svedesi"}
+];
+const chiDefs = [
+{id:"cd1",matchId:"c1",text:"Dal Nord Africa verso Italia, sud della Francia e Spagna; conquistano la Sicilia."},
+{id:"cd2",matchId:"c2",text:"Dall'Europa orientale verso i Balcani, la Germania e l'Italia, con rapide incursioni a cavallo."},
+{id:"cd3",matchId:"c3",text:"Verso l'Inghilterra e l'America; primi europei a sbarcare nel Nuovo Mondo."},
+{id:"cd4",matchId:"c4",text:"Verso l'Inghilterra e il nord della Francia, dove ottennero la Normandia."},
+{id:"cd5",matchId:"c5",text:"Verso est, fondendosi con gli slavi e dando origine alla Rus di Kiev."}
+];
+
+const riconosciPool = [
+{id:1,desc:"Sistema di potere basato su rapporti di fiducia tra signore e vassallo, con obblighi reciproci.",options:["Feudalesimo","Servitù della gleba","Curtis","Incastellamento"],correct:0,explanation:"Il feudalesimo."},
+{id:2,desc:"Condizione di chi è legato alla terra (non al padrone) e gode di alcuni diritti.",options:["Servitù della gleba","Schiavitù romana","Vassallaggio","Artigianato"],correct:0,explanation:"La servitù della gleba."},
+{id:3,desc:"L'atto formale con cui il vassallo si raccomanda al signore, con ritualità e formule.",options:["Commendatio","Investitura","Incoronazione","Addobbamento"],correct:0,explanation:"La commendatio."},
+{id:4,desc:"La carica pubblica (conte, marchese, duca) affidata al vassallo.",options:["Honor","Beneficium","Feudum","Mundio"],correct:0,explanation:"L'honor."},
+{id:5,desc:"La parte della curtis gestita direttamente dal signore tramite i propri servi.",options:["Pars dominica","Pars massaricia","Manso","Dominicum"],correct:0,explanation:"La pars dominica."},
+{id:6,desc:"La parte della curtis affidata alle famiglie contadine.",options:["Pars massaricia","Pars dominica","Manso","Feudo"],correct:0,explanation:"La pars massaricia."},
+{id:7,desc:"La tassa ecclesiastica pari a un decimo dei raccolti.",options:["Decima","Corvée","Jizya","Taglia"],correct:0,explanation:"La decima."},
+{id:8,desc:"Il fenomeno di costruzione di castelli per protezione dall'insicurezza.",options:["Incastellamento","Urbanizzazione","Feudalizzazione","Fortificazione comunale"],correct:0,explanation:"L'incastellamento."},
+{id:9,desc:"La tipica imbarcazione vichinga, adatta a navigare fiumi e mari.",options:["Drakkar","Galera","Cocca","Caravella"],correct:0,explanation:"Il drakkar."},
+{id:10,desc:"Ordine monastico-cavalleresco fondato nel 1129, poi divenuto potenza finanziaria.",options:["Templari","Ospedalieri","Teutonici","Gesuiti"],correct:0,explanation:"I Templari."},
+{id:11,desc:"Popolazioni arabo-berbere che razziarono il Mediterraneo dal Nord Africa.",options:["Saraceni","Ungari","Vichinghi","Mongoli"],correct:0,explanation:"I saraceni."},
+{id:12,desc:"Popolo di origine mongolica che razziò l'Europa tra IX e X secolo con incursioni a cavallo.",options:["Ungari","Saraceni","Vichinghi","Avari"],correct:0,explanation:"Gli ungari."},
+{id:13,desc:"Popolo scandinavo che razziò l'Europa dall'VIII secolo, con società più egualitaria.",options:["Vichinghi","Ungari","Saraceni","Normanni di Sicilia"],correct:0,explanation:"I vichinghi."},
+{id:14,desc:"La battaglia del 955 in cui Ottone I sconfisse gli ungari.",options:["Lechfeld","Hastings","Bouvines","Legnano"],correct:0,explanation:"La battaglia di Lechfeld."},
+{id:15,desc:"Il re che nel 987 diede inizio alla dinastia capetingia.",options:["Ugo Capeto","Carlo il Calvo","Ugo di Provenza","Roberto II"],correct:0,explanation:"Ugo Capeto."}
+];
+
+const clozePool = [
+{text:`Con il Trattato di <select id="cloze-1" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Verdun">Verdun</option><option value="Augusta">Augusta</option><option value="Cateau-Cambrésis">Cateau-Cambrésis</option></select> dell'843 l'Impero carolingio fu diviso in tre parti. Il potere effettivo passò ai <select id="cloze-2" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="vassalli">vassalli</option><option value="vescovi">vescovi</option><option value="contadini">contadini</option></select>, legati al signore da un rapporto di fedeltà. L'atto formale era la <select id="cloze-3" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="commendatio">commendatio</option><option value="donatio">donatio</option><option value="investitura">investitura</option></select>, con cui il vassallo si raccomandava al signore. In cambio riceveva un <select id="cloze-4" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="beneficium">beneficium</option><option value="honor">honor</option><option value="mundio">mundio</option></select>, spesso un territorio.`,
+answers:{1:"Verdun",2:"vassalli",3:"commendatio",4:"beneficium"}},
+{text:`Tra IX e X secolo l'Europa fu razziata da tre popoli: i <select id="cloze-1" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="saraceni">saraceni</option><option value="mongoli">mongoli</option><option value="slavi">slavi</option></select> dal Mediterraneo, gli <select id="cloze-2" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="ungari">ungari</option><option value="avari">avari</option><option value="goti">goti</option></select> da est e i <select id="cloze-3" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="vichinghi">vichinghi</option><option value="normanni di Sicilia">normanni di Sicilia</option><option value="danesi">danesi</option></select> da nord. La battaglia di <select id="cloze-4" class="bg-slate-800 text-amber-300 rounded px-2 py-1"><option value="">[?]</option><option value="Lechfeld">Lechfeld</option><option value="Hastings">Hastings</option><option value="Legnano">Legnano</option></select> del 955 fermò gli ungari.`,
+answers:{1:"saraceni",2:"ungari",3:"vichinghi",4:"Lechfeld"}}
+];
+
+function renderMCQ(){state.activeMCQ=shuffle(mcqPool).slice(0,10);document.getElementById('mcq-container').innerHTML=state.activeMCQ.map((q,i)=>`<div class="glass-card p-5 rounded-2xl space-y-3 border border-slate-800"><div class="font-bold text-slate-100 text-sm">${i+1}. ${q.question}</div><div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectMCQ(${q.id},${oi})" class="mcq-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div><div id="mcq-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div></div>`).join('');}
+function selectMCQ(id,oi){playSound('click');const q=mcqPool.find(x=>x.id===id);state.mcqAnswers[id]=oi;document.querySelectorAll(`.mcq-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`mcq-fb-${id}`);fb.classList.remove('hidden');if(oi===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}updateGlobalScore();}
+
+function renderTF(){state.activeTF=shuffle(tfPool).slice(0,8);document.getElementById('tf-container').innerHTML=state.activeTF.map((q,i)=>`<div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800"><p class="text-xs text-slate-200">${i+1}. ${q.text}</p><div class="flex gap-2"><button onclick="answerTF(${q.id},true)" class="tf-opt-${q.id} bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1 rounded text-xs font-bold">VERO</button><button onclick="answerTF(${q.id},false)" class="tf-opt-${q.id} bg-rose-900/50 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs font-bold">FALSO</button></div><div id="tf-fb-${q.id}" class="hidden text-xs pt-1"></div></div>`).join('');}
+function answerTF(id,c){playSound('click');const q=tfPool.find(x=>x.id===id);state.tfAnswers[id]=c;document.querySelectorAll(`.tf-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`tf-fb-${id}`);fb.classList.remove('hidden');if(c===q.isTrue){playSound('correct');fb.className="text-xs text-emerald-300";fb.innerText=`Esatto! ${q.explanation}`;}else{playSound('error');fb.className="text-xs text-rose-300";fb.innerText=`Sbagliato. ${q.explanation}`;}updateGlobalScore();}
+
+function renderTimelineOrder(){document.getElementById('timeline-list').innerHTML=state.timelineOrder.map((di,cp)=>`<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs gap-3"><span class="text-purple-300 font-bold"><span class="text-slate-500 mr-1">${cp+1}.</span>${timelineEvents[di].title}</span><div class="flex gap-1 shrink-0"><button onclick="moveTimeline(${cp},-1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-up"></i></button><button onclick="moveTimeline(${cp},1)" class="p-1 text-purple-400 hover:text-purple-200"><i class="fa-solid fa-chevron-down"></i></button></div></div>`).join('');}
+function moveTimeline(p,d){const t=p+d;if(t<0||t>=state.timelineOrder.length)return;[state.timelineOrder[p],state.timelineOrder[t]]=[state.timelineOrder[t],state.timelineOrder[p]];renderTimelineOrder();playSound('click');}
+function checkTimelineOrder(){let c=0;state.timelineOrder.forEach((v,i)=>{if(v===i)c++;});const fb=document.getElementById('timeline-order-feedback');const btn=document.getElementById('btn-check-timeline-order');btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');if(c===timelineEvents.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Perfetto!";}else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Corretti: ${c} su ${timelineEvents.length}.`;}updateGlobalScore();}
+function renderTimelineDates(){document.getElementById('timeline-dates-container').innerHTML=timelineDateItems.map(it=>`<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2"><div class="text-xs font-bold text-slate-200">${it.event}</div><select id="timeline-sel-${it.id}" onchange="state.timelineDateAnswers[${it.id}]=this.value" class="w-full bg-slate-950 text-purple-300 border border-slate-700 rounded-lg p-2 text-xs"><option value="">-- Anno --</option>${it.options.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>`).join('');}
+function checkTimelineDates(){let c=0;timelineDateItems.forEach(it=>{const s=document.getElementById(`timeline-sel-${it.id}`);if(s)s.disabled=true;if(state.timelineDateAnswers[it.id]===it.correctDate)c++;});const fb=document.getElementById('timeline-dates-feedback');const btn=document.getElementById('btn-check-timeline-dates');btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');if(c===timelineDateItems.length){playSound('correct');fb.className="text-emerald-400 font-bold mt-2";fb.innerText="Tutte le date corrette!";}else{playSound('error');fb.className="text-amber-400 font-bold mt-2";fb.innerText=`Corrette: ${c} su ${timelineDateItems.length}.`;}updateGlobalScore();}
+
+function renderMatching(){document.getElementById('matching-terms').innerHTML=matchingTerms.map(t=>`<button onclick="selectMatchTerm('${t.id}')" id="mt-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50 transition-all">${t.term}</button>`).join('');document.getElementById('matching-defs').innerHTML=shuffle(matchingDefs).map(d=>`<button onclick="selectMatchDef('${d.matchId}')" id="md-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-rose-500/50 transition-all">${d.text}</button>`).join('');}
+function selectMatchTerm(id){if(state.matchingPairs[id])return;state.matchingSelectedTerm=id;playSound('click');matchingTerms.forEach(t=>{const b=document.getElementById(`mt-${t.id}`);if(b&&!state.matchingPairs[t.id])b.className=(t.id===id)?"w-full text-left p-3 rounded-xl border-2 border-rose-500 bg-rose-950/40 text-xs text-rose-200":"w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-rose-500/50";});}
+function selectMatchDef(mid){if(!state.matchingSelectedTerm)return;const fb=document.getElementById('matching-feedback');if(state.matchingSelectedTerm===mid){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText="Corretto!";state.matchingPairs[mid]=true;const t=document.getElementById(`mt-${state.matchingSelectedTerm}`);const d=document.getElementById(`md-${mid}`);const l="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";if(t){t.disabled=true;t.className=l;}if(d){d.disabled=true;d.className=l;}}else{playSound('error');fb.className="text-rose-400 font-bold";fb.innerText="Errato.";}state.matchingSelectedTerm=null;updateGlobalScore();}
+
+function renderChiConChi(){document.getElementById('chi-terms').innerHTML=chiTerms.map(t=>`<button onclick="selectChiTerm('${t.id}')" id="ct-${t.id}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-teal-500/50 transition-all">${t.term}</button>`).join('');document.getElementById('chi-defs').innerHTML=shuffle(chiDefs).map(d=>`<button onclick="selectChiDef('${d.matchId}')" id="cd-${d.matchId}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-300 hover:border-teal-500/50 transition-all">${d.text}</button>`).join('');}
+function selectChiTerm(id){if(state.chiPairs[id])return;state.chiSelectedTerm=id;playSound('click');chiTerms.forEach(t=>{const b=document.getElementById(`ct-${t.id}`);if(b&&!state.chiPairs[t.id])b.className=(t.id===id)?"w-full text-left p-3 rounded-xl border-2 border-teal-500 bg-teal-950/40 text-xs text-teal-200":"w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:border-teal-500/50";});}
+function selectChiDef(mid){if(!state.chiSelectedTerm)return;const fb=document.getElementById('chi-feedback');if(state.chiSelectedTerm===mid){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText="Corretto!";state.chiPairs[mid]=true;const t=document.getElementById(`ct-${state.chiSelectedTerm}`);const d=document.getElementById(`cd-${mid}`);const l="w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-xs text-emerald-300 opacity-50 cursor-not-allowed line-through";if(t){t.disabled=true;t.className=l;}if(d){d.disabled=true;d.className=l;}}else{playSound('error');fb.className="text-rose-400 font-bold";fb.innerText="Errato.";}state.chiSelectedTerm=null;updateGlobalScore();}
+
+function renderRiconosci(){state.activeRiconosci=shuffle(riconosciPool).slice(0,6);document.getElementById('riconosci-container').innerHTML=state.activeRiconosci.map((q,i)=>`<div class="glass-card p-5 rounded-2xl space-y-3 border border-amber-500/30"><div class="text-xs font-bold text-amber-300 uppercase">Istituzione ${i+1}</div><div class="italic text-amber-200 text-sm border-l-2 border-amber-500/50 pl-3">${q.desc}</div><div class="text-xs text-slate-400">Di cosa si tratta?</div><div class="space-y-2">${q.options.map((o,oi)=>`<button onclick="selectRiconosci(${q.id},${oi})" class="ric-opt-${q.id} w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 text-xs text-slate-200 hover:bg-slate-800 transition-all">${o}</button>`).join('')}</div><div id="ric-fb-${q.id}" class="hidden p-3 rounded-xl text-xs"></div></div>`).join('');}
+function selectRiconosci(id,oi){playSound('click');const q=riconosciPool.find(x=>x.id===id);state.riconosciAnswers[id]=oi;document.querySelectorAll(`.ric-opt-${id}`).forEach(b=>{b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');});const fb=document.getElementById(`ric-fb-${id}`);fb.classList.remove('hidden');if(oi===q.correct){playSound('correct');fb.className="p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700";fb.innerHTML=`<strong>Corretto!</strong> ${q.explanation}`;}else{playSound('error');fb.className="p-3 rounded-xl text-xs bg-rose-950 text-rose-300 border border-rose-700";fb.innerHTML=`<strong>Errato.</strong> ${q.explanation}`;}updateGlobalScore();}
+
+function renderCloze(){state.activeClozeIndex=Math.floor(Math.random()*clozePool.length);const c=clozePool[state.activeClozeIndex];document.getElementById('cloze-body-container').innerHTML=`<div class="p-5 bg-slate-900/90 rounded-xl leading-loose text-sm text-slate-200 border border-slate-800">${c.text}</div>`;const b=document.getElementById('btn-check-cloze');b.disabled=false;b.classList.remove('opacity-50','cursor-not-allowed');document.getElementById('cloze-feedback').innerText="";}
+function checkCloze(){const c=clozePool[state.activeClozeIndex];let k=0;const t=Object.keys(c.answers).length;for(let i=1;i<=t;i++){const el=document.getElementById(`cloze-${i}`);if(el){el.disabled=true;if(el.value===c.answers[i]){k++;el.className="bg-emerald-950 text-emerald-300 border border-emerald-500 rounded px-2 py-1 font-bold";}else{el.className="bg-rose-950 text-rose-300 border border-rose-500 rounded px-2 py-1 font-bold";}}}const b=document.getElementById('btn-check-cloze');b.disabled=true;b.classList.add('opacity-50','cursor-not-allowed');state.clozeScore=Math.round((k/t)*100);const fb=document.getElementById('cloze-feedback');if(k===t){playSound('correct');fb.className="text-emerald-400 font-bold";fb.innerText=`Eccellente! ${k}/${t}.`;}else{playSound('error');fb.className="text-amber-400 font-bold";fb.innerText=`Punteggio: ${k}/${t}.`;}updateGlobalScore();}
+
+function updateGlobalScore(){
+    let mcqC=0;state.activeMCQ.forEach(q=>{if(state.mcqAnswers[q.id]===q.correct)mcqC++;});
+    let tfC=0;state.activeTF.forEach(q=>{if(state.tfAnswers[q.id]===q.isTrue)tfC++;});
+    let tlO=0;state.timelineOrder.forEach((v,i)=>{if(v===i)tlO++;});
+    let tlD=0;timelineDateItems.forEach(it=>{if(state.timelineDateAnswers[it.id]===it.correctDate)tlD++;});
+    let mC=Object.keys(state.matchingPairs).length;
+    let cC=Object.keys(state.chiPairs).length;
+    let rC=0;state.activeRiconosci.forEach(q=>{if(state.riconosciAnswers[q.id]===q.correct)rC++;});
+    const total=Math.round(
+        (state.activeMCQ.length?(mcqC/state.activeMCQ.length)*20:0)+
+        (state.activeTF.length?(tfC/state.activeTF.length)*15:0)+
+        (tlO/8)*5+(tlD/5)*5+
+        (mC/5)*10+(cC/5)*15+
+        (state.activeRiconosci.length?(rC/state.activeRiconosci.length)*15:0)+
+        (state.clozeScore/100)*15
+    );
+    document.getElementById('global-score-text').innerText=`${total} / 100`;
+    return total;
+}
+function updateReport(){const s=updateGlobalScore();document.getElementById('report-score').innerText=`${s} / 100 XP`;document.getElementById('report-student').innerText=state.studentName;const b=document.getElementById('report-badge');if(s>=90)b.innerText="Signore Feudale (Eccellente)";else if(s>=75)b.innerText="Vassallo Fedele (Buono)";else if(s>=55)b.innerText="Cavaliere in Formazione (Sufficiente)";else b.innerText="Servo della Gleba (Insufficiente)";}
+function switchTab(id){playSound('click');document.querySelectorAll('.tab-content').forEach(e=>e.classList.add('hidden'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.remove('hidden');if(id==='tab-report')updateReport();}
+function resetAll(){state.mcqAnswers={};state.tfAnswers={};state.timelineOrder=shuffledTimelineOrder();state.timelineDateAnswers={};state.matchingPairs={};state.chiPairs={};state.riconosciAnswers={};state.clozeScore=0;state.matchingSelectedTerm=null;state.chiSelectedTerm=null;renderMCQ();renderTF();renderTimelineOrder();renderTimelineDates();renderMatching();renderChiConChi();renderRiconosci();renderCloze();document.getElementById('btn-check-timeline-order').disabled=false;document.getElementById('btn-check-timeline-order').classList.remove('opacity-50','cursor-not-allowed');document.getElementById('btn-check-timeline-dates').disabled=false;document.getElementById('btn-check-timeline-dates').classList.remove('opacity-50','cursor-not-allowed');document.getElementById('timeline-order-feedback').innerText="";document.getElementById('timeline-dates-feedback').innerText="";document.getElementById('matching-feedback').innerText="";document.getElementById('chi-feedback').innerText="";updateGlobalScore();switchTab('tab-studio');}
+window.addEventListener('DOMContentLoaded',()=>{renderMCQ();renderTF();renderTimelineOrder();renderTimelineDates();renderMatching();renderChiConChi();renderRiconosci();renderCloze();updateGlobalScore();});
+</script>
+</body>
+</html>
